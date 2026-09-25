@@ -137,3 +137,30 @@ Everything can be tested without Turkish or Norwegian speakers, using test mode.
 Headless check without the UI, on any OS: `dotnet run --project tools/LiveSubtitles.Cli -- vad some.wav` lists
 the speech segments. `translate some.wav` streams a WAV file to OpenAI and prints the lines (set the
 `OPENAI_API_KEY` environment variable first).
+
+### Stage 2: settings, hotkeys, glossary, transcript history
+
+1. **Settings tab:** change the font, size, background opacity, max lines and fade time. The overlay updates
+   immediately. Settings are saved to `%APPDATA%\LiveSubtitles\settings.json`. The API key is never stored there.
+2. **Hotkeys:** click a hotkey box and press a new combination. The defaults are:
+
+   | Action | Hotkey |
+   |---|---|
+   | Start/stop | `Ctrl+Alt+S` |
+   | Pause | `Ctrl+Alt+P` |
+   | Show/hide overlay | `Ctrl+Alt+O` |
+   | Click-through | `Ctrl+Alt+T` |
+
+   Focus another app (a browser or game) and press them. The status line under the boxes says if a
+   combination is already taken by another program.
+3. **Tray:** close or minimise the window. The app keeps running in the notification area. Right-click the icon
+   for start/stop, pause, overlay and exit.
+4. **Glossary:** run a test file or video that mentions a name.
+   - Add a **Keep as-is** rule with the correct spelling, plus any wrong spellings the model produced as aliases.
+     New lines use the corrected spelling immediately, even mid-session.
+   - A **Replace** rule changes words in the English text, e.g. make "brother" read "abi".
+   - Rules are applied locally. The API has no glossary input.
+5. **History tab:** every line with time, speaker, translation and original. **Export .txt** and
+   **Export .srt** save the current session. Load the .srt next to a screen recording to check the timing.
+   **Save transcripts automatically** is off by default. When on, each final line is appended to a text file in
+   the chosen folder.

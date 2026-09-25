@@ -24,6 +24,8 @@ public sealed record SegmenterOptions
     public int EarlyIdMs { get; init; } = 1200;
     /// <summary>Send all audio, including long silences (best quality, higher cost).</summary>
     public bool SendContinuously { get; init; }
+    /// <summary>Segment ids continue across sessions so the transcript history stays unique.</summary>
+    public int FirstSegmentId { get; init; } = 1;
 }
 
 public abstract record SegmenterEvent;
@@ -71,6 +73,7 @@ public sealed class SpeechSegmenter
         _earlyFrames = Frames(options.EarlyIdMs);
         _endPadFrames = 3;
         _sending = options.SendContinuously;
+        _nextSegmentId = Math.Max(1, options.FirstSegmentId);
     }
 
     public SegmenterOptions Options => _o;

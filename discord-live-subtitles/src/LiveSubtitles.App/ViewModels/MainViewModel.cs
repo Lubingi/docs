@@ -23,6 +23,9 @@ public sealed record Option<T>(T Value, string Label)
 
 public partial class MainViewModel : ObservableObject
 {
+    private TrayIcon? _tray;
+    private HotkeyManager? _hotkeys;
+    private TranscriptAutoSaver? _autoSaver;
     private readonly SettingsStore _settingsStore;
     private readonly FileLog _log;
     private readonly DispatcherTimer _saveTimer;
@@ -40,6 +43,9 @@ public partial class MainViewModel : ObservableObject
         Session = new SessionController(log, Transcript);
         Overlay = new OverlayViewModel(Settings.Overlay, SaveSettings);
         Debug = new DebugViewModel();
+        History = new HistoryViewModel();
+        InitGlossary();
+        InitSettingsPage();
 
         _saveTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(600) };
         _saveTimer.Tick += (_, _) => { _saveTimer.Stop(); SaveNow(); };
@@ -77,6 +83,7 @@ public partial class MainViewModel : ObservableObject
     public TranscriptStore Transcript { get; }
     public OverlayViewModel Overlay { get; }
     public DebugViewModel Debug { get; }
+    public HistoryViewModel History { get; }
     public ILog Log => _log;
 
     // ------------------------------------------------------------------ options
@@ -138,6 +145,7 @@ public partial class MainViewModel : ObservableObject
     {
         Settings.Overlay.Visible = value;
         SaveSettings();
+        UpdateTray();
         if (_overlayWindow == null) return;
         if (value) _overlayWindow.Show(); else _overlayWindow.Hide();
     }
@@ -276,9 +284,8 @@ public partial class MainViewModel : ObservableObject
         }
     }
 
-    protected virtual ISpeakerIdentifier CreateSpeakerIdentifier() => new NoSpeakerIdentifier();
-    protected virtual ITextPostProcessor CreateTextProcessor() => NoTextPostProcessor.Instance;
-    protected virtual IAudioEffect? CreateFileEffect() => null;
+    private ISpeakerIdentifier CreateSpeakerIdentifier() => new NoSpeakerIdentifier();
+    private IAudioEffect? CreateFileEffect() => null;
 
     private async Task StartSessionAsync()
     {
@@ -298,7 +305,13 @@ public partial class MainViewModel : ObservableObject
             await Session.StartAsync(Settings, key, CreateSpeakerIdentifier(), CreateTextProcessor(), CreateFileEffect());
             IsRunning = true;
             IsPaused = false;
-            OnSessionStarted();
+            if (Settings.AutoSaveTranscript)
+            {
+                var folder = string.IsNullOrWhiteSpace(Settings.AutoSaveFolder) ? DefaultTranscriptFolder : Settings.AutoSaveFolder!;
+                _autoSaver ??= new TranscriptAutoSaver(Transcript, folder);
+                Debug.Log("Saving transcript to " + _autoSaver.FilePath);
+            }
+            UpdateTray();
         }
         catch (Exception ex)
         {
@@ -308,8 +321,6 @@ public partial class MainViewModel : ObservableObject
         }
     }
 
-    protected virtual void OnSessionStarted() { }
-    protected virtual void OnSessionStopped() { }
 
     private async Task StopSessionAsync()
     {
@@ -320,7 +331,9 @@ public partial class MainViewModel : ObservableObject
         ConnectionStatus = "Stopped";
         InputLevel = 0;
         SpeechProbability = 0;
-        OnSessionStopped();
+        _autoSaver?.Dispose();
+        _autoSaver = null;
+        UpdateTray();
     }
 
     [RelayCommand]
@@ -329,6 +342,7 @@ public partial class MainViewModel : ObservableObject
         if (!IsRunning) return;
         IsPaused = !IsPaused;
         Session.SetPaused(IsPaused);
+        UpdateTray();
     }
 
     [RelayCommand]
@@ -359,7 +373,11 @@ public partial class MainViewModel : ObservableObject
 
     // ------------------------------------------------------------------ transcript
 
-    protected virtual void OnLine(TranscriptLine line) => Overlay.Apply(line);
+    private void OnLine(TranscriptLine line)
+    {
+        Overlay.Apply(line);
+        History.Apply(line);
+    }
 
     // ------------------------------------------------------------------ windows & settings
 
@@ -368,10 +386,35 @@ public partial class MainViewModel : ObservableObject
         _mainWindow = main;
         _overlayWindow = new OverlayWindow(Overlay);
         if (OverlayVisible) _overlayWindow.Show();
-        OnWindowsAttached(main);
+        _tray = new TrayIcon(main.ShowFromTray, () => StartStopCommand.Execute(null), TogglePause, ToggleOverlay, ToggleClickThrough,
+            () => _ = main.ExitAsync());
+        Overlay.PropertyChanged += (_, _) => UpdateTray();
+        var hwnd = new System.Windows.Interop.WindowInteropHelper(main).EnsureHandle();
+        _hotkeys = new HotkeyManager(hwnd);
+        RegisterHotkeys();
+        UpdateTray();
     }
 
-    protected virtual void OnWindowsAttached(MainWindow main) { }
+    public void RegisterHotkeys()
+    {
+        if (_hotkeys == null) return;
+        var h = Settings.Hotkeys;
+        var problems = _hotkeys.Register(new (string, string, Action)[]
+        {
+            ("Start/stop", h.StartStop, () => StartStopCommand.Execute(null)),
+            ("Pause", h.Pause, TogglePause),
+            ("Show/hide overlay", h.ToggleOverlay, ToggleOverlay),
+            ("Click-through", h.ToggleClickThrough, ToggleClickThrough),
+        });
+        HotkeyStatus = problems.Count == 0 ? "All hotkeys registered." : string.Join("\n", problems);
+    }
+
+    [ObservableProperty] private string _hotkeyStatus = "";
+
+    private void UpdateTray() => _tray?.Update(IsRunning, IsPaused, OverlayVisible, Overlay.ClickThrough, ConnectionStatus);
+
+    public bool MinimizeToTray => Settings.MinimizeToTray;
+    public void NotifyMinimizedToTray() => _tray?.ShowMinimizedHint();
 
     public void SaveSettings()
     {
@@ -389,6 +432,8 @@ public partial class MainViewModel : ObservableObject
     {
         if (IsRunning) await StopSessionAsync();
         SaveNow();
+        _hotkeys?.Dispose();
+        _tray?.Dispose();
         _overlayWindow?.Close();
     }
 }

@@ -201,3 +201,9 @@ public sealed class SettingsStore
     public static AppSettings Clone(AppSettings s) =>
         JsonSerializer.Deserialize<AppSettings>(JsonSerializer.Serialize(s, Json), Json)!;
 }
+
+/// <summary>For XAML combo boxes.</summary>
+public static class GlossaryModesList
+{
+    public static IReadOnlyList<GlossaryMode> All { get; } = Enum.GetValues<GlossaryMode>();
+}

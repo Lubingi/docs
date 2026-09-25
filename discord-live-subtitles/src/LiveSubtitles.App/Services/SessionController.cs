@@ -45,8 +45,11 @@ public sealed class SessionController
         if (IsRunning) return;
         _vad = CreateVad();
         var sessionConfig = settings.ToSessionConfig();
+        var options = settings.ToPipelineOptions();
+        int nextId = Transcript.Snapshot().Select(l => l.SegmentId).DefaultIfEmpty(0).Max() + 1;
+        options = options with { Segmenter = options.Segmenter with { FirstSegmentId = nextId } };
         var pipeline = new SubtitlePipeline(
-            settings.ToPipelineOptions(), _vad, settings.SpeakerIdEnabled ? speakers : new NoSpeakerIdentifier(),
+            options, _vad, settings.SpeakerIdEnabled ? speakers : new NoSpeakerIdentifier(),
             () => new RealtimeTranslationSession(sessionConfig, apiKey, _log),
             Transcript, _log, text);
         pipeline.StatusChanged += s => StatusChanged?.Invoke(s);

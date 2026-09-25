@@ -1,6 +1,7 @@
 <Window x:Class="LiveSubtitles.App.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:core="clr-namespace:LiveSubtitles.Core.Settings;assembly=LiveSubtitles.Core"
         Title="Live Subtitles for Discord" Width="980" Height="720" MinWidth="760" MinHeight="520"
         Icon="/Assets/app.ico" WindowStartupLocation="CenterScreen">
     <DockPanel>
@@ -106,6 +107,177 @@
                             <Button Content="Reset position" Command="{Binding ResetOverlayPositionCommand}" />
                         </StackPanel>
                         <TextBlock Style="{StaticResource Hint}" Text="Games must run in borderless or windowed mode for any overlay to show on top. Turn click-through off to drag or resize the overlay." />
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- ============================================================ HISTORY -->
+            <TabItem Header="History">
+                <DockPanel Margin="4">
+                    <DockPanel DockPanel.Dock="Top" Margin="0,0,0,6">
+                        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                            <Button Content="Export .txt…" Command="{Binding ExportTxtCommand}" />
+                            <Button Content="Export .srt…" Command="{Binding ExportSrtCommand}" />
+                            <Button Content="Clear" Command="{Binding ClearHistoryCommand}" Margin="0" />
+                        </StackPanel>
+                        <CheckBox Content="Auto-scroll" IsChecked="{Binding History.AutoScroll}" VerticalAlignment="Center" Margin="0,0,12,0" />
+                        <TextBlock Style="{StaticResource Hint}" VerticalAlignment="Center" Text="Kept in memory only. Right-click a line to rename or correct its speaker." />
+                    </DockPanel>
+                    <Border DockPanel.Dock="Bottom" BorderBrush="#E5E7EB" BorderThickness="0,1,0,0" Padding="0,6,0,0" Margin="0,6,0,0">
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox Content="Save transcripts automatically to" IsChecked="{Binding AutoSaveTranscript}" VerticalAlignment="Center" />
+                            <TextBlock Text="{Binding AutoSaveFolder}" VerticalAlignment="Center" Margin="6,0" Foreground="{StaticResource Muted}" />
+                            <Button Content="Change…" Command="{Binding ChooseAutoSaveFolderCommand}" />
+                            <TextBlock Text="(off by default; text only, never audio)" VerticalAlignment="Center" Foreground="{StaticResource Muted}" />
+                        </StackPanel>
+                    </Border>
+                    <DataGrid x:Name="HistoryGrid" ItemsSource="{Binding History.Rows}" SelectedItem="{Binding History.Selected}"
+                              AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column" GridLinesVisibility="Horizontal"
+                              EnableRowVirtualization="True" SelectionMode="Single">
+                        <DataGrid.ContextMenu>
+                            <ContextMenu x:Name="HistoryMenu">
+                                <MenuItem Header="Copy line" Command="{Binding CopySelectedLineCommand}" />
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Time" Binding="{Binding Time}" Width="70" />
+                            <DataGridTemplateColumn Header="Speaker" Width="110">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Speaker}" Foreground="{Binding SpeakerBrush}" FontWeight="SemiBold" Cursor="Hand"
+                                                   ToolTip="Click to rename this speaker" MouseLeftButtonUp="HistorySpeaker_Click" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Translation" Binding="{Binding Translation}" Width="3*">
+                                <DataGridTextColumn.ElementStyle><Style TargetType="TextBlock"><Setter Property="TextWrapping" Value="Wrap" /></Style></DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="Original" Binding="{Binding Original}" Width="2*">
+                                <DataGridTextColumn.ElementStyle><Style TargetType="TextBlock"><Setter Property="TextWrapping" Value="Wrap" /><Setter Property="Foreground" Value="#555" /></Style></DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+
+            <!-- ============================================================ GLOSSARY -->
+            <TabItem Header="Glossary">
+                <DockPanel Margin="8">
+                    <StackPanel DockPanel.Dock="Top">
+                        <TextBlock Style="{StaticResource Hint}">
+                            gpt-realtime-translate does not accept prompts or glossaries, so these rules fix the text on your PC after translation.
+                            <LineBreak /><Bold>Keep as-is</Bold>: a name or word that must appear exactly like this. Capitalised spellings one letter off, and any listed aliases, are corrected (Emir, Emrah → Emre).
+                            <LineBreak /><Bold>Replace</Bold>: whole-word replacement, e.g. "brother" → "abi", "GG" → "good game". Longer phrases are matched first.
+                        </TextBlock>
+                        <StackPanel Orientation="Horizontal" Margin="0,4,0,6">
+                            <Button Content="Add rule" Command="{Binding AddGlossaryEntryCommand}" />
+                            <Button Content="Remove selected" Command="{Binding RemoveGlossaryEntryCommand}" CommandParameter="{Binding SelectedItem, ElementName=GlossaryGrid}" />
+                        </StackPanel>
+                    </StackPanel>
+                    <DataGrid x:Name="GlossaryGrid" ItemsSource="{Binding Glossary}" AutoGenerateColumns="False" CanUserAddRows="False"
+                              HeadersVisibility="Column" GridLinesVisibility="Horizontal"
+                              CellEditEnding="Glossary_CellEditEnding" RowEditEnding="Glossary_RowEditEnding">
+                        <DataGrid.Columns>
+                            <DataGridCheckBoxColumn Header="On" Binding="{Binding Enabled, UpdateSourceTrigger=PropertyChanged}" Width="36" />
+                            <DataGridComboBoxColumn Header="Type" SelectedItemBinding="{Binding Mode}" Width="90"
+                                                    ItemsSource="{Binding Source={x:Static core:GlossaryModesList.All}}" />
+                            <DataGridTextColumn Header="Term" Binding="{Binding Term}" Width="*" />
+                            <DataGridTextColumn Header="Replace with" Binding="{Binding Replacement}" Width="*" />
+                            <DataGridTextColumn Header="Aliases / other spellings (comma separated)" Binding="{Binding Aliases}" Width="2*" />
+                            <DataGridCheckBoxColumn Header="Also original" Binding="{Binding ApplyToOriginal, UpdateSourceTrigger=PropertyChanged}" Width="90" />
+                            <DataGridCheckBoxColumn Header="Match case" Binding="{Binding CaseSensitive, UpdateSourceTrigger=PropertyChanged}" Width="80" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </TabItem>
+
+            <!-- ============================================================ SETTINGS -->
+            <TabItem Header="Settings">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel x:Name="SettingsPanel" Margin="12" MaxWidth="820" HorizontalAlignment="Left"
+                                TextBoxBase.TextChanged="Settings_Changed" ToggleButton.Checked="Settings_Changed" ToggleButton.Unchecked="Settings_Changed"
+                                Selector.SelectionChanged="Settings_Changed" RangeBase.ValueChanged="Settings_Changed"
+                                UIElement.LostFocus="Settings_Changed">
+                        <TextBlock Style="{StaticResource SectionHeader}" Text="Overlay appearance" Margin="0,0,0,6" />
+                        <Grid>
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="200" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition />
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="Font" VerticalAlignment="Center" />
+                            <ComboBox Grid.Column="1" ItemsSource="{Binding FontFamilies}" SelectedItem="{Binding Settings.Overlay.FontFamily}" Width="260" HorizontalAlignment="Left" Margin="0,2" />
+                            <TextBlock Grid.Row="1" Text="{Binding Value, ElementName=SizeSlider, StringFormat='Text size ({0:0})'}" VerticalAlignment="Center" />
+                            <Slider Grid.Row="1" Grid.Column="1" Minimum="12" Maximum="64" x:Name="SizeSlider" Value="{Binding Settings.Overlay.FontSize}" Width="260" HorizontalAlignment="Left" Margin="0,4" />
+                            <TextBlock Grid.Row="2" Text="{Binding Value, ElementName=OpacitySlider, StringFormat='Background opacity ({0:P0})'}" VerticalAlignment="Center" />
+                            <Slider Grid.Row="2" Grid.Column="1" Minimum="0" Maximum="1" x:Name="OpacitySlider" Value="{Binding Settings.Overlay.BackgroundOpacity}" Width="260" HorizontalAlignment="Left" Margin="0,4" />
+                            <TextBlock Grid.Row="3" Text="{Binding Value, ElementName=LinesSlider, StringFormat='Max lines shown ({0})'}" VerticalAlignment="Center" />
+                            <Slider Grid.Row="3" Grid.Column="1" Minimum="1" Maximum="8" IsSnapToTickEnabled="True" TickFrequency="1" x:Name="LinesSlider" Value="{Binding Settings.Overlay.MaxLines}" Width="260" HorizontalAlignment="Left" Margin="0,4" />
+                            <TextBlock Grid.Row="4" Text="{Binding Value, ElementName=FadeSlider, StringFormat='Fade out after ({0:0} s)'}" VerticalAlignment="Center" />
+                            <Slider Grid.Row="4" Grid.Column="1" Minimum="2" Maximum="30" IsSnapToTickEnabled="True" TickFrequency="1" x:Name="FadeSlider" Value="{Binding Settings.Overlay.FadeSeconds}" Width="260" HorizontalAlignment="Left" Margin="0,4" />
+                            <CheckBox Grid.Row="5" Grid.ColumnSpan="2" Content="Show the original-language line under each subtitle" IsChecked="{Binding Settings.Overlay.ShowOriginal}" />
+                        </Grid>
+                        <TextBlock Style="{StaticResource Hint}" Text="Position and width: turn click-through off and drag/resize the overlay itself. “Reset position” is on the Session tab." />
+
+                        <TextBlock Style="{StaticResource SectionHeader}" Text="Global hotkeys" />
+                        <TextBlock Style="{StaticResource Hint}" Text="Click a box and press the new key combination. Hotkeys work while Discord or a game has focus." />
+                        <Grid>
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="200" /><ColumnDefinition Width="200" /></Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /></Grid.RowDefinitions>
+                            <TextBlock Text="Start / stop" VerticalAlignment="Center" />
+                            <TextBox Grid.Column="1" Text="{Binding Settings.Hotkeys.StartStop, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" PreviewKeyDown="Hotkey_PreviewKeyDown" Margin="0,2" />
+                            <TextBlock Grid.Row="1" Text="Pause / resume" VerticalAlignment="Center" />
+                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Settings.Hotkeys.Pause, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" PreviewKeyDown="Hotkey_PreviewKeyDown" Margin="0,2" />
+                            <TextBlock Grid.Row="2" Text="Show / hide overlay" VerticalAlignment="Center" />
+                            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Settings.Hotkeys.ToggleOverlay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" PreviewKeyDown="Hotkey_PreviewKeyDown" Margin="0,2" />
+                            <TextBlock Grid.Row="3" Text="Toggle click-through" VerticalAlignment="Center" />
+                            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Settings.Hotkeys.ToggleClickThrough, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" PreviewKeyDown="Hotkey_PreviewKeyDown" Margin="0,2" />
+                        </Grid>
+                        <StackPanel Orientation="Horizontal" Margin="0,4">
+                            <Button Content="Reset hotkeys" Command="{Binding ResetHotkeysCommand}" />
+                            <TextBlock Text="{Binding HotkeyStatus}" VerticalAlignment="Center" TextWrapping="Wrap" />
+                        </StackPanel>
+
+                        <TextBlock Style="{StaticResource SectionHeader}" Text="Translation" />
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Subtitle language" Width="200" VerticalAlignment="Center" />
+                            <ComboBox ItemsSource="{Binding OutputLanguages}" SelectedValuePath="Value" SelectedValue="{Binding Settings.OutputLanguage}" Width="200" IsEnabled="{Binding CanEditSource}" />
+                        </StackPanel>
+                        <CheckBox Content="Send audio continuously (also long silences): slightly better accuracy, much higher cost" IsChecked="{Binding Settings.SendContinuously}" IsEnabled="{Binding CanEditSource}" />
+
+                        <TextBlock Style="{StaticResource SectionHeader}" Text="App" />
+                        <CheckBox Content="Minimise and close to the system tray" IsChecked="{Binding Settings.MinimizeToTray}" />
+                        <CheckBox Content="Start minimised in the tray" IsChecked="{Binding Settings.StartMinimized}" />
+
+                        <Expander Header="Advanced tuning" Margin="0,12,0,0">
+                            <StackPanel Margin="8">
+                                <TextBlock Style="{StaticResource Hint}" Text="Changes apply the next time you press Start. The Debug tab shows how segments and text line up." />
+                                <Grid>
+                                    <Grid.ColumnDefinitions><ColumnDefinition Width="330" /><ColumnDefinition Width="120" /></Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /></Grid.RowDefinitions>
+                                    <TextBlock Text="Speech threshold (0-1, higher = stricter)" VerticalAlignment="Center" />
+                                    <TextBox Grid.Column="1" Text="{Binding Settings.Advanced.VadThreshold}" Margin="0,2" />
+                                    <TextBlock Grid.Row="1" Text="Pause that ends a segment (ms)" VerticalAlignment="Center" />
+                                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Settings.Advanced.MinSilenceMs}" Margin="0,2" />
+                                    <TextBlock Grid.Row="2" Text="Audio sent after speech stops (ms)" VerticalAlignment="Center" />
+                                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Settings.Advanced.TailMs}" Margin="0,2" />
+                                    <TextBlock Grid.Row="3" Text="Longest segment before splitting (ms)" VerticalAlignment="Center" />
+                                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Settings.Advanced.MaxSegmentMs}" Margin="0,2" />
+                                    <TextBlock Grid.Row="4" Text="Text this late belongs to the next segment (ms)" VerticalAlignment="Center" />
+                                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Settings.Advanced.CloseLagMs}" Margin="0,2" />
+                                    <TextBlock Grid.Row="5" Text="Line is final after no new text for (ms)" VerticalAlignment="Center" />
+                                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Settings.Advanced.FinalizeIdleMs}" Margin="0,2" />
+                                    <TextBlock Grid.Row="6" Text="Voice match threshold (cosine)" VerticalAlignment="Center" />
+                                    <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Settings.Diarization.MatchThreshold}" Margin="0,2" />
+                                    <TextBlock Grid.Row="7" Text="New voice below similarity" VerticalAlignment="Center" />
+                                    <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Settings.Diarization.NewSpeakerThreshold}" Margin="0,2" />
+                                    <TextBlock Grid.Row="8" Text="Auto-merge voices above similarity" VerticalAlignment="Center" />
+                                    <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding Settings.Diarization.MergeThreshold}" Margin="0,2" />
+                                    <TextBlock Grid.Row="9" Text="Model id" VerticalAlignment="Center" />
+                                    <TextBox Grid.Row="9" Grid.Column="1" Text="{Binding Settings.Model}" Margin="0,2" />
+                                </Grid>
+                                <Button Content="Reset advanced settings" Command="{Binding ResetAdvancedCommand}" HorizontalAlignment="Left" Margin="0,6,0,0" />
+                            </StackPanel>
+                        </Expander>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
