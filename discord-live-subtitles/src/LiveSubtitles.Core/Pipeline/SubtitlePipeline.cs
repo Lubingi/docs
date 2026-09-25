@@ -74,8 +74,8 @@ public sealed class SubtitlePipeline : IAsyncDisposable
         _log = log;
         _text = textProcessor ?? NoTextPostProcessor.Instance;
         _segmenter = new SpeechSegmenter(options.Segmenter);
-        _translationAttr = new StreamAttributor(options.Attribution, () => _sent);
-        _originalAttr = new StreamAttributor(options.Attribution, () => _sent);
+        // The original-language transcript aligns better with speech; it anchors where translated lines end.
+        (_translationAttr, _originalAttr) = StreamAttributor.CreatePair(options.Attribution, () => _sent, options.ShowOriginal);
         _connection = new TranslationConnection(sessionFactory, reconnect, log);
         _connection.FrameSent += (tag, start, dur, wall) => Post(() => OnFrameSent(tag, start, dur, wall));
         _connection.DeltaReceived += d => Post(() => OnDelta(d));

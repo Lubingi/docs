@@ -36,12 +36,22 @@ public class AttributionTests
     }
 
     [Fact]
-    public void EmptySegmentIsSkipped()
+    public void EmptySegmentIsSkippedWhenTheOriginalConfirmsIt()
     {
-        // Segment 1 produced no text (e.g. English speech, or a laugh); text for segment 2 must not land on it.
+        // Segment 1 was a laugh: the original-language transcript has nothing for it and has moved on.
         var segs = new List<TimelineSegment> { Seg(1, 0, 1500), Seg(2, 2000, 5000) };
-        var attr = new StreamAttributor(new AttributionOptions(), () => segs);
+        var (attr, original) = StreamAttributor.CreatePair(new AttributionOptions(), () => segs, withOriginal: true);
+        Assert.Equal(2, original.Add("Merhaba", 2500, DateTimeOffset.UtcNow));
         Assert.Equal(2, attr.Add("Hi", 2600, DateTimeOffset.UtcNow));
+    }
+
+    [Fact]
+    public void LateFirstTextOfAShortLineIsNotSkipped()
+    {
+        // A 1.3 s line whose translation only starts after the next line began (seen with the real API).
+        var segs = new List<TimelineSegment> { Seg(1, 0, 1300), Seg(2, 1800, 4000) };
+        var attr = new StreamAttributor(new AttributionOptions(), () => segs);
+        Assert.Equal(1, attr.Add("I'm in,", 2400, DateTimeOffset.UtcNow));
     }
 
     [Fact]

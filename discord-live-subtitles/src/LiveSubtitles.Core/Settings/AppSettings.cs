@@ -155,8 +155,8 @@ public sealed class AdvancedSettings
     public int MinSilenceMs { get; set; } = 480;
     public int TailMs { get; set; } = 1500;
     public int MaxSegmentMs { get; set; } = 15000;
-    public int CloseLagMs { get; set; } = 1600;
-    public int FinalizeIdleMs { get; set; } = 1800;
+    public int CloseLagMs { get; set; } = 2500;
+    public int FinalizeIdleMs { get; set; } = 2200;
 }
 
 public sealed class SettingsStore

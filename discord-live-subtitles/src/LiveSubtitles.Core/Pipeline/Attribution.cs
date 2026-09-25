@@ -6,10 +6,17 @@ public sealed record AttributionOptions
 {
     /// <summary>Text can't refer to speech the model hasn't heard yet: text at model time t belongs to segments that started before t - MinLagMs.</summary>
     public int MinLagMs { get; init; } = 300;
-    /// <summary>Text arriving this long after a segment's speech ended (in model time) goes to the next segment.</summary>
-    public int CloseLagMs { get; init; } = 1600;
+    /// <summary>Text arriving this long after a segment's speech ended (in model time) always goes to the next segment.
+    /// Measured: sentence ends arrive a median 1.05 s (up to 2.7 s) after the speech ends.</summary>
+    public int CloseLagMs { get; init; } = 2500;
+    /// <summary>After a finished sentence, move on only if the line has as many sentences as its original-language
+    /// transcript (which aligns better), or once this long has passed since the speech ended.</summary>
+    public int SentenceCloseLagMs { get; init; } = 1200;
+    /// <summary>A line with no text at all is skipped this long after its speech ended (null = never early).
+    /// Used for the original-language stream, which lags only 0.2–0.8 s.</summary>
+    public int? EmptySkipLagMs { get; init; }
     /// <summary>A segment is final once no new text has arrived for this long after its speech ended.</summary>
-    public int FinalizeIdleMs { get; init; } = 1800;
+    public int FinalizeIdleMs { get; init; } = 2200;
 }
 
 /// <summary>Where a speech segment sits on the translation model's audio timeline.</summary>
@@ -37,12 +44,25 @@ public sealed class StreamAttributor
     private readonly Func<IReadOnlyList<TimelineSegment>> _segments;
     private readonly Dictionary<int, StringBuilder> _text = new();
     private readonly Dictionary<int, DateTimeOffset> _lastDelta = new();
+    private readonly StreamAttributor? _anchor;
     private int _cursor; // index into the sent-segment list
 
-    public StreamAttributor(AttributionOptions options, Func<IReadOnlyList<TimelineSegment>> sentSegments)
+    /// <param name="anchor">Optional better-aligned stream (the original-language transcript) whose sentence count per
+    /// segment tells this stream when a line is complete.</param>
+    public StreamAttributor(AttributionOptions options, Func<IReadOnlyList<TimelineSegment>> sentSegments, StreamAttributor? anchor = null)
     {
         _o = options;
         _segments = sentSegments;
+        _anchor = anchor;
+    }
+
+    /// <summary>Creates the original-language attributor and the translation attributor anchored to it.</summary>
+    public static (StreamAttributor Translation, StreamAttributor Original) CreatePair(
+        AttributionOptions options, Func<IReadOnlyList<TimelineSegment>> sentSegments, bool withOriginal)
+    {
+        var original = new StreamAttributor(options with { EmptySkipLagMs = options.EmptySkipLagMs ?? 1000 }, sentSegments);
+        var translation = new StreamAttributor(options, sentSegments, withOriginal ? original : null);
+        return (translation, original);
     }
 
     public string TextFor(int segmentId) => _text.TryGetValue(segmentId, out var sb) ? sb.ToString() : "";
@@ -64,18 +84,75 @@ public sealed class StreamAttributor
             var next = segs[_cursor + 1];
             if (next.ModelStartMs is not { } nextStart || modelMs < nextStart + _o.MinLagMs) break;
             if (cur.ModelSpeechEndMs is not { } curEnd || !cur.SpeechEnded) break;
+            var curText = TextFor(cur.Id);
             bool pastClose = modelMs >= curEnd + _o.CloseLagMs;
-            bool sentenceDone = modelMs >= curEnd && EndsSentence(TextFor(cur.Id));
-            bool nothingYet = TextFor(cur.Id).Length == 0 && modelMs >= curEnd + _o.MinLagMs;
-            if (!(pastClose || sentenceDone || nothingYet)) break;
+            bool sentenceDone = modelMs >= curEnd && EndsSentence(curText) && SentencesComplete(cur.Id, curText, modelMs - curEnd);
+            // Only when the original transcript confirms there were no words (a laugh, a cough) is an empty line skipped early.
+            bool empty = curText.Trim().Length == 0;
+            bool confirmedEmpty = empty && _anchor != null && _anchor.Cursor > _cursor
+                                  && _anchor.TextFor(cur.Id).Trim().Length == 0 && modelMs >= curEnd + _o.MinLagMs;
+            if (empty && _o.EmptySkipLagMs is { } skip && modelMs >= curEnd + skip) confirmedEmpty = true;
+            if (!(pastClose || sentenceDone || confirmedEmpty)) break;
             _cursor++;
         }
 
+        // A sentence's final punctuation often arrives as its own delta after the next person started talking.
+        // If the new line has no text yet, the punctuation belongs to the previous line when that sentence is still open.
+        if (_cursor > 0 && TextFor(segs[_cursor].Id).Trim().Length == 0 && LeadingPunctuation(delta) is { Length: > 0 } punct)
+        {
+            var prev = segs[_cursor - 1];
+            var prevText = TextFor(prev.Id);
+            if (prevText.Trim().Length > 0 && !EndsSentence(prevText) && prev.ModelSpeechEndMs is { } prevEnd && modelMs <= prevEnd + _o.CloseLagMs + 1500)
+            {
+                Append(prev.Id, punct, now);
+                delta = delta[punct.Length..];
+                if (delta.Trim().Length == 0) return prev.Id;
+            }
+        }
+
         var target = segs[_cursor];
-        if (!_text.TryGetValue(target.Id, out var sb)) _text[target.Id] = sb = new StringBuilder();
-        sb.Append(delta);
-        _lastDelta[target.Id] = now;
+        Append(target.Id, delta, now);
         return target.Id;
+    }
+
+    private void Append(int segmentId, string text, DateTimeOffset now)
+    {
+        if (!_text.TryGetValue(segmentId, out var sb)) _text[segmentId] = sb = new StringBuilder();
+        sb.Append(text);
+        _lastDelta[segmentId] = now;
+    }
+
+    /// <summary>True unless the anchor (original transcript) shows this line should have more sentences and there's still time for them.</summary>
+    private bool SentencesComplete(int segmentId, string text, double msSinceEnd)
+    {
+        if (_anchor == null || msSinceEnd >= _o.SentenceCloseLagMs) return true;
+        var anchorText = _anchor.TextFor(segmentId);
+        if (anchorText.Trim().Length == 0) return true;
+        return CountSentences(text) >= CountSentences(anchorText);
+    }
+
+    internal static int CountSentences(string text)
+    {
+        static bool IsEnd(char c) => c is '.' or '!' or '?' or '…' or '。' or '！' or '？';
+        int count = 0;
+        var t = text.Trim();
+        for (int i = 0; i < t.Length; i++)
+        {
+            if (!IsEnd(t[i]) || (i + 1 < t.Length && IsEnd(t[i + 1]))) continue; // count each run ("?!", "...") once, at its end
+            bool atBoundary = i == t.Length - 1 || char.IsWhiteSpace(t[i + 1]) || t[i + 1] is '"' or '\'' or '”' or '’' or ')';
+            if (atBoundary) count++;
+        }
+        return count;
+    }
+
+    /// <summary>The run of sentence/clause punctuation a delta starts with (after optional spaces), e.g. "." from ". Okay".</summary>
+    internal static string LeadingPunctuation(string delta)
+    {
+        int i = 0;
+        while (i < delta.Length && delta[i] == ' ') i++;
+        int start = i;
+        while (i < delta.Length && delta[i] is '.' or '?' or '!' or ',' or ';' or ':' or '…' or '"' or '”' or '’') i++;
+        return i > start ? delta[..i] : "";
     }
 
     /// <summary>True if this stream will not add more text to the segment.</summary>
