@@ -1,0 +1,22 @@
+<Window x:Class="LiveSubtitles.App.Views.ApiKeyWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="OpenAI API key" Width="520" SizeToContent="Height" ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner">
+    <StackPanel Margin="16">
+        <TextBlock TextWrapping="Wrap">
+            Paste your OpenAI API key. It is stored in Windows Credential Manager (encrypted for your Windows account) and never written to a file.
+        </TextBlock>
+        <TextBlock Margin="0,6,0,10">
+            <Hyperlink NavigateUri="https://platform.openai.com/api-keys" RequestNavigate="Hyperlink_RequestNavigate">Create a key at platform.openai.com/api-keys</Hyperlink>
+        </TextBlock>
+        <PasswordBox x:Name="KeyBox" Padding="4,3" />
+        <TextBlock x:Name="Result" TextWrapping="Wrap" Margin="0,8,0,0" />
+        <StackPanel Orientation="Horizontal" Margin="0,14,0,0" HorizontalAlignment="Right">
+            <Button x:Name="RemoveButton" Content="Remove saved key" Click="Remove_Click" />
+            <Button x:Name="TestButton" Content="Test key" Click="Test_Click" />
+            <Button Content="Save" Style="{StaticResource PrimaryButton}" Click="Save_Click" IsDefault="True" />
+            <Button Content="Cancel" IsCancel="True" Margin="0" />
+        </StackPanel>
+    </StackPanel>
+</Window>

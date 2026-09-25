@@ -1,0 +1,19 @@
+<Project>
+  <!-- Real multi-speaker speech used by integration tests (from the sherpa-onnx test assets). Downloaded on first build. -->
+  <ItemGroup>
+    <LiveSubsTestAudio Include="two-speakers-en.wav">
+      <Url>https://github.com/k2-fsa/sherpa-onnx/releases/download/speaker-segmentation-models/1-two-speakers-en.wav</Url>
+    </LiveSubsTestAudio>
+    <LiveSubsTestAudio Include="four-speakers-zh.wav">
+      <Url>https://github.com/k2-fsa/sherpa-onnx/releases/download/speaker-segmentation-models/0-four-speakers-zh.wav</Url>
+    </LiveSubsTestAudio>
+  </ItemGroup>
+  <Target Name="LiveSubsDownloadTestAudio" BeforeTargets="BeforeBuild" Condition="'$(SkipModelDownload)' != 'true'">
+    <DownloadFile SourceUrl="%(LiveSubsTestAudio.Url)" DestinationFolder="$(ModelsDir)testaudio" DestinationFileName="%(LiveSubsTestAudio.Identity)"
+                  Condition="!Exists('$(ModelsDir)testaudio\%(LiveSubsTestAudio.Identity)')" Retries="2" ContinueOnError="true" />
+    <ItemGroup>
+      <_LiveSubsTestWav Include="$(ModelsDir)testaudio/*.wav" />
+      <None Include="@(_LiveSubsTestWav)" Link="testaudio\%(_LiveSubsTestWav.Filename)%(_LiveSubsTestWav.Extension)" CopyToOutputDirectory="PreserveNewest" />
+    </ItemGroup>
+  </Target>
+</Project>
