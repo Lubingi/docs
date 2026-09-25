@@ -49,6 +49,7 @@ public sealed class SubtitlePipeline : IAsyncDisposable
     private DateTimeOffset _lastLevel = DateTimeOffset.MinValue;
     private bool _flushAfterPump;
     private int _finalizeFrom;
+    private DateTimeOffset _lastTick = DateTimeOffset.MinValue;
     private bool _dropTailFrames;
     private bool _paused;
     private bool _running;
@@ -464,6 +465,8 @@ public sealed class SubtitlePipeline : IAsyncDisposable
     {
         if (!_running) return;
         var now = DateTimeOffset.UtcNow;
+        if ((now - _lastTick).TotalMilliseconds < 50) return; // Run() calls this after every message
+        _lastTick = now;
 
         // Capture APIs deliver nothing while an app is silent; synthesize silence so segments can end.
         if (IsLiveSource && _sourceRate > 0 && _lastAudioWall != DateTimeOffset.MinValue)
