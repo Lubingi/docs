@@ -412,6 +412,7 @@ public sealed class SubtitlePipeline : IAsyncDisposable
         }
         if (tag.IsSpeech) st.Timeline.ModelSpeechEndMs = modelStart + durationMs;
         st.Timeline.ModelSpeechEndMs ??= modelStart + durationMs;
+        if (tag.Replay) return; // re-sent after a dropped connection: already counted
         st.InFlightFrames--;
         UpdateSpeechEnded(st);
     }

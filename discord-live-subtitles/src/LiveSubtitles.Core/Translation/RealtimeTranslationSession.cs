@@ -178,8 +178,11 @@ public sealed class RealtimeTranslationSession : ITranslationSession
         _ => $"OpenAI returned HTTP {(int)status} while connecting.",
     };
 
+    private int _disposed;
+
     public async ValueTask DisposeAsync()
     {
+        if (Interlocked.Exchange(ref _disposed, 1) != 0) return;
         _cts.Cancel();
         _outgoing.Writer.TryComplete();
         try

@@ -7,8 +7,9 @@ public enum ConnectionState { Stopped, Connecting, Connected, Reconnecting, Fail
 
 public enum TranscriptStream { Translation, Original }
 
-/// <summary>Identifies which speech segment an audio frame belongs to (null = gap/tail silence).</summary>
-public readonly record struct FrameTag(int? SegmentId, bool IsSpeech);
+/// <summary>Identifies which speech segment an audio frame belongs to (null = gap/tail silence).
+/// <paramref name="Replay"/> marks audio re-sent after a dropped connection.</summary>
+public readonly record struct FrameTag(int? SegmentId, bool IsSpeech, bool Replay = false);
 
 public sealed record TranscriptDelta(TranscriptStream Stream, string Text, double ModelMs, bool HadElapsed, DateTimeOffset ReceivedAt);
 
@@ -20,6 +21,10 @@ public sealed record ReconnectPolicy
     public TimeSpan MaxBacklog { get; init; } = TimeSpan.FromSeconds(20);
     /// <summary>Start a fresh session this long before the server-side expiry, during a quiet moment.</summary>
     public TimeSpan RotateBeforeExpiry { get; init; } = TimeSpan.FromMinutes(3);
+    /// <summary>After an unexpected drop, audio the old session had not translated yet (up to this much) is sent again.</summary>
+    public TimeSpan MaxReplay { get; init; } = TimeSpan.FromSeconds(4);
+    /// <summary>Text trails the audio by about 1–1.5 s, so replay starts this far before the last text received.</summary>
+    public TimeSpan ReplayLead { get; init; } = TimeSpan.FromMilliseconds(1500);
     /// <summary>Never rotate a session younger than this (guards against a very short server-side expiry).</summary>
     public TimeSpan MinSessionAge { get; init; } = TimeSpan.FromMinutes(1);
 
@@ -52,6 +57,7 @@ public sealed class TranslationConnection : IAsyncDisposable
     private CancellationTokenSource? _cts;
     private Task? _runTask;
     private bool _rotating;
+    private volatile bool _stopping;
 
     public TranslationConnection(Func<ITranslationSession> factory, ReconnectPolicy? policy = null, ILog? log = null)
     {
@@ -117,8 +123,9 @@ public sealed class TranslationConnection : IAsyncDisposable
         double durationMs = audio24.Length * 1000.0 / TranslationProtocol.SampleRate;
         var now = DateTimeOffset.UtcNow;
         FrameSent?.Invoke(tag, _globalModelMs, durationMs, now);
+        _current!.Remember(audio24, tag, _current.SentMs, _policy.MaxReplay.TotalMilliseconds + _policy.ReplayLead.TotalMilliseconds);
         _globalModelMs += durationMs;
-        _current!.SentMs += durationMs;
+        _current.SentMs += durationMs;
         if (tag.IsSpeech) _lastSpeechSent = now;
         _chunk.AddRange(audio24);
         while (_chunk.Count >= TranslationProtocol.ChunkSamples)
@@ -192,11 +199,16 @@ public sealed class TranslationConnection : IAsyncDisposable
                 }
             }
 
+            if (ct.IsCancellationRequested || _stopping) break; // a user stop is not a dropped connection
             lock (_lock)
             {
-                if (_current == active) { _current = null; _chunk.Clear(); }
+                if (_current == active)
+                {
+                    _current = null;
+                    _chunk.Clear();
+                    QueueReplayLocked(active);
+                }
             }
-            if (ct.IsCancellationRequested) break;
             var end = active.End;
             await active.Session.DisposeAsync().ConfigureAwait(false);
             if (end?.Fatal == true)
@@ -209,7 +221,24 @@ public sealed class TranslationConnection : IAsyncDisposable
             SetState(ConnectionState.Reconnecting, $"Connection dropped ({end?.Reason ?? "unknown"}) — reconnecting in {wait.TotalSeconds:0}s");
             try { await Task.Delay(wait, ct).ConfigureAwait(false); } catch (OperationCanceledException) { break; }
         }
-        SetState(ConnectionState.Stopped, "Stopped");
+    }
+
+    /// <summary>
+    /// Audio already sent to a session that died was lost with it (the VPS test lost ~1.7 s of speech this way).
+    /// Put the part the old session had not produced text for yet back in front of the backlog.
+    /// </summary>
+    private void QueueReplayLocked(ActiveSession dead)
+    {
+        double from = Math.Max(dead.SentMs - _policy.MaxReplay.TotalMilliseconds,
+            dead.LastOutputElapsedMs is { } last ? last - _policy.ReplayLead.TotalMilliseconds : 0);
+        var replay = dead.RecentFrom(from);
+        if (!replay.Any(f => f.Tag.IsSpeech)) return;
+        var rest = _backlog.ToList();
+        _backlog.Clear();
+        foreach (var f in replay) _backlog.Enqueue((f.Audio, f.Tag with { Replay = true }));
+        foreach (var f in rest) _backlog.Enqueue(f);
+        _backlogMs += replay.Sum(f => f.Audio.Length) * 1000.0 / TranslationProtocol.SampleRate;
+        _log.Info($"Connection dropped mid-speech; re-sending the last {replay.Sum(f => f.Audio.Length) / 24.0:0} ms of audio");
     }
 
     private ActiveSession Install(ActiveSession active)
@@ -224,7 +253,7 @@ public sealed class TranslationConnection : IAsyncDisposable
 
     private bool ShouldRotate(ActiveSession active)
     {
-        if (_rotating || active.ExpiresAt is not { } expires) return false;
+        if (_rotating || _stopping || active.ExpiresAt is not { } expires) return false;
         var now = DateTimeOffset.UtcNow;
         if (now - active.InstalledAt < _policy.MinSessionAge) return false;
         if (now < expires - _policy.RotateBeforeExpiry) return false;
@@ -285,7 +314,12 @@ public sealed class TranslationConnection : IAsyncDisposable
             {
                 if (string.IsNullOrEmpty(ev.Delta)) return;
                 double model;
-                lock (_lock) model = session.Offset + (ev.ElapsedMs ?? session.SentMs);
+                lock (_lock)
+                {
+                    model = session.Offset + (ev.ElapsedMs ?? session.SentMs);
+                    if (ev.Type == "session.output_transcript.delta")
+                        session.LastOutputElapsedMs = Math.Max(session.LastOutputElapsedMs ?? 0, ev.ElapsedMs ?? session.SentMs);
+                }
                 var stream = ev.Type == "session.output_transcript.delta" ? TranscriptStream.Translation : TranscriptStream.Original;
                 DeltaReceived?.Invoke(new TranscriptDelta(stream, ev.Delta, model, ev.ElapsedMs != null, ev.ReceivedAt));
                 break;
@@ -310,6 +344,9 @@ public sealed class TranslationConnection : IAsyncDisposable
 
     public async Task StopAsync()
     {
+        if (_runTask == null && _current == null) return;
+        // Flag first: the server closing the socket in response to session.close must not look like a drop.
+        _stopping = true;
         ActiveSession? current;
         lock (_lock)
         {
@@ -319,15 +356,22 @@ public sealed class TranslationConnection : IAsyncDisposable
         }
         if (current != null)
         {
-            await current.Session.CloseAsync(TimeSpan.FromSeconds(3)).ConfigureAwait(false);
+            try { await current.Session.CloseAsync(TimeSpan.FromSeconds(3)).ConfigureAwait(false); }
+            catch (Exception ex) { _log.Debug("Close on stop: " + ex.Message); }
         }
         _cts?.Cancel();
         if (_runTask != null)
         {
             try { await _runTask.ConfigureAwait(false); } catch { }
         }
-        if (current != null) await current.Session.DisposeAsync().ConfigureAwait(false);
+        if (current != null)
+        {
+            try { await current.Session.DisposeAsync().ConfigureAwait(false); }
+            catch (Exception ex) { _log.Debug("Dispose on stop: " + ex.Message); }
+        }
         _runTask = null;
+        _cts?.Dispose();
+        _cts = null;
         SetState(ConnectionState.Stopped, "Stopped");
     }
 
@@ -346,7 +390,19 @@ public sealed class TranslationConnection : IAsyncDisposable
         public TranslationSessionEnd? End { get; private set; }
 
         public ITranslationSession Session { get; }
+        private readonly LinkedList<(float[] Audio, FrameTag Tag, double At)> _recent = new();
         public double Offset { get; set; }
+        /// <summary>Largest elapsed_ms of translated text received: audio before about this point has been translated.</summary>
+        public double? LastOutputElapsedMs { get; set; }
+
+        public void Remember(float[] audio, FrameTag tag, double at, double keepMs)
+        {
+            _recent.AddLast((audio, tag, at));
+            while (_recent.First is { } f && f.Value.At < at - keepMs) _recent.RemoveFirst();
+        }
+
+        public List<(float[] Audio, FrameTag Tag)> RecentFrom(double sessionMs) =>
+            _recent.Where(r => r.At >= sessionMs).Select(r => (r.Audio, r.Tag)).ToList();
         public DateTimeOffset InstalledAt { get; set; }
         public double SentMs { get; set; }
         public DateTimeOffset? ExpiresAt { get; set; }
