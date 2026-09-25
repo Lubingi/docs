@@ -8,11 +8,12 @@ using LiveSubtitles.Core.Vad;
 
 // Developer / troubleshooting tool. Runs the same pipeline as the app on a WAV file, without the UI.
 //   livesubs-cli vad <file.wav>                 print detected speech segments
+//   livesubs-cli diarize <file.wav>             print who spoke when (local speaker model)
 //   livesubs-cli translate <file.wav> [lang]    stream the file to OpenAI in real time (needs OPENAI_API_KEY)
 
 if (args.Length < 2)
 {
-    Console.WriteLine("usage: livesubs-cli vad|translate <file.wav> [output-language]");
+    Console.WriteLine("usage: livesubs-cli vad|diarize|translate <file.wav> [output-language]");
     return 1;
 }
 
@@ -23,7 +24,10 @@ Console.WriteLine($"{Path.GetFileName(args[1])}: {samples.Length / (double)rate:
 switch (args[0])
 {
     case "vad":
+    case "diarize":
     {
+        using var embedder = args[0] == "diarize" ? new SpeakerEmbedder(Path.Combine(modelsDir, "campplus_voxceleb_16k.onnx")) : null;
+        var registry = embedder == null ? null : new SpeakerRegistry(a => embedder.Embed(a), new LiveSubtitles.Core.Settings.DiarizationSettings());
         using var vad = new SileroVad(Path.Combine(modelsDir, "silero_vad.onnx"));
         var to16 = new StreamResampler(rate, 16000).Process(samples);
         var to24 = new StreamResampler(rate, 24000).Process(samples);
@@ -37,11 +41,22 @@ switch (args[0])
             seg.Process(to16[(i * 512)..((i + 1) * 512)], to24[(i * 768)..((i + 1) * 768)], vad.Process(to16.AsSpan(i * 512, 512)), events);
             foreach (var e in events)
             {
-                if (e is SegmentEnded s) Console.WriteLine($"  segment {s.SegmentId,3}: {s.StreamStartMs / 1000,7:0.00}s – {s.StreamEndMs / 1000,7:0.00}s");
+                if (e is SegmentEnded s)
+                {
+                    string who = "";
+                    if (registry != null)
+                    {
+                        var m = registry.Assign(s.SegmentId, s.Audio16);
+                        who = $"  {registry.Describe(m.SpeakerId, m.Uncertain).Label,-10} (best {m.Similarity:0.00}, next {m.SecondBest:0.00})";
+                    }
+                    Console.WriteLine($"  segment {s.SegmentId,3}: {s.StreamStartMs / 1000,7:0.00}s – {s.StreamEndMs / 1000,7:0.00}s{who}");
+                }
                 if (e is SendFrame) sent++;
             }
         }
         Console.WriteLine($"audio that would be sent: {sent * 0.032:0.0}s of {samples.Length / (double)rate:0.0}s");
+        if (registry != null)
+            foreach (var sp in registry.Snapshot()) Console.WriteLine($"  {sp.Label}: {sp.Segments} segments, {sp.SpeechSeconds:0.0}s");
         return 0;
     }
     case "translate":

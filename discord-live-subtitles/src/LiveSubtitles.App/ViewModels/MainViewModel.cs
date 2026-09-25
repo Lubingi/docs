@@ -46,6 +46,8 @@ public partial class MainViewModel : ObservableObject
         History = new HistoryViewModel();
         InitGlossary();
         InitSettingsPage();
+        InitSpeakers();
+        Overlay.SpeakerClicked += line => SpeakerLabelClicked(line.SegmentId, line.SpeakerId);
 
         _saveTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(600) };
         _saveTimer.Tick += (_, _) => { _saveTimer.Stop(); SaveNow(); };
@@ -284,7 +286,6 @@ public partial class MainViewModel : ObservableObject
         }
     }
 
-    private ISpeakerIdentifier CreateSpeakerIdentifier() => new NoSpeakerIdentifier();
     private IAudioEffect? CreateFileEffect() => null;
 
     private async Task StartSessionAsync()
@@ -333,6 +334,7 @@ public partial class MainViewModel : ObservableObject
         SpeechProbability = 0;
         _autoSaver?.Dispose();
         _autoSaver = null;
+        _registry?.SaveProfiles();
         UpdateTray();
     }
 

@@ -104,9 +104,40 @@ public partial class MainWindow : Window
     private void Glossary_RowEditEnding(object? sender, DataGridRowEditEndingEventArgs e) =>
         Dispatcher.BeginInvoke(_vm.GlossaryEdited, DispatcherPriority.Background);
 
-    // ----- history: click a speaker name (rename is added with speaker identification)
+    // ----- history: click a speaker name to rename it (or pick who a "?" line was)
     private void HistorySpeaker_Click(object sender, MouseButtonEventArgs e)
     {
         if (sender is FrameworkElement { DataContext: HistoryRow row }) _vm.HistorySpeakerClicked(row);
+    }
+
+    private void HistoryMenu_Opened(object sender, RoutedEventArgs e)
+    {
+        var row = _vm.History.Selected;
+        bool enabled = row != null && _vm.SpeakerIdEnabled;
+        RenameMenu.IsEnabled = enabled && row!.SpeakerId != null;
+        AssignMenu.Items.Clear();
+        MergeMenu.Items.Clear();
+        AssignMenu.IsEnabled = MergeMenu.IsEnabled = enabled;
+        if (!enabled) return;
+        foreach (var choice in _vm.SpeakerChoices())
+        {
+            var item = new MenuItem { Header = choice.Label, IsChecked = Equals(choice.Value, row!.SpeakerId) };
+            item.Click += (_, _) => _vm.ReassignLine(row.SegmentId, choice.Value as int?);
+            AssignMenu.Items.Add(item);
+            if (choice.Value is int target && row.SpeakerId is int from && target != from)
+            {
+                var merge = new MenuItem { Header = choice.Label };
+                merge.Click += (_, _) => _vm.MergeSpeaker(from, target);
+                MergeMenu.Items.Add(merge);
+            }
+        }
+        MergeMenu.IsEnabled = MergeMenu.Items.Count > 0;
+    }
+
+    private void HistoryRename_Click(object sender, RoutedEventArgs e) => _vm.RenameSpeaker(_vm.History.Selected?.SpeakerId);
+
+    private void SpeakerGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+        if (SpeakerGrid.SelectedItem is SpeakerRow row) _vm.RenameSpeaker(row.Id);
     }
 }

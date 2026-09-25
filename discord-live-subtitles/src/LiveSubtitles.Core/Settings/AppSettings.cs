@@ -139,11 +139,11 @@ public sealed class GlossaryEntry
 public sealed class DiarizationSettings
 {
     /// <summary>Cosine similarity needed to assign a segment to an existing voice.</summary>
-    public float MatchThreshold { get; set; } = 0.50f;
+    public float MatchThreshold { get; set; } = 0.45f;
     /// <summary>Below this similarity to everyone, a segment may start a new voice.</summary>
-    public float NewSpeakerThreshold { get; set; } = 0.32f;
+    public float NewSpeakerThreshold { get; set; } = 0.33f;
     /// <summary>Two voices whose profiles are this similar are merged automatically.</summary>
-    public float MergeThreshold { get; set; } = 0.62f;
+    public float MergeThreshold { get; set; } = 0.60f;
     /// <summary>Segments shorter than this are never used to create a new voice.</summary>
     public int MinNewSpeakerMs { get; set; } = 1500;
     public int MaxSpeakers { get; set; } = 12;

@@ -72,9 +72,3 @@ public partial class MainViewModel
         Overlay.Clear();
     }
 }
-
-public partial class MainViewModel
-{
-    /// <summary>Speaker names become clickable once speaker identification exists (stage 3).</summary>
-    public void HistorySpeakerClicked(HistoryRow row) { }
-}

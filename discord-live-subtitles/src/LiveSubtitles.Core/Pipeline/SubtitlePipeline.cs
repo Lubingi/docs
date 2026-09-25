@@ -81,7 +81,6 @@ public sealed class SubtitlePipeline : IAsyncDisposable
         _connection.StateChanged += (s, m) => Post(() => { RawEvent?.Invoke($"connection: {s} — {m}"); PublishStatus(force: true); });
         _connection.ServerError += e => { RawEvent?.Invoke("error: " + e); ServerError?.Invoke(e); };
         _connection.AudioSentMs += ms => AudioSent?.Invoke(ms);
-        _speakers.SpeakersChanged += () => Post(RelabelAll);
         _thread = new Thread(Run) { IsBackground = true, Name = "SubtitlePipeline" };
         _speakerThread = new Thread(RunSpeakerWorker) { IsBackground = true, Name = "SpeakerWorker", Priority = ThreadPriority.BelowNormal };
     }
@@ -315,9 +314,9 @@ public sealed class SubtitlePipeline : IAsyncDisposable
     private void OnEarlyDecision(int segmentId, SpeakerMatch match, bool muted)
     {
         if (!_segments.TryGetValue(segmentId, out var st)) return;
-        if (st.Match == null)
+        if (st.Match == null && !match.Uncertain)
         {
-            st.Match = match; // provisional label until the full segment is assigned
+            st.Match = match; // provisional label until the full segment is assigned; unsure guesses keep "…"
             st.SpeakerId = match.SpeakerId;
         }
         if (st.Decision == SegmentDecision.Pending)
@@ -535,22 +534,6 @@ public sealed class SubtitlePipeline : IAsyncDisposable
             _segments.Remove(id);
     }
 
-    private void RelabelAll()
-    {
-        foreach (var st in _segments.Values)
-        {
-            st.SpeakerId = _speakers.Resolve(st.SpeakerId);
-        }
-        _store.UpdateWhere(l => l.SpeakerId != null, l =>
-        {
-            var id = _speakers.Resolve(l.SpeakerId);
-            var (label, color) = _speakers.Describe(id, l.SpeakerUncertain);
-            bool hidden = (id is { } sp && !l.SpeakerUncertain && _speakers.IsMuted(sp))
-                          || (l.SameLanguage && _options.SameLanguage == SameLanguageMode.Hide);
-            return l with { SpeakerId = id, SpeakerLabel = label, SpeakerColor = color, Hidden = hidden };
-        });
-    }
-
     // ---------------------------------------------------------------- output
 
     private TranscriptLine BuildLine(SegmentState st)
@@ -560,30 +543,28 @@ public sealed class SubtitlePipeline : IAsyncDisposable
         bool sameLanguage = st.IsFinal && original.Length > 0 && (translation.Length == 0 || Normalize(translation) == Normalize(original));
         if (sameLanguage) translation = "";
 
+        // Provisional speaker from the early check until the full segment has been assigned.
         bool uncertain = st.Match?.Uncertain ?? true;
-        var (label, color) = _speakers.Enabled ? _speakers.Describe(st.SpeakerId, uncertain) : ("", "#FFFFFF");
-        if (_speakers.Enabled && st.Match == null) label = "…";
+        string provisionalLabel = _speakers.Enabled && st.Match == null ? "…" : "";
 
-        bool muted = st.Decision == SegmentDecision.Suppressed || (st.SpeakerId is { } sp && !uncertain && _speakers.IsMuted(sp));
-        bool hidden = muted || (sameLanguage && _options.SameLanguage == SameLanguageMode.Hide);
-
-        return new TranscriptLine
+        var line = new TranscriptLine
         {
             SegmentId = st.Id,
             StartedAt = st.WallStart,
             StreamStartMs = st.StreamStartMs,
             StreamEndMs = st.StreamEndMs ?? st.StreamStartMs,
-            SpeakerId = st.SpeakerId,
-            SpeakerLabel = label,
-            SpeakerColor = color,
+            SpeakerId = st.Match?.SpeakerId,
+            SpeakerLabel = provisionalLabel,
+            SpeakerColor = "#FFFFFF",
             SpeakerConfidence = st.Match?.Similarity ?? 0,
             SpeakerUncertain = uncertain,
             Translation = translation,
             Original = original,
             IsFinal = st.IsFinal,
             SameLanguage = sameLanguage,
-            Hidden = hidden,
+            Hidden = sameLanguage && _options.SameLanguage == SameLanguageMode.Hide,
         };
+        return TranscriptRelabeler.Relabel(line, _speakers, _options.SameLanguage, st.Decision == SegmentDecision.Suppressed);
     }
 
     private static string Normalize(string s) =>

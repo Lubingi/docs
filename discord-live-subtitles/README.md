@@ -9,7 +9,10 @@ nothing for the people you talk to to install. The only external service is the 
 - A local voice detector (Silero VAD) means only speech is sent to OpenAI, not silence.
 - The overlay is transparent and always on top. It streams partial text, then replaces it with the final line.
 - Shows the original-language transcript under each subtitle (optional).
-- Test mode: use any app (e.g. a YouTube video in Chrome) or a local audio file as the source.
+- **Who is speaking**, fully automatic and local. Each voice gets a label and a colour. Rename a label once and
+  that voice is recognised in future calls. Mute English speakers so their speech isn't sent to OpenAI.
+- Test mode: use any app (e.g. a YouTube video in Chrome) or a local audio file as the source, or generate a
+  fake multi-speaker conversation with OpenAI text-to-speech.
 - Debug panel: speech segments, latency and raw text.
 
 > Status: this README is updated after each build stage. See [Testing each stage](#testing-each-stage).
@@ -164,3 +167,46 @@ the speech segments. `translate some.wav` streams a WAV file to OpenAI and print
    **Export .srt** save the current session. Load the .srt next to a screen recording to check the timing.
    **Save transcripts automatically** is off by default. When on, each final line is appended to a text file in
    the chosen folder.
+
+### Stage 3: automatic speaker labels, rename/merge, test dialogue generator
+
+How it works: each speech segment gets a 512-number voice fingerprint from the local CAM++ model (ONNX Runtime
+on your CPU). It is compared with each voice heard so far.
+
+- A clear match gets that label, and the voice's profile improves with each line.
+- A clearly new voice becomes "Speaker N" with a new colour.
+- Anything in between shows **"?"**. The app never guesses. Several similar "?" lines together become a new
+  speaker, and earlier "?" lines are relabelled retroactively.
+- Voices that turn out to be the same person are merged automatically.
+
+Only voices you rename are stored, as fingerprints (no audio), in `%APPDATA%\LiveSubtitles\voices.json`.
+
+Why CAM++ instead of ECAPA-TDNN: no maintained ECAPA-TDNN ONNX export was available. CAM++ (3D-Speaker) is the
+newer model from the same line of work. It is more accurate on VoxCeleb (EER 0.65 %), and smaller and faster
+on a CPU.
+
+Testing:
+
+1. **Test tools tab → Generate test dialogue:** pick Turkish or Norwegian and 3 speakers, then click
+   **Generate**. After about 20–40 s you get a .wav in `Music\LiveSubtitles test audio` and a script showing
+   who said what.
+2. Click **▶ Play through the pipeline**. Lines appear as `Speaker 1: …`, `Speaker 2: …` in different colours.
+   A line shows "…" until its voice is checked. Compare with the script: the voices are fictional, so the
+   numbering can differ, but each voice should keep the same label. On the **Debug** tab, the Confidence column
+   shows the similarity to the best and next-best voice.
+3. **Rename:** turn click-through off, then click a name on the overlay. Or click it on the History tab, or
+   double-click it on the Speakers tab. Enter e.g. "Emre". All of that voice's past lines update. Stop, then
+   play the same file again: "Emre" is recognised automatically. That voice is now listed as *remembered*.
+4. **Fix mistakes:**
+   - On the History tab, right-click a line → **This line was said by ▸** to move it (the profile learns from
+     this).
+   - **This speaker is the same person as ▸** merges two labels. You can also merge from the Speakers tab.
+   - Click a "?" name to say who it was.
+5. **Mute:** tick **Mute** for one speaker and replay. Once that voice is recognised (about 1.2 s into each
+   line), that speaker's audio is not sent at all. The Debug tab shows "muted (not sent)", and no lines appear
+   for them.
+6. **Forget / Clear all voices** delete profiles. Their lines fall back to "?".
+7. Your own voice test: play a YouTube video with several speakers (a podcast or panel) using **Any app**.
+
+Headless check: `dotnet run --project tools/LiveSubtitles.Cli -- diarize some.wav` prints each segment's speaker
+with similarity scores.
