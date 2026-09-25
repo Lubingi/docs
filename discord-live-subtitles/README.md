@@ -15,7 +15,8 @@ nothing for the people you talk to to install. The only external service is the 
   fake multi-speaker conversation with OpenAI text-to-speech.
 - Debug panel: speech segments, latency and raw text.
 
-> Status: this README is updated after each build stage. See [Testing each stage](#testing-each-stage).
+All five build stages are complete. To try it quickly, see [Install](#install) and [Quick start](#quick-start).
+[Testing each stage](#testing-each-stage) explains how to test every feature without other people.
 
 ## Requirements
 
@@ -24,6 +25,37 @@ nothing for the people you talk to to install. The only external service is the 
 - An OpenAI API key with access to `gpt-realtime-translate` (see below).
 - For games: run the game in **borderless windowed** or windowed mode. Exclusive fullscreen draws over every
   overlay.
+
+## Install
+
+**Option A: download the installer.** Every push to this folder builds it on GitHub:
+
+1. Open the repository on GitHub → **Actions** → **Live Subtitles (Windows app)**, and click the latest green run.
+2. Under **Artifacts**, download **LiveSubtitlesSetup** (a zip containing `LiveSubtitlesSetup-<version>.exe`).
+3. Run it. It installs for your user only, with no admin rights, into `%LOCALAPPDATA%\Programs\LiveSubtitles`.
+   It includes the .NET runtime and both models, so nothing else is needed.
+
+The installer isn't code-signed, so Windows SmartScreen may say *"Windows protected your PC"*. Click
+**More info → Run anyway**. Uninstall from *Settings → Apps*. The uninstaller asks whether to also delete your
+settings, voice profiles, logs and the saved API key.
+
+**Option B: build the installer yourself.** Install the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
+and Inno Setup 6 (`winget install JRSoftware.InnoSetup`), then run:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File installer\build-installer.ps1
+```
+
+The script runs the tests, publishes a self-contained build and writes
+`installer\Output\LiveSubtitlesSetup-<version>.exe`.
+
+## Quick start
+
+1. Start **Live Subtitles**, click **Set API key…**, paste your key, then **Test key** and **Save**.
+2. Join a Discord voice channel. Keep **Audio source = Discord** and click **▶ Start** (or press `Ctrl+Alt+S`).
+3. Subtitles appear at the bottom of the screen. To move the overlay, untick **Click-through** (`Ctrl+Alt+T`),
+   drag it, then lock it again so clicks pass through to your game.
+4. Click a speaker's name to give them a real name. They are recognised automatically next time.
 
 ## Getting an OpenAI API key
 
@@ -239,3 +271,70 @@ with similarity scores.
    stops talking their line becomes final. The Debug tab shows these values for each segment.
 6. **Errors** go to `%APPDATA%\LiveSubtitles\logs\livesubtitles-YYYYMMDD.log` (Debug tab → Open log folder).
    Logs are kept for 14 days.
+
+### Stage 5: installer
+
+1. Install from the GitHub Actions artifact (or build it, see [Install](#install)). Tick "Start when I sign in" to
+   test autostart.
+2. Start it from the Start menu. The app starts, finds the bundled models (no "model missing" message on the
+   Speakers tab), and the Debug tab's status says *Silero VAD*.
+3. Repeat the stage 1 test with an audio file or YouTube, and the stage 3 test with a generated dialogue.
+4. Uninstall and answer **Yes** to the question about deleting data: `%APPDATA%\LiveSubtitles` and the saved key
+   are removed.
+
+The GitHub workflow also runs `LiveSubtitles.exe --smoke-test` on a real Windows machine after each build. It:
+
+- opens every window and tab;
+- pushes sample lines through the overlay and history;
+- fails on any XAML or data-binding error;
+- decodes an audio file through Media Foundation;
+- tries process-loopback activation.
+
+The result is in the `smoke-test-output` artifact.
+
+## Known limitations
+
+- **Overlapping speech:** Discord mixes all voices into one stream, so when two people talk at once the line goes
+  to whoever dominates. Short interjections ("yes", "haha") under about 1 s often show "?", because they are too
+  short to identify a voice reliably.
+- **Line boundaries:** the translation API streams text without utterance boundaries. The app matches text to
+  speech segments by audio timing. When one person answers the instant another stops, the first words of the
+  answer can end up on the previous line. The *Advanced tuning* values and the Debug tab help here.
+- **Glossary:** the model has no glossary or prompt input, so the glossary can only fix the text afterwards. It
+  cannot stop the model from mistranslating a slang word in the first place.
+- **Same-language speech:** the model does not produce a translation for speech that's already in English. Such
+  lines use the original transcript (if enabled). To save cost for people who always speak English, mute them.
+- **Exclusive fullscreen games** hide every overlay. Use borderless windowed mode.
+- **Speaker labels** depend on audio quality. Discord's noise suppression and very similar voices can split one
+  person into two labels or merge two people. Use Merge and "This line was said by" to correct it; the profiles
+  learn from these corrections.
+- The cost shown is an estimate from audio minutes sent. OpenAI's billing is authoritative.
+- I verified the OpenAI API details from OpenAI's official SDK type definitions and cookbook guide. Everything
+  except a live call to OpenAI and the Windows audio devices is covered by automated tests: the WebSocket
+  protocol against a local fake server, the audio pipeline on real speech, and diarization on real
+  multi-speaker recordings.
+
+## Troubleshooting
+
+| Symptom | What to check |
+|---|---|
+| "Waiting for Discord to start…" although Discord is open | Discord, Discord PTB and Canary are detected. For another client, use **Any app** and pick it. |
+| Nothing happens when people talk | Watch **Speech detected** in the top bar. If it stays empty, Discord's output may be muted or deafened, or you picked the wrong app. Try the **Whole output device** source to compare. |
+| "OpenAI rejected the API key (401)" | Create a new key and use **Test key**. |
+| "…not available to this project (404/403)" | The key's project has no access to `gpt-realtime-translate`. Check the project's model permissions on platform.openai.com. |
+| "Rate limited or out of credit (429)" | Add credit under Billing, or raise the project's rate limits. |
+| Hotkey doesn't work | Another app has taken it (the Settings tab says which). Pick another combination. |
+| Overlay not visible in a game | Switch the game to borderless windowed mode. |
+| Anything else | Debug tab → **Open log folder** and look at today's log. It contains no audio, text or key, so it's safe to share. |
+
+## Project layout
+
+```
+src/LiveSubtitles.Core      platform-independent pipeline: resampler, VAD, segmenter, OpenAI client,
+                            text-to-segment matching, speaker model + clustering, glossary, export, cost
+src/LiveSubtitles.App       Windows WPF app: WASAPI capture (NAudio), overlay, main window, tray, hotkeys,
+                            Credential Manager
+tests/LiveSubtitles.Core.Tests   unit + integration tests (real speech, fake OpenAI server)
+tools/LiveSubtitles.Cli     headless vad / diarize / translate on a WAV file
+installer/                  Inno Setup script and build script
+```

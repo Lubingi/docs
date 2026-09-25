@@ -14,11 +14,12 @@ public partial class App : Application
     private FileLog? _log;
     private MainViewModel? _main;
 
-    protected override void OnStartup(StartupEventArgs e)
+    protected override async void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
+        string? smokeResult = e.Args.Length >= 2 && e.Args[0] == "--smoke-test" ? e.Args[1] : null;
         _singleInstance = new Mutex(true, @"Local\LiveSubtitlesForDiscord", out bool first);
-        if (!first)
+        if (!first && smokeResult == null)
         {
             MessageBox.Show("Live Subtitles is already running (check the system tray).", "Live Subtitles", MessageBoxButton.OK, MessageBoxImage.Information);
             Shutdown();
@@ -36,6 +37,13 @@ public partial class App : Application
         _main = new MainViewModel(settingsStore, _log);
         var window = new MainWindow(_main);
         _main.AttachWindows(window);
+        if (smokeResult != null)
+        {
+            int code = await SmokeTest.RunAsync(_main, window, smokeResult, _log);
+            await _main.ShutdownAsync();
+            Shutdown(code);
+            return;
+        }
         if (_main.Settings.StartMinimized && _main.Settings.MinimizeToTray) window.StartHidden();
         else window.Show();
     }

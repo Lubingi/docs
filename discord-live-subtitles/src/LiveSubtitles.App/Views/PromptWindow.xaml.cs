@@ -33,5 +33,12 @@ public partial class PromptWindow : Window
         return w.ShowDialog() == true ? w.Choice.SelectedItem as ChoiceItem : null;
     }
 
+    internal static PromptWindow CreateForSmokeTest()
+    {
+        var w = new PromptWindow("Smoke test", "Loaded");
+        w.Show();
+        return w;
+    }
+
     private void Ok_Click(object sender, RoutedEventArgs e) => DialogResult = true;
 }

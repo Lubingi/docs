@@ -1,0 +1,53 @@
+name: 'Live Subtitles (Windows app)'
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'discord-live-subtitles/**'
+      - '.github/workflows/discord-live-subtitles.yml'
+  pull_request:
+    paths:
+      - 'discord-live-subtitles/**'
+      - '.github/workflows/discord-live-subtitles.yml'
+
+jobs:
+  build:
+    name: 'Test, publish and package'
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: discord-live-subtitles
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: 'Install Inno Setup'
+        shell: pwsh
+        run: |
+          if (-not (Test-Path "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe")) { choco install innosetup -y --no-progress }
+      - name: 'Build installer (runs tests first)'
+        shell: pwsh
+        run: ./installer/build-installer.ps1
+      - name: 'Smoke test (starts the real app: every window, tab and binding, audio APIs)'
+        shell: pwsh
+        run: |
+          $p = Start-Process -FilePath artifacts/publish/LiveSubtitles.exe -ArgumentList '--smoke-test', "$PWD\smoke.txt" -PassThru
+          $null = $p.Handle
+          if (-not $p.WaitForExit(180000)) { $p.Kill(); throw 'Smoke test timed out' }
+          if (Test-Path smoke.txt) { Get-Content smoke.txt } else { Write-Host 'no smoke.txt written' }
+          if ($p.ExitCode -ne 0) { throw "Smoke test failed (exit code $($p.ExitCode))" }
+      - name: 'Upload smoke test output and logs'
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-test-output
+          path: |
+            discord-live-subtitles/smoke.txt
+            ~/AppData/Roaming/LiveSubtitles/logs/*.log
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: LiveSubtitlesSetup
+          path: discord-live-subtitles/installer/Output/*.exe
+          if-no-files-found: error
