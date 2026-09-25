@@ -85,7 +85,7 @@ The first build downloads the two local models into `models/` and checks their S
 
 | Model | Purpose | Size | Licence |
 |---|---|---|---|
-| Silero VAD v5 | Speech detection | 2.3 MB | MIT |
+| Silero VAD v6.2 | Speech detection | 2.3 MB | MIT |
 | 3D-Speaker CAM++ (VoxCeleb) | Speaker voice embeddings (stage 3) | 28 MB | Apache-2.0 |
 
 Run the tests (they also run on Linux or macOS):

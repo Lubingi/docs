@@ -152,7 +152,7 @@ public sealed class DiarizationSettings
 public sealed class AdvancedSettings
 {
     public float VadThreshold { get; set; } = 0.5f;
-    public int MinSilenceMs { get; set; } = 480;
+    public int MinSilenceMs { get; set; } = 300;
     public int TailMs { get; set; } = 1500;
     public int MaxSegmentMs { get; set; } = 15000;
     public int CloseLagMs { get; set; } = 2500;

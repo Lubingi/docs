@@ -13,7 +13,7 @@ public sealed record SegmenterOptions
     /// <summary>Speech must last this long before a segment starts (filters clicks/coughs).</summary>
     public int MinSpeechMs { get; init; } = 192;
     /// <summary>A pause this long ends a segment (speaker turns are split on pauses).</summary>
-    public int MinSilenceMs { get; init; } = 480;
+    public int MinSilenceMs { get; init; } = 300;
     /// <summary>Audio kept from before the detected onset so the first syllable is not cut.</summary>
     public int PreRollMs { get; init; } = 320;
     /// <summary>After speech stops, keep sending real audio this long so the model can finish the sentence.</summary>

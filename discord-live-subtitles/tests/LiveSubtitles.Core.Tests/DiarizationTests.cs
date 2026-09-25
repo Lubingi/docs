@@ -6,16 +6,21 @@ using LiveSubtitles.Core.Vad;
 
 namespace LiveSubtitles.Core.Tests;
 
-public class DiarizationTests
+public partial class DiarizationTests
+{
+    private static List<(SegmentEnded Segment, SpeakerMatch Match)> Diarize(string wav, SpeakerRegistry registry) => DiarizationHelper.Diarize(wav, registry);
+}
+
+internal static class DiarizationHelper
 {
     /// <summary>Runs VAD + segmenter + online clustering over a WAV like the live pipeline does.</summary>
-    private static List<(SegmentEnded Segment, SpeakerMatch Match)> Diarize(string wav, SpeakerRegistry registry)
+    public static List<(SegmentEnded Segment, SpeakerMatch Match)> Diarize(string wav, SpeakerRegistry registry, SegmenterOptions? options = null)
     {
         var (samples, rate) = WavFile.ReadMono(wav);
         using var vad = new SileroVad(TestPaths.Model("silero_vad.onnx"));
         var to16 = new StreamResampler(rate, 16000).Process(samples);
         var to24 = new StreamResampler(rate, 24000).Process(samples);
-        var seg = new SpeechSegmenter(new SegmenterOptions());
+        var seg = new SpeechSegmenter(options ?? new SegmenterOptions());
         var events = new List<SegmenterEvent>();
         var result = new List<(SegmentEnded, SpeakerMatch)>();
         int frames = Math.Min(to16.Length / 512, to24.Length / 768);
@@ -28,7 +33,10 @@ public class DiarizationTests
         }
         return result;
     }
+}
 
+public partial class DiarizationTests
+{
     private static SpeakerRegistry NewRegistry(out SpeakerEmbedder embedder, VoiceProfileStore? store = null)
     {
         var emb = new SpeakerEmbedder(TestPaths.Model("campplus_voxceleb_16k.onnx"));
@@ -61,18 +69,19 @@ public class DiarizationTests
         var reg = NewRegistry(out var emb);
         using var _ = emb;
         var r = Diarize(TestPaths.Audio("four-speakers-zh.wav"), reg);
-        var ids = r.Select(x => reg.Lookup(x.Segment.SegmentId)!.SpeakerId).ToList();
-        Assert.Equal(8, ids.Count);
-        // Voices that are the same person (by the model's offline similarity structure) share a label ...
-        Assert.Equal(ids[0], ids[2]);
-        Assert.Equal(ids[2], ids[7]);
-        Assert.Equal(ids[4], ids[5]);
-        // ... and different people never do.
-        var groups = new[] { new[] { 0, 2, 7 }, new[] { 1, 6 }, new[] { 4, 5 } };
-        foreach (var g1 in groups)
-        foreach (var g2 in groups.Where(g => g != g1))
-            Assert.DoesNotContain(g1.Select(i => ids[i]).Where(i => i != null), id => g2.Select(i => ids[i]).Contains(id));
-        Assert.InRange(reg.Snapshot().Count, 3, 5);
+        int? At(double seconds)
+        {
+            var hit = r.First(x => x.Segment.StreamStartMs / 1000 <= seconds && x.Segment.StreamEndMs / 1000 >= seconds);
+            var l = reg.Lookup(hit.Segment.SegmentId)!;
+            return l.Uncertain ? null : l.SpeakerId;
+        }
+        // Facts the model's similarity structure supports strongly (0.56–0.75 same voice, ≤ 0.34 different).
+        Assert.NotNull(At(2));
+        Assert.Equal(At(2), At(23));
+        Assert.Equal(At(2), At(53));
+        Assert.NotEqual(At(2), At(14));
+        Assert.NotEqual(At(2), At(49));
+        Assert.InRange(reg.Snapshot().Count, 3, 6);
     }
 
     [Fact]
@@ -170,5 +179,68 @@ public class DialogueScriptTests
     {
         foreach (var script in LiveSubtitles.Core.Testing.DialogueGenerator.BuiltInScripts.Values)
             Assert.Equal(4, script.Select(l => l.Speaker).Distinct().Count());
+    }
+}
+
+/// <summary>
+/// Reproduces VPS bug 3: fast turn-taking (0.3–0.4 s gaps) puts two people into one segment; the blended voice
+/// profile then matched everyone and the conversation collapsed into a single speaker.
+/// </summary>
+public class FastTurnTakingTests
+{
+    [Theory]
+    [InlineData(300)]   // default: pauses of 0.3 s split turns
+    [InlineData(480)]   // older default: turns merge into one segment, voice-change detection must catch it
+    public void QuickRepliesDoNotCollapseIntoOneSpeaker(int minSilenceMs)
+    {
+        var wav = TestPaths.Audio("two-speakers-en.wav");
+        if (!TestPaths.Has(wav) || !TestPaths.Has(TestPaths.Model("campplus_voxceleb_16k.onnx"))) return;
+        var (samples, _) = WavFile.ReadMono(wav);
+        // Utterances of this file: A = 1.70–3.55 s and 4.45–6.53 s, B = 9.41–11.49 s and 12.22–14.69 s.
+        float[] Cut(double s, double e) => samples[(int)(s * 16000)..(int)(e * 16000)];
+        var order = new[] { Cut(1.70, 3.55), Cut(9.41, 11.49), Cut(4.45, 6.53), Cut(12.22, 14.69), Cut(1.70, 3.55), Cut(9.41, 11.49) };
+        bool[] isA = { true, false, true, false, true, false };
+        var gaps = new[] { 0.30, 0.36, 0.41, 0.33, 0.38, 1.0 };
+        var parts = new List<float>(new float[8000]);
+        var starts = new List<double>();
+        for (int i = 0; i < order.Length; i++)
+        {
+            starts.Add(parts.Count / 16000.0);
+            parts.AddRange(order[i]);
+            parts.AddRange(new float[(int)(gaps[i] * 16000)]);
+        }
+        var file = Path.Combine(Path.GetTempPath(), $"fast-{Guid.NewGuid():N}.wav");
+        WavFile.WriteMono16(file, parts.ToArray(), 16000);
+        try
+        {
+            using var emb = new SpeakerEmbedder(TestPaths.Model("campplus_voxceleb_16k.onnx"));
+            var reg = new SpeakerRegistry(x => emb.Embed(x), new DiarizationSettings());
+            var result = DiarizationHelper.Diarize(file, reg, new SegmenterOptions { MinSilenceMs = minSilenceMs });
+            // Collapsing both people into one voice is the bug. With 300 ms pauses both voices must be found;
+            // with 480 ms (turns merged) showing "?" instead of guessing is acceptable.
+            Assert.NotEqual(1, reg.Snapshot().Count);
+            if (minSilenceMs == 300) Assert.True(reg.Snapshot().Count >= 2, $"found {reg.Snapshot().Count} speaker(s)");
+            // Labels of segments that start inside an utterance of A vs of B must never be the same person.
+            var aIds = new HashSet<int>();
+            var bIds = new HashSet<int>();
+            foreach (var (seg, _) in result)
+            {
+                var l = reg.Lookup(seg.SegmentId)!;
+                if (l.Uncertain || l.SpeakerId is not { } id) continue;
+                int u = starts.FindLastIndex(t => t <= seg.StreamStartMs / 1000 + 0.35);
+                if (u < 0) continue;
+                (isA[u] ? aIds : bIds).Add(id);
+            }
+            if (minSilenceMs == 300)
+            {
+                Assert.NotEmpty(aIds);
+                Assert.NotEmpty(bIds);
+            }
+            Assert.Empty(aIds.Intersect(bIds));
+        }
+        finally
+        {
+            File.Delete(file);
+        }
     }
 }

@@ -8,7 +8,7 @@
   </PropertyGroup>
   <ItemGroup>
     <LiveSubsModel Include="silero_vad.onnx">
-      <Url>https://raw.githubusercontent.com/snakers4/silero-vad/v5.1.2/src/silero_vad/data/silero_vad.onnx</Url>
+      <Url>https://raw.githubusercontent.com/snakers4/silero-vad/v6.2/src/silero_vad/data/silero_vad.onnx</Url>
       <Sha256>1A153A22F4509E292A94E67D6F9B85E8DEB25B4988682B7E174C65279D8788E3</Sha256>
     </LiveSubsModel>
     <LiveSubsModel Include="campplus_voxceleb_16k.onnx">

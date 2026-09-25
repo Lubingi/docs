@@ -4,7 +4,7 @@ using Microsoft.ML.OnnxRuntime.Tensors;
 namespace LiveSubtitles.Core.Vad;
 
 /// <summary>
-/// Silero VAD v5 (MIT licence) running locally through ONNX Runtime.
+/// Silero VAD v6 (MIT licence) running locally through ONNX Runtime.
 /// Each call takes a 512-sample frame at 16 kHz, prefixed with the last 64 samples of the previous frame.
 /// </summary>
 public sealed class SileroVad : IVoiceActivityDetector

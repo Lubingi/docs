@@ -84,20 +84,66 @@ public sealed class SpeakerRegistry : ISpeakerIdentifier
         }
     }
 
+    /// <summary>Segments at least this long are also checked for a change of speaker inside them.</summary>
+    private const int ChangeCheckMs = 3000;
+    private const int WindowSamples = 16000 * 3 / 2;
+    private const int HopSamples = WindowSamples / 2;
+    /// <summary>Neighbouring 1.5 s windows of one voice measured ≥ 0.41; at a change of speaker they dropped to 0.09–0.16.</summary>
+    private const float ChangeThreshold = 0.30f;
+
     public SpeakerMatch Assign(int segmentId, float[] audio16k)
     {
         double ms = audio16k.Length / 16.0;
         var emb = _embed(audio16k);
+        // Quick replies (short gaps) can put two people in one segment. A segment with a change of voice inside is never
+        // used to learn or create a voice (the blended profile would match both people); its line is labelled with
+        // whoever starts it if that's certain, otherwise "?".
+        var firstWindow = emb != null && ms >= ChangeCheckMs ? DetectVoiceChange(audio16k) : null;
         SpeakerMatch result;
         bool structural = false;
         lock (_lock)
         {
             var record = new SegmentRecord(segmentId, emb, ms);
             AddRecord(record);
-            if (emb == null)
+            if (emb == null) return SpeakerMatch.None;
+            if (firstWindow != null)
             {
-                return SpeakerMatch.None;
+                record.Mixed = true;
+                var (best, bestSim, second) = Rank(firstWindow);
+                bool sure = best != null && bestSim >= Settings.MatchThreshold && bestSim - second >= 0.04f;
+                if (sure) AddToSpeaker(best!, record, bestSim); // counts the line, doesn't train (Mixed)
+                else { record.Similarity = bestSim; record.Uncertain = true; }
+                result = new SpeakerMatch(sure ? best!.Id : null, bestSim, second, false, !sure);
             }
+            else
+            {
+                (result, structural) = AssignLocked(record, emb, ms);
+            }
+        }
+        if (structural) SpeakersChanged?.Invoke();
+        return result;
+    }
+
+    /// <summary>If the voice changes inside the segment, returns the embedding of its first 1.5 s; otherwise null.</summary>
+    private float[]? DetectVoiceChange(float[] audio)
+    {
+        float[]? first = null, previous = null;
+        for (int start = 0; start + WindowSamples <= audio.Length; start += HopSamples)
+        {
+            var w = _embed(audio[start..(start + WindowSamples)]);
+            if (w == null) continue;
+            first ??= w;
+            if (previous != null && SpeakerEmbedder.Cosine(previous, w) < ChangeThreshold) return first;
+            previous = w;
+        }
+        return null;
+    }
+
+    private (SpeakerMatch Match, bool Structural) AssignLocked(SegmentRecord record, float[] emb, double ms)
+    {
+        SpeakerMatch result;
+        bool structural = false;
+        {
             var (best, bestSim, second) = Rank(emb);
             bool isShort = ms < 1000;
             float matchThreshold = Settings.MatchThreshold + (isShort ? 0.08f : 0f);
@@ -106,7 +152,7 @@ public sealed class SpeakerRegistry : ISpeakerIdentifier
             {
                 AddToSpeaker(best, record, bestSim);
                 structural = TryAutoMerge(best);
-                result = new SpeakerMatch(Resolve(best.Id), bestSim, second, false, false);
+                result = new SpeakerMatch(ResolveLocked(best.Id), bestSim, second, false, false);
             }
             else if ((best == null || bestSim < Settings.NewSpeakerThreshold) && ms >= Settings.MinNewSpeakerMs && ActiveCount < Settings.MaxSpeakers)
             {
@@ -120,7 +166,7 @@ public sealed class SpeakerRegistry : ISpeakerIdentifier
             {
                 record.Similarity = bestSim;
                 record.Uncertain = true;
-                _pending.Add(segmentId);
+                _pending.Add(record.SegmentId);
                 while (_pending.Count > MaxPending) _pending.RemoveAt(0);
                 var formed = TryFormFromPending(record);
                 if (formed != null)
@@ -131,8 +177,7 @@ public sealed class SpeakerRegistry : ISpeakerIdentifier
                 else result = new SpeakerMatch(null, bestSim, second, false, true);
             }
         }
-        if (structural) SpeakersChanged?.Invoke();
-        return result;
+        return (result, structural);
     }
 
     private (Speaker? Best, float BestSim, float Second) Rank(float[] emb)
@@ -168,7 +213,7 @@ public sealed class SpeakerRegistry : ISpeakerIdentifier
         s.Segments++;
         s.SpeechMs += r.DurationMs;
         s.LastHeard = DateTimeOffset.UtcNow;
-        if (r.Embedding == null) return;
+        if (r.Embedding == null || r.Mixed) return; // a segment with two voices never trains a profile
         double w = Math.Min(r.DurationMs / 1000.0, 10);
         // Cap the total weight so long-known voices still adapt to today's microphone/connection.
         if (s.Weight + w > MaxProfileWeightSeconds)
@@ -497,5 +542,7 @@ public sealed class SpeakerRegistry : ISpeakerIdentifier
         public float Similarity { get; set; }
         public double Contribution { get; set; }
         public bool UserAssigned { get; set; }
+        /// <summary>Contains more than one voice; used for labels but never for learning.</summary>
+        public bool Mixed { get; set; }
     }
 }

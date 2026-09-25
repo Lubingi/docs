@@ -45,7 +45,7 @@ public class SegmenterTests
     [Fact]
     public void ShortPausesDoNotSplit()
     {
-        var (ev, _) = Run(new SegmenterOptions(), Frames((0f, 500), (0.9f, 1000), (0.1f, 300), (0.9f, 1000), (0f, 3000)));
+        var (ev, _) = Run(new SegmenterOptions(), Frames((0f, 500), (0.9f, 1000), (0.1f, 200), (0.9f, 1000), (0f, 3000)));
         Assert.Single(ev.OfType<SegmentEnded>());
     }
 
