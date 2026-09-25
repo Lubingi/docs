@@ -1,0 +1,19 @@
+dialogue-turkish-3sp-20260926-002552.wav: 55.5s @ 24000 Hz
+  segment   1:    0.16s –    2.94s  Speaker 1  (best 0.00, next 0.00)
+  segment   2:    3.49s –    6.98s  ?          (best 0.33, next 0.00)
+  segment   3:    7.65s –   11.14s  Speaker 1  (best 0.68, next 0.00)
+  segment   4:   11.62s –   13.41s  Speaker 2  (best 0.33, next 0.00)
+  segment   5:   13.89s –   15.78s  Speaker 2  (best 0.58, next 0.30)
+  segment   6:   16.29s –   20.45s  Speaker 3  (best 0.93, next 0.33)
+  segment   7:   21.12s –   25.38s  Speaker 1  (best 0.67, next 0.43)
+  segment   8:   25.86s –   27.39s  Speaker 1  (best 0.53, next 0.25)
+  segment   9:   27.87s –   29.76s  Speaker 1  (best 0.62, next 0.20)
+  segment  10:   30.24s –   35.36s  Speaker 2  (best 0.68, next 0.40)
+  segment  11:   36.03s –   41.25s  Speaker 3  (best 0.86, next 0.41)
+  segment  12:   41.76s –   49.60s  Speaker 1  (best 0.82, next 0.43)
+  segment  13:   50.11s –   53.66s  Speaker 2  (best 0.62, next 0.31)
+audio that would be sent: 55.0s of 55.5s
+final speakers (after retroactive fixes and merges):
+  Speaker 2: 4 segments, 12.7s
+  Speaker 1: 6 segments, 22.4s
+  Speaker 3: 3 segments, 13.2s

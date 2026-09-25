@@ -1,0 +1,601 @@
+{"t_ms":1444,"type":"client.connected","file":"dialogue-turkish-3sp-20260926-002552.wav","audio_seconds":55.495}
+{"t_ms":1456,"sent_ms":0,"type":"session.created","elapsed_ms":null,"delta":null,"audio_bytes":null,"expires_at":"2026-09-25T23:29:30+00:00","session":"{\u0022id\u0022:\u0022sess_ES8i2vHQ53IYsqkMI8RoN\u0022,\u0022type\u0022:\u0022translation\u0022,\u0022expires_at\u0022:1790378970,\u0022model\u0022:\u0022gpt-realtime-translate\u0022,\u0022audio\u0022:{\u0022input\u0022:{\u0022noise_reduction\u0022:null,\u0022transcription\u0022:null},\u0022output\u0022:{\u0022language\u0022:\u0022es\u0022}},\u0022include\u0022:null}","error":null}
+{"t_ms":117,"sent_ms":200,"type":"session.updated","elapsed_ms":null,"delta":null,"audio_bytes":null,"expires_at":"2026-09-25T23:29:30+00:00","session":"{\u0022id\u0022:\u0022sess_ES8i2vHQ53IYsqkMI8RoN\u0022,\u0022type\u0022:\u0022translation\u0022,\u0022expires_at\u0022:1790378970,\u0022model\u0022:\u0022gpt-realtime-translate\u0022,\u0022audio\u0022:{\u0022input\u0022:{\u0022noise_reduction\u0022:null,\u0022transcription\u0022:{\u0022model\u0022:\u0022gpt-realtime-whisper\u0022}},\u0022output\u0022:{\u0022language\u0022:\u0022en\u0022}},\u0022include\u0022:null}","error":null}
+{"t_ms":801,"sent_ms":1000,"type":"session.output_audio.delta","elapsed_ms":200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":901,"sent_ms":1000,"type":"session.output_audio.delta","elapsed_ms":400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":1290,"sent_ms":1400,"type":"session.output_audio.delta","elapsed_ms":600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":1601,"sent_ms":1800,"type":"session.input_transcript.delta","elapsed_ms":1400,"delta":" Sel","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":1606,"sent_ms":1800,"type":"session.input_transcript.delta","elapsed_ms":1400,"delta":"am","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":1669,"sent_ms":1800,"type":"session.output_transcript.delta","elapsed_ms":1600,"delta":"Hey","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":1702,"sent_ms":1800,"type":"session.output_audio.delta","elapsed_ms":800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":2001,"sent_ms":2200,"type":"session.input_transcript.delta","elapsed_ms":1800,"delta":" millet","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":2074,"sent_ms":2200,"type":"session.output_transcript.delta","elapsed_ms":2000,"delta":",","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":2105,"sent_ms":2200,"type":"session.output_audio.delta","elapsed_ms":1000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":2401,"sent_ms":2600,"type":"session.input_transcript.delta","elapsed_ms":2200,"delta":",","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":2418,"sent_ms":2600,"type":"session.input_transcript.delta","elapsed_ms":2200,"delta":" beni","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":2475,"sent_ms":2600,"type":"session.output_transcript.delta","elapsed_ms":2400,"delta":" folks","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":2508,"sent_ms":2600,"type":"session.output_audio.delta","elapsed_ms":1200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":2806,"sent_ms":3000,"type":"session.input_transcript.delta","elapsed_ms":2600,"delta":" duy","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":2812,"sent_ms":3000,"type":"session.input_transcript.delta","elapsed_ms":2600,"delta":"abili","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":2819,"sent_ms":3000,"type":"session.input_transcript.delta","elapsed_ms":2600,"delta":"yor","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":2876,"sent_ms":3000,"type":"session.output_transcript.delta","elapsed_ms":2800,"delta":"!","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":2908,"sent_ms":3000,"type":"session.output_audio.delta","elapsed_ms":1400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":3081,"sent_ms":3200,"type":"session.output_transcript.delta","elapsed_ms":3000,"delta":" Can","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":3285,"sent_ms":3400,"type":"session.output_transcript.delta","elapsed_ms":3200,"delta":" you","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":3318,"sent_ms":3400,"type":"session.output_audio.delta","elapsed_ms":1600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":3412,"sent_ms":3600,"type":"session.input_transcript.delta","elapsed_ms":3200,"delta":" mus","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":3422,"sent_ms":3600,"type":"session.input_transcript.delta","elapsed_ms":3200,"delta":"unuz","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":3426,"sent_ms":3600,"type":"session.input_transcript.delta","elapsed_ms":3200,"delta":"?","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":3481,"sent_ms":3600,"type":"session.output_transcript.delta","elapsed_ms":3400,"delta":" hear","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":3675,"sent_ms":3800,"type":"session.output_transcript.delta","elapsed_ms":3600,"delta":" me","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":3705,"sent_ms":3800,"type":"session.output_audio.delta","elapsed_ms":1800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":3874,"sent_ms":4000,"type":"session.output_transcript.delta","elapsed_ms":3800,"delta":"?","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":4083,"sent_ms":4200,"type":"session.output_audio.delta","elapsed_ms":2000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":4483,"sent_ms":4600,"type":"session.output_audio.delta","elapsed_ms":2200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":4801,"type":"client.progress","sent_ms":5000}
+{"t_ms":4801,"sent_ms":5000,"type":"session.input_transcript.delta","elapsed_ms":4600,"delta":" E","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":4807,"sent_ms":5000,"type":"session.input_transcript.delta","elapsed_ms":4600,"delta":"vet","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":4912,"sent_ms":5000,"type":"session.output_audio.delta","elapsed_ms":2400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":5082,"sent_ms":5200,"type":"session.output_transcript.delta","elapsed_ms":5000,"delta":" Yes","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":5315,"sent_ms":5400,"type":"session.output_audio.delta","elapsed_ms":2600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":5485,"sent_ms":5600,"type":"session.input_transcript.delta","elapsed_ms":5200,"delta":",","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":5495,"sent_ms":5600,"type":"session.input_transcript.delta","elapsed_ms":5200,"delta":" ses","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":5502,"sent_ms":5600,"type":"session.input_transcript.delta","elapsed_ms":5200,"delta":"in","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":5560,"sent_ms":5600,"type":"session.output_transcript.delta","elapsed_ms":5400,"delta":",","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":5681,"sent_ms":5800,"type":"session.output_transcript.delta","elapsed_ms":5600,"delta":" we","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":5715,"sent_ms":5800,"type":"session.output_audio.delta","elapsed_ms":2800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":5881,"sent_ms":6000,"type":"session.output_transcript.delta","elapsed_ms":5800,"delta":" hear","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":6010,"sent_ms":6200,"type":"session.input_transcript.delta","elapsed_ms":5800,"delta":" geliyor","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":6086,"sent_ms":6200,"type":"session.output_transcript.delta","elapsed_ms":6000,"delta":" you","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":6114,"sent_ms":6200,"type":"session.output_audio.delta","elapsed_ms":3000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":6275,"sent_ms":6400,"type":"session.output_transcript.delta","elapsed_ms":6200,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":6409,"sent_ms":6400,"type":"session.input_transcript.delta","elapsed_ms":6200,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":6425,"sent_ms":6600,"type":"session.input_transcript.delta","elapsed_ms":6200,"delta":" Ama","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":6483,"sent_ms":6600,"type":"session.output_audio.delta","elapsed_ms":3200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":6809,"sent_ms":7000,"type":"session.input_transcript.delta","elapsed_ms":6600,"delta":" biraz","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":6891,"sent_ms":7000,"type":"session.output_audio.delta","elapsed_ms":3400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":7079,"sent_ms":7200,"type":"session.output_transcript.delta","elapsed_ms":7000,"delta":" But","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":7284,"sent_ms":7400,"type":"session.output_transcript.delta","elapsed_ms":7200,"delta":" it\u0027s","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":7319,"sent_ms":7400,"type":"session.output_audio.delta","elapsed_ms":3600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":7399,"sent_ms":7400,"type":"session.input_transcript.delta","elapsed_ms":7200,"delta":" c","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":7405,"sent_ms":7600,"type":"session.input_transcript.delta","elapsed_ms":7200,"delta":"\u0131z\u0131","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":7413,"sent_ms":7600,"type":"session.input_transcript.delta","elapsed_ms":7200,"delta":"rt","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":7420,"sent_ms":7600,"type":"session.input_transcript.delta","elapsed_ms":7200,"delta":"\u0131l\u0131","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":7427,"sent_ms":7600,"type":"session.input_transcript.delta","elapsed_ms":7200,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":7478,"sent_ms":7600,"type":"session.output_transcript.delta","elapsed_ms":7400,"delta":" a","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":7480,"sent_ms":7600,"type":"session.output_transcript.delta","elapsed_ms":7400,"delta":" little","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":7702,"sent_ms":7800,"type":"session.output_audio.delta","elapsed_ms":3800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":7883,"sent_ms":8000,"type":"session.output_transcript.delta","elapsed_ms":7800,"delta":" static","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":8114,"sent_ms":8200,"type":"session.output_transcript.delta","elapsed_ms":8000,"delta":"-y","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":8150,"sent_ms":8200,"type":"session.output_audio.delta","elapsed_ms":4000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":8282,"sent_ms":8400,"type":"session.output_transcript.delta","elapsed_ms":8200,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":8489,"sent_ms":8600,"type":"session.output_audio.delta","elapsed_ms":4200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":8806,"sent_ms":9000,"type":"session.input_transcript.delta","elapsed_ms":8600,"delta":" Tam","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":8812,"sent_ms":9000,"type":"session.input_transcript.delta","elapsed_ms":8600,"delta":"am","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":8889,"sent_ms":9000,"type":"session.output_audio.delta","elapsed_ms":4400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":9083,"sent_ms":9200,"type":"session.output_transcript.delta","elapsed_ms":9000,"delta":" Okay","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":9312,"sent_ms":9400,"type":"session.output_audio.delta","elapsed_ms":4600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":9485,"sent_ms":9600,"type":"session.output_transcript.delta","elapsed_ms":9400,"delta":",","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":9688,"sent_ms":9800,"type":"session.output_transcript.delta","elapsed_ms":9600,"delta":" the","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":9722,"sent_ms":9800,"type":"session.output_audio.delta","elapsed_ms":4800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":9799,"sent_ms":9800,"type":"session.input_transcript.delta","elapsed_ms":9600,"delta":",","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":9801,"type":"client.progress","sent_ms":10000}
+{"t_ms":9806,"sent_ms":10000,"type":"session.input_transcript.delta","elapsed_ms":9600,"delta":" mikro","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":9813,"sent_ms":10000,"type":"session.input_transcript.delta","elapsed_ms":9600,"delta":"fon","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":9820,"sent_ms":10000,"type":"session.input_transcript.delta","elapsed_ms":9600,"delta":"u","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":9885,"sent_ms":10000,"type":"session.output_transcript.delta","elapsed_ms":9800,"delta":" microphone","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":10111,"sent_ms":10200,"type":"session.output_audio.delta","elapsed_ms":5000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":10283,"sent_ms":10400,"type":"session.output_transcript.delta","elapsed_ms":10200,"delta":"\u2014","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":10399,"sent_ms":10400,"type":"session.input_transcript.delta","elapsed_ms":10200,"delta":" de\u011Fi\u015Ft","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":10406,"sent_ms":10600,"type":"session.input_transcript.delta","elapsed_ms":10200,"delta":"ird","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":10412,"sent_ms":10600,"type":"session.input_transcript.delta","elapsed_ms":10200,"delta":"im","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":10487,"sent_ms":10600,"type":"session.output_transcript.delta","elapsed_ms":10400,"delta":" I","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":10491,"sent_ms":10600,"type":"session.output_transcript.delta","elapsed_ms":10400,"delta":" changed","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":10524,"sent_ms":10600,"type":"session.output_audio.delta","elapsed_ms":5200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":10886,"sent_ms":11000,"type":"session.output_transcript.delta","elapsed_ms":10800,"delta":" it","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":10919,"sent_ms":11000,"type":"session.output_audio.delta","elapsed_ms":5400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":11098,"sent_ms":11200,"type":"session.output_transcript.delta","elapsed_ms":11000,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":11217,"sent_ms":11400,"type":"session.input_transcript.delta","elapsed_ms":11000,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":11223,"sent_ms":11400,"type":"session.input_transcript.delta","elapsed_ms":11000,"delta":" \u015E","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":11238,"sent_ms":11400,"type":"session.input_transcript.delta","elapsed_ms":11000,"delta":"imdi","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":11309,"sent_ms":11400,"type":"session.output_audio.delta","elapsed_ms":5600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":11614,"sent_ms":11600,"type":"session.input_transcript.delta","elapsed_ms":11400,"delta":" nas\u0131l","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":11628,"sent_ms":11800,"type":"session.input_transcript.delta","elapsed_ms":11400,"delta":"?","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":11703,"sent_ms":11800,"type":"session.output_audio.delta","elapsed_ms":5800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":12102,"sent_ms":12200,"type":"session.output_audio.delta","elapsed_ms":6000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":12510,"sent_ms":12600,"type":"session.output_audio.delta","elapsed_ms":6200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":12799,"sent_ms":12800,"type":"session.input_transcript.delta","elapsed_ms":12600,"delta":" \u015E","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":12809,"sent_ms":13000,"type":"session.input_transcript.delta","elapsed_ms":12600,"delta":"imdi","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":12889,"sent_ms":13000,"type":"session.output_audio.delta","elapsed_ms":6400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":13206,"sent_ms":13400,"type":"session.input_transcript.delta","elapsed_ms":13000,"delta":" \u00E7ok","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":13290,"sent_ms":13400,"type":"session.output_transcript.delta","elapsed_ms":13200,"delta":" How","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":13322,"sent_ms":13400,"type":"session.output_audio.delta","elapsed_ms":6600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":13602,"sent_ms":13800,"type":"session.input_transcript.delta","elapsed_ms":13400,"delta":" daha","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":13684,"sent_ms":13800,"type":"session.output_transcript.delta","elapsed_ms":13600,"delta":" is","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":13687,"sent_ms":13800,"type":"session.output_transcript.delta","elapsed_ms":13600,"delta":" it","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":13720,"sent_ms":13800,"type":"session.output_audio.delta","elapsed_ms":6800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":13805,"sent_ms":14000,"type":"session.input_transcript.delta","elapsed_ms":13600,"delta":" iyi","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":13913,"sent_ms":14000,"type":"session.output_transcript.delta","elapsed_ms":13800,"delta":" now","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":14086,"sent_ms":14200,"type":"session.output_transcript.delta","elapsed_ms":14000,"delta":"?","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":14089,"sent_ms":14200,"type":"session.output_transcript.delta","elapsed_ms":14000,"delta":" Much","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":14123,"sent_ms":14200,"type":"session.output_audio.delta","elapsed_ms":7000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":14487,"sent_ms":14600,"type":"session.output_transcript.delta","elapsed_ms":14400,"delta":" better","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":14522,"sent_ms":14600,"type":"session.output_audio.delta","elapsed_ms":7200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":14602,"sent_ms":14800,"type":"session.input_transcript.delta","elapsed_ms":14400,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":14606,"sent_ms":14800,"type":"session.input_transcript.delta","elapsed_ms":14400,"delta":" Bu","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":14681,"sent_ms":14800,"type":"session.output_transcript.delta","elapsed_ms":14600,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":14800,"type":"client.progress","sent_ms":15000}
+{"t_ms":14893,"sent_ms":15000,"type":"session.output_audio.delta","elapsed_ms":7400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":15015,"sent_ms":15200,"type":"session.input_transcript.delta","elapsed_ms":14800,"delta":" ak","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":15015,"sent_ms":15200,"type":"session.input_transcript.delta","elapsed_ms":14800,"delta":"\u015Fam","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":15305,"sent_ms":15400,"type":"session.output_audio.delta","elapsed_ms":7600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":15603,"sent_ms":15800,"type":"session.input_transcript.delta","elapsed_ms":15400,"delta":" ka\u00E7","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":15614,"sent_ms":15800,"type":"session.input_transcript.delta","elapsed_ms":15400,"delta":"ta","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":15683,"sent_ms":15800,"type":"session.output_transcript.delta","elapsed_ms":15600,"delta":" What","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":15715,"sent_ms":15800,"type":"session.output_audio.delta","elapsed_ms":7800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":15889,"sent_ms":16000,"type":"session.output_transcript.delta","elapsed_ms":15800,"delta":" time","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":16085,"sent_ms":16200,"type":"session.output_transcript.delta","elapsed_ms":16000,"delta":" are","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":16119,"sent_ms":16200,"type":"session.output_audio.delta","elapsed_ms":8000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":16201,"sent_ms":16400,"type":"session.input_transcript.delta","elapsed_ms":16000,"delta":" ba\u015F","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":16210,"sent_ms":16400,"type":"session.input_transcript.delta","elapsed_ms":16000,"delta":"l\u0131","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":16215,"sent_ms":16400,"type":"session.input_transcript.delta","elapsed_ms":16000,"delta":"yoruz","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":16222,"sent_ms":16400,"type":"session.input_transcript.delta","elapsed_ms":16000,"delta":"?","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":16286,"sent_ms":16400,"type":"session.output_transcript.delta","elapsed_ms":16200,"delta":" we","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":16291,"sent_ms":16400,"type":"session.output_transcript.delta","elapsed_ms":16200,"delta":" starting","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":16505,"sent_ms":16600,"type":"session.output_audio.delta","elapsed_ms":8200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":16680,"sent_ms":16800,"type":"session.output_transcript.delta","elapsed_ms":16600,"delta":" tonight","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":16909,"sent_ms":17000,"type":"session.output_audio.delta","elapsed_ms":8400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":17100,"sent_ms":17200,"type":"session.output_transcript.delta","elapsed_ms":17000,"delta":"?","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":17313,"sent_ms":17400,"type":"session.output_audio.delta","elapsed_ms":8600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":17608,"sent_ms":17800,"type":"session.input_transcript.delta","elapsed_ms":17400,"delta":" B","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":17615,"sent_ms":17800,"type":"session.input_transcript.delta","elapsed_ms":17400,"delta":"ence","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":17700,"sent_ms":17800,"type":"session.output_audio.delta","elapsed_ms":8800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":18106,"sent_ms":18200,"type":"session.output_audio.delta","elapsed_ms":9000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":18214,"sent_ms":18400,"type":"session.input_transcript.delta","elapsed_ms":18000,"delta":" dok","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":18221,"sent_ms":18400,"type":"session.input_transcript.delta","elapsed_ms":18000,"delta":"uz","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":18228,"sent_ms":18400,"type":"session.input_transcript.delta","elapsed_ms":18000,"delta":"da","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":18500,"sent_ms":18600,"type":"session.output_transcript.delta","elapsed_ms":18400,"delta":" I","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":18503,"sent_ms":18600,"type":"session.output_transcript.delta","elapsed_ms":18400,"delta":" think","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":18540,"sent_ms":18600,"type":"session.output_audio.delta","elapsed_ms":9200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":18693,"sent_ms":18800,"type":"session.output_transcript.delta","elapsed_ms":18600,"delta":" we","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":18817,"sent_ms":19000,"type":"session.input_transcript.delta","elapsed_ms":18600,"delta":" ba\u015Flay","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":18817,"sent_ms":19000,"type":"session.input_transcript.delta","elapsed_ms":18600,"delta":"al","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":18819,"sent_ms":19000,"type":"session.input_transcript.delta","elapsed_ms":18600,"delta":"\u0131m","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":18934,"sent_ms":19000,"type":"session.output_transcript.delta","elapsed_ms":18800,"delta":" should","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":18934,"sent_ms":19000,"type":"session.output_audio.delta","elapsed_ms":9400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":19103,"sent_ms":19200,"type":"session.output_transcript.delta","elapsed_ms":19000,"delta":" start","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":19301,"sent_ms":19400,"type":"session.output_transcript.delta","elapsed_ms":19200,"delta":" at","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":19305,"sent_ms":19400,"type":"session.output_transcript.delta","elapsed_ms":19200,"delta":" nine","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":19337,"sent_ms":19400,"type":"session.output_audio.delta","elapsed_ms":9600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":19426,"sent_ms":19600,"type":"session.input_transcript.delta","elapsed_ms":19200,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":19427,"sent_ms":19600,"type":"session.input_transcript.delta","elapsed_ms":19200,"delta":" Ben","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":19714,"sent_ms":19800,"type":"session.output_transcript.delta","elapsed_ms":19600,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":19750,"sent_ms":19800,"type":"session.output_audio.delta","elapsed_ms":9800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":19800,"type":"client.progress","sent_ms":20000}
+{"t_ms":19821,"sent_ms":20000,"type":"session.input_transcript.delta","elapsed_ms":19600,"delta":" yem","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":19830,"sent_ms":20000,"type":"session.input_transcript.delta","elapsed_ms":19600,"delta":"ekten","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":20185,"sent_ms":20200,"type":"session.output_audio.delta","elapsed_ms":10000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":20251,"sent_ms":20400,"type":"session.input_transcript.delta","elapsed_ms":20000,"delta":" sonra","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":20533,"sent_ms":20600,"type":"session.output_transcript.delta","elapsed_ms":20400,"delta":" I\u0027ll","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":20563,"sent_ms":20600,"type":"session.output_audio.delta","elapsed_ms":10200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":20606,"sent_ms":20800,"type":"session.input_transcript.delta","elapsed_ms":20400,"delta":" haz\u0131r","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":20695,"sent_ms":20800,"type":"session.output_transcript.delta","elapsed_ms":20600,"delta":" be","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":20695,"sent_ms":20800,"type":"session.output_transcript.delta","elapsed_ms":20600,"delta":" ready","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":20912,"sent_ms":21000,"type":"session.output_audio.delta","elapsed_ms":10400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":21003,"sent_ms":21200,"type":"session.input_transcript.delta","elapsed_ms":20800,"delta":" olur","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":21010,"sent_ms":21200,"type":"session.input_transcript.delta","elapsed_ms":20800,"delta":"um","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":21088,"sent_ms":21200,"type":"session.output_transcript.delta","elapsed_ms":21000,"delta":" after","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":21284,"sent_ms":21400,"type":"session.output_transcript.delta","elapsed_ms":21200,"delta":" dinner","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":21318,"sent_ms":21400,"type":"session.output_audio.delta","elapsed_ms":10600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":21482,"sent_ms":21600,"type":"session.output_transcript.delta","elapsed_ms":21400,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":21689,"sent_ms":21800,"type":"session.output_audio.delta","elapsed_ms":10800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":22111,"sent_ms":22200,"type":"session.output_audio.delta","elapsed_ms":11000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":22409,"sent_ms":22600,"type":"session.input_transcript.delta","elapsed_ms":22200,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":22427,"sent_ms":22600,"type":"session.input_transcript.delta","elapsed_ms":22200,"delta":" Ben","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":22496,"sent_ms":22600,"type":"session.output_audio.delta","elapsed_ms":11200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":22804,"sent_ms":23000,"type":"session.input_transcript.delta","elapsed_ms":22600,"delta":" biraz","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":22902,"sent_ms":23000,"type":"session.output_audio.delta","elapsed_ms":11400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":23005,"sent_ms":23200,"type":"session.input_transcript.delta","elapsed_ms":22800,"delta":" ge\u00E7","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":23296,"sent_ms":23400,"type":"session.output_audio.delta","elapsed_ms":11600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":23607,"sent_ms":23800,"type":"session.input_transcript.delta","elapsed_ms":23400,"delta":" kal","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":23610,"sent_ms":23800,"type":"session.input_transcript.delta","elapsed_ms":23400,"delta":"abil","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":23618,"sent_ms":23800,"type":"session.input_transcript.delta","elapsed_ms":23400,"delta":"irim","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":23700,"sent_ms":23800,"type":"session.output_audio.delta","elapsed_ms":11800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":24086,"sent_ms":24200,"type":"session.output_transcript.delta","elapsed_ms":24000,"delta":" I","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":24117,"sent_ms":24200,"type":"session.output_audio.delta","elapsed_ms":12000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":24289,"sent_ms":24400,"type":"session.output_transcript.delta","elapsed_ms":24200,"delta":" might","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":24402,"sent_ms":24600,"type":"session.input_transcript.delta","elapsed_ms":24200,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":24409,"sent_ms":24600,"type":"session.input_transcript.delta","elapsed_ms":24200,"delta":" \u0130\u015F","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":24416,"sent_ms":24600,"type":"session.input_transcript.delta","elapsed_ms":24200,"delta":"ten","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":24488,"sent_ms":24600,"type":"session.output_transcript.delta","elapsed_ms":24400,"delta":" be","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":24489,"sent_ms":24600,"type":"session.output_transcript.delta","elapsed_ms":24400,"delta":" a","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":24523,"sent_ms":24600,"type":"session.output_audio.delta","elapsed_ms":12200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":24740,"sent_ms":24800,"type":"session.output_transcript.delta","elapsed_ms":24600,"delta":" little","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":24800,"type":"client.progress","sent_ms":25000}
+{"t_ms":24805,"sent_ms":25000,"type":"session.input_transcript.delta","elapsed_ms":24600,"delta":" \u00E7\u0131k","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":24810,"sent_ms":25000,"type":"session.input_transcript.delta","elapsed_ms":24600,"delta":"\u0131nca","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":24886,"sent_ms":25000,"type":"session.output_transcript.delta","elapsed_ms":24800,"delta":" late","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":24914,"sent_ms":25000,"type":"session.output_audio.delta","elapsed_ms":12400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":25090,"sent_ms":25200,"type":"session.output_transcript.delta","elapsed_ms":25000,"delta":" getting","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":25201,"sent_ms":25400,"type":"session.input_transcript.delta","elapsed_ms":25000,"delta":" hemen","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":25284,"sent_ms":25400,"type":"session.output_transcript.delta","elapsed_ms":25200,"delta":" off","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":25316,"sent_ms":25400,"type":"session.output_audio.delta","elapsed_ms":12600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":25483,"sent_ms":25600,"type":"session.output_transcript.delta","elapsed_ms":25400,"delta":" work","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":25682,"sent_ms":25800,"type":"session.output_transcript.delta","elapsed_ms":25600,"delta":",","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":25685,"sent_ms":25800,"type":"session.output_transcript.delta","elapsed_ms":25600,"delta":" but","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":25715,"sent_ms":25800,"type":"session.output_audio.delta","elapsed_ms":12800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":25800,"sent_ms":25800,"type":"session.input_transcript.delta","elapsed_ms":25600,"delta":" ba\u011F","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":25806,"sent_ms":26000,"type":"session.input_transcript.delta","elapsed_ms":25600,"delta":"lan","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":25813,"sent_ms":26000,"type":"session.input_transcript.delta","elapsed_ms":25600,"delta":"\u0131r\u0131m","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":25883,"sent_ms":26000,"type":"session.output_transcript.delta","elapsed_ms":25800,"delta":" I\u0027ll","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":26082,"sent_ms":26200,"type":"session.output_transcript.delta","elapsed_ms":26000,"delta":" join","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":26115,"sent_ms":26200,"type":"session.output_audio.delta","elapsed_ms":13000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":26284,"sent_ms":26400,"type":"session.output_transcript.delta","elapsed_ms":26200,"delta":" right","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":26482,"sent_ms":26600,"type":"session.output_transcript.delta","elapsed_ms":26400,"delta":" away","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":26514,"sent_ms":26600,"type":"session.output_audio.delta","elapsed_ms":13200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":26684,"sent_ms":26800,"type":"session.output_transcript.delta","elapsed_ms":26600,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":26887,"sent_ms":27000,"type":"session.output_transcript.delta","elapsed_ms":26800,"delta":" No","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":26921,"sent_ms":27000,"type":"session.output_audio.delta","elapsed_ms":13400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":27001,"sent_ms":27200,"type":"session.input_transcript.delta","elapsed_ms":26800,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":27008,"sent_ms":27200,"type":"session.input_transcript.delta","elapsed_ms":26800,"delta":" Sor","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":27016,"sent_ms":27200,"type":"session.input_transcript.delta","elapsed_ms":26800,"delta":"un","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":27089,"sent_ms":27200,"type":"session.output_transcript.delta","elapsed_ms":27000,"delta":" problem","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":27315,"sent_ms":27400,"type":"session.output_audio.delta","elapsed_ms":13600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":27409,"sent_ms":27600,"type":"session.input_transcript.delta","elapsed_ms":27200,"delta":" de\u011Fil","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":27503,"sent_ms":27600,"type":"session.output_transcript.delta","elapsed_ms":27400,"delta":",","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":27697,"sent_ms":27800,"type":"session.output_audio.delta","elapsed_ms":13800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":28001,"sent_ms":28200,"type":"session.input_transcript.delta","elapsed_ms":27800,"delta":",","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":28008,"sent_ms":28200,"type":"session.input_transcript.delta","elapsed_ms":27800,"delta":" El","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":28015,"sent_ms":28200,"type":"session.input_transcript.delta","elapsed_ms":27800,"delta":"if","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":28097,"sent_ms":28200,"type":"session.output_audio.delta","elapsed_ms":14000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":28493,"sent_ms":28600,"type":"session.output_audio.delta","elapsed_ms":14200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":28603,"sent_ms":28800,"type":"session.input_transcript.delta","elapsed_ms":28400,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":28609,"sent_ms":28800,"type":"session.input_transcript.delta","elapsed_ms":28400,"delta":" \u0130lk","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":28899,"sent_ms":29000,"type":"session.output_audio.delta","elapsed_ms":14400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":29002,"sent_ms":29200,"type":"session.input_transcript.delta","elapsed_ms":28800,"delta":" ma","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":29010,"sent_ms":29200,"type":"session.input_transcript.delta","elapsed_ms":28800,"delta":"\u00E7\u0131","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":29205,"sent_ms":29400,"type":"session.input_transcript.delta","elapsed_ms":29000,"delta":" biz","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":29295,"sent_ms":29400,"type":"session.output_audio.delta","elapsed_ms":14600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":29492,"sent_ms":29600,"type":"session.output_transcript.delta","elapsed_ms":29400,"delta":" El","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":29629,"sent_ms":29800,"type":"session.input_transcript.delta","elapsed_ms":29400,"delta":" \u00FC\u00E7","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":29636,"sent_ms":29800,"type":"session.input_transcript.delta","elapsed_ms":29400,"delta":"\u00FCm\u00FCz","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":29730,"sent_ms":29800,"type":"session.output_transcript.delta","elapsed_ms":29600,"delta":"if","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":29790,"sent_ms":29800,"type":"session.output_audio.delta","elapsed_ms":14800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":29813,"type":"client.progress","sent_ms":30000}
+{"t_ms":29911,"sent_ms":30000,"type":"session.output_transcript.delta","elapsed_ms":29800,"delta":",","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":29911,"sent_ms":30000,"type":"session.output_transcript.delta","elapsed_ms":29800,"delta":" the","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":30106,"sent_ms":30200,"type":"session.output_transcript.delta","elapsed_ms":30000,"delta":" three","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":30211,"sent_ms":30400,"type":"session.output_audio.delta","elapsed_ms":15000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":30211,"sent_ms":30400,"type":"session.input_transcript.delta","elapsed_ms":30000,"delta":" oyn","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":30211,"sent_ms":30400,"type":"session.input_transcript.delta","elapsed_ms":30000,"delta":"ar","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":30218,"sent_ms":30400,"type":"session.input_transcript.delta","elapsed_ms":30000,"delta":"\u0131z","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":30291,"sent_ms":30400,"type":"session.output_transcript.delta","elapsed_ms":30200,"delta":" of","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":30497,"sent_ms":30600,"type":"session.output_transcript.delta","elapsed_ms":30400,"delta":" us","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":30499,"sent_ms":30600,"type":"session.output_transcript.delta","elapsed_ms":30400,"delta":" will","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":30532,"sent_ms":30600,"type":"session.output_audio.delta","elapsed_ms":15200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":30701,"sent_ms":30800,"type":"session.output_transcript.delta","elapsed_ms":30600,"delta":" play","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":30888,"sent_ms":31000,"type":"session.output_transcript.delta","elapsed_ms":30800,"delta":" the","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":30952,"sent_ms":31000,"type":"session.output_transcript.delta","elapsed_ms":30800,"delta":" first","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":30952,"sent_ms":31000,"type":"session.output_audio.delta","elapsed_ms":15400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":31315,"sent_ms":31400,"type":"session.input_transcript.delta","elapsed_ms":31000,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":31315,"sent_ms":31400,"type":"session.input_transcript.delta","elapsed_ms":31000,"delta":" Ama","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":31377,"sent_ms":31400,"type":"session.output_transcript.delta","elapsed_ms":31200,"delta":" match","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":31534,"sent_ms":31600,"type":"session.output_audio.delta","elapsed_ms":15600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":31688,"sent_ms":31800,"type":"session.output_transcript.delta","elapsed_ms":31400,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":31869,"sent_ms":32000,"type":"session.output_audio.delta","elapsed_ms":15800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":31902,"sent_ms":32000,"type":"session.input_transcript.delta","elapsed_ms":31600,"delta":" ge\u00E7en","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":32146,"sent_ms":32200,"type":"session.output_audio.delta","elapsed_ms":16000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":32412,"sent_ms":32600,"type":"session.input_transcript.delta","elapsed_ms":32200,"delta":" haft","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":32419,"sent_ms":32600,"type":"session.input_transcript.delta","elapsed_ms":32200,"delta":"aki","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":32498,"sent_ms":32600,"type":"session.output_audio.delta","elapsed_ms":16200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":32735,"sent_ms":32600,"type":"session.input_transcript.delta","elapsed_ms":32400,"delta":" gibi","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":33163,"sent_ms":33200,"type":"session.output_audio.delta","elapsed_ms":16400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":33218,"sent_ms":33400,"type":"session.input_transcript.delta","elapsed_ms":33000,"delta":" yine","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":33315,"sent_ms":33400,"type":"session.output_audio.delta","elapsed_ms":16600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":33697,"sent_ms":33800,"type":"session.output_audio.delta","elapsed_ms":16800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":33887,"sent_ms":34000,"type":"session.output_transcript.delta","elapsed_ms":33800,"delta":" But","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":34086,"sent_ms":34200,"type":"session.output_transcript.delta","elapsed_ms":34000,"delta":" let\u0027s","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":34118,"sent_ms":34200,"type":"session.output_audio.delta","elapsed_ms":17000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":34202,"sent_ms":34400,"type":"session.input_transcript.delta","elapsed_ms":34000,"delta":" kay","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":34209,"sent_ms":34400,"type":"session.input_transcript.delta","elapsed_ms":34000,"delta":"bet","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":34216,"sent_ms":34400,"type":"session.input_transcript.delta","elapsed_ms":34000,"delta":"mey","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":34224,"sent_ms":34400,"type":"session.input_transcript.delta","elapsed_ms":34000,"delta":"elim","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":34282,"sent_ms":34400,"type":"session.output_transcript.delta","elapsed_ms":34200,"delta":" not","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":34494,"sent_ms":34600,"type":"session.output_transcript.delta","elapsed_ms":34400,"delta":" lose","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":34625,"sent_ms":34800,"type":"session.output_audio.delta","elapsed_ms":17200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":34694,"sent_ms":34800,"type":"session.output_transcript.delta","elapsed_ms":34600,"delta":" again","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":34801,"type":"client.progress","sent_ms":35000}
+{"t_ms":35206,"sent_ms":35400,"type":"session.input_transcript.delta","elapsed_ms":34600,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":35206,"sent_ms":35400,"type":"session.input_transcript.delta","elapsed_ms":34600,"delta":" \u00C7ok","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":35206,"sent_ms":35400,"type":"session.output_audio.delta","elapsed_ms":17400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":35215,"sent_ms":35400,"type":"session.output_transcript.delta","elapsed_ms":35000,"delta":" like","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":35215,"sent_ms":35400,"type":"session.output_transcript.delta","elapsed_ms":35000,"delta":" last","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":35553,"sent_ms":35600,"type":"session.output_audio.delta","elapsed_ms":17600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":35560,"sent_ms":35600,"type":"session.output_transcript.delta","elapsed_ms":35400,"delta":" week","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":35695,"sent_ms":35800,"type":"session.output_transcript.delta","elapsed_ms":35600,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":35726,"sent_ms":35800,"type":"session.output_audio.delta","elapsed_ms":17800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":35800,"sent_ms":36000,"type":"session.input_transcript.delta","elapsed_ms":35600,"delta":" sin","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":35808,"sent_ms":36000,"type":"session.input_transcript.delta","elapsed_ms":35600,"delta":"ir","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":35887,"sent_ms":36000,"type":"session.output_transcript.delta","elapsed_ms":35800,"delta":" That","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":36005,"sent_ms":36200,"type":"session.input_transcript.delta","elapsed_ms":35800,"delta":" boz","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":36011,"sent_ms":36200,"type":"session.input_transcript.delta","elapsed_ms":35800,"delta":"uc","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":36017,"sent_ms":36200,"type":"session.input_transcript.delta","elapsed_ms":35800,"delta":"uy","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":36025,"sent_ms":36200,"type":"session.input_transcript.delta","elapsed_ms":35800,"delta":"du","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":36087,"sent_ms":36200,"type":"session.output_transcript.delta","elapsed_ms":36000,"delta":" was","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":36118,"sent_ms":36200,"type":"session.output_audio.delta","elapsed_ms":18000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":36287,"sent_ms":36400,"type":"session.output_transcript.delta","elapsed_ms":36200,"delta":" really","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":36488,"sent_ms":36600,"type":"session.output_transcript.delta","elapsed_ms":36400,"delta":" frustrating","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":36522,"sent_ms":36600,"type":"session.output_audio.delta","elapsed_ms":18200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":36932,"sent_ms":37000,"type":"session.output_audio.delta","elapsed_ms":18400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":37136,"sent_ms":37200,"type":"session.output_transcript.delta","elapsed_ms":37000,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":37260,"sent_ms":37400,"type":"session.input_transcript.delta","elapsed_ms":37000,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":37260,"sent_ms":37400,"type":"session.input_transcript.delta","elapsed_ms":37000,"delta":" O","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":37390,"sent_ms":37400,"type":"session.output_audio.delta","elapsed_ms":18600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":37488,"sent_ms":37600,"type":"session.input_transcript.delta","elapsed_ms":37200,"delta":" ma\u00E7","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":37496,"sent_ms":37600,"type":"session.input_transcript.delta","elapsed_ms":37200,"delta":"ta","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":37742,"sent_ms":37800,"type":"session.output_audio.delta","elapsed_ms":18800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":38015,"sent_ms":38200,"type":"session.input_transcript.delta","elapsed_ms":37800,"delta":" herkes","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":38103,"sent_ms":38200,"type":"session.output_audio.delta","elapsed_ms":19000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":38503,"sent_ms":38600,"type":"session.output_audio.delta","elapsed_ms":19200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":38599,"sent_ms":38600,"type":"session.input_transcript.delta","elapsed_ms":38400,"delta":" farkl\u0131","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":38690,"sent_ms":38800,"type":"session.output_transcript.delta","elapsed_ms":38600,"delta":" In","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":38816,"sent_ms":39000,"type":"session.input_transcript.delta","elapsed_ms":38600,"delta":" yere","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":38903,"sent_ms":39000,"type":"session.output_transcript.delta","elapsed_ms":38800,"delta":" that","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":38940,"sent_ms":39000,"type":"session.output_audio.delta","elapsed_ms":19400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":39203,"sent_ms":39400,"type":"session.input_transcript.delta","elapsed_ms":39000,"delta":" ko\u015F","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":39210,"sent_ms":39400,"type":"session.input_transcript.delta","elapsed_ms":39000,"delta":"tu","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":39331,"sent_ms":39400,"type":"session.output_transcript.delta","elapsed_ms":39200,"delta":" match","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":39332,"sent_ms":39400,"type":"session.output_audio.delta","elapsed_ms":19600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":39792,"sent_ms":39800,"type":"session.output_transcript.delta","elapsed_ms":39600,"delta":",","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":39792,"sent_ms":39800,"type":"session.output_audio.delta","elapsed_ms":19800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":39800,"type":"client.progress","sent_ms":40000}
+{"t_ms":39863,"sent_ms":40000,"type":"session.input_transcript.delta","elapsed_ms":39600,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":39863,"sent_ms":40000,"type":"session.input_transcript.delta","elapsed_ms":39600,"delta":" Bu","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":39923,"sent_ms":40000,"type":"session.output_transcript.delta","elapsed_ms":39800,"delta":" everyone","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":40126,"sent_ms":40200,"type":"session.output_audio.delta","elapsed_ms":20000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":40270,"sent_ms":40400,"type":"session.input_transcript.delta","elapsed_ms":40000,"delta":" se","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":40277,"sent_ms":40400,"type":"session.input_transcript.delta","elapsed_ms":40000,"delta":"fer","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":40355,"sent_ms":40400,"type":"session.output_transcript.delta","elapsed_ms":40200,"delta":" ran","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":40514,"sent_ms":40600,"type":"session.output_transcript.delta","elapsed_ms":40400,"delta":" to","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":40547,"sent_ms":40600,"type":"session.output_audio.delta","elapsed_ms":20200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":40705,"sent_ms":40800,"type":"session.output_transcript.delta","elapsed_ms":40600,"delta":" different","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":40947,"sent_ms":41000,"type":"session.output_audio.delta","elapsed_ms":20400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":41018,"sent_ms":41200,"type":"session.input_transcript.delta","elapsed_ms":40800,"delta":" \u00F6n","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":41026,"sent_ms":41200,"type":"session.input_transcript.delta","elapsed_ms":40800,"delta":"ced","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":41030,"sent_ms":41200,"type":"session.input_transcript.delta","elapsed_ms":40800,"delta":"en","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":41105,"sent_ms":41200,"type":"session.output_transcript.delta","elapsed_ms":41000,"delta":" places","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":41225,"sent_ms":41400,"type":"session.input_transcript.delta","elapsed_ms":41000,"delta":" plan","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":41369,"sent_ms":41400,"type":"session.output_audio.delta","elapsed_ms":20600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":41510,"sent_ms":41600,"type":"session.output_transcript.delta","elapsed_ms":41400,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":41713,"sent_ms":41800,"type":"session.output_transcript.delta","elapsed_ms":41600,"delta":" This","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":41747,"sent_ms":41800,"type":"session.output_audio.delta","elapsed_ms":20800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":41819,"sent_ms":42000,"type":"session.input_transcript.delta","elapsed_ms":41600,"delta":" yap","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":41825,"sent_ms":42000,"type":"session.input_transcript.delta","elapsed_ms":41600,"delta":"al","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":41832,"sent_ms":42000,"type":"session.input_transcript.delta","elapsed_ms":41600,"delta":"\u0131m","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":41916,"sent_ms":42000,"type":"session.output_transcript.delta","elapsed_ms":41800,"delta":" time","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":42118,"sent_ms":42200,"type":"session.output_transcript.delta","elapsed_ms":42000,"delta":",","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":42120,"sent_ms":42200,"type":"session.output_transcript.delta","elapsed_ms":42000,"delta":" let\u0027s","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":42156,"sent_ms":42200,"type":"session.output_audio.delta","elapsed_ms":21000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":42297,"sent_ms":42400,"type":"session.output_transcript.delta","elapsed_ms":42200,"delta":" plan","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":42515,"sent_ms":42600,"type":"session.output_audio.delta","elapsed_ms":21200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":42702,"sent_ms":42800,"type":"session.output_transcript.delta","elapsed_ms":42600,"delta":" ahead","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":42907,"sent_ms":43000,"type":"session.output_transcript.delta","elapsed_ms":42800,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":42937,"sent_ms":43000,"type":"session.output_audio.delta","elapsed_ms":21400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":43008,"sent_ms":43200,"type":"session.input_transcript.delta","elapsed_ms":42800,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":43016,"sent_ms":43200,"type":"session.input_transcript.delta","elapsed_ms":42800,"delta":" Tam","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":43022,"sent_ms":43200,"type":"session.input_transcript.delta","elapsed_ms":42800,"delta":"am","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":43128,"sent_ms":43200,"type":"session.output_transcript.delta","elapsed_ms":43000,"delta":" Okay","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":43333,"sent_ms":43400,"type":"session.output_audio.delta","elapsed_ms":21600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":43403,"sent_ms":43600,"type":"session.input_transcript.delta","elapsed_ms":43200,"delta":",","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":43421,"sent_ms":43600,"type":"session.input_transcript.delta","elapsed_ms":43200,"delta":" ben","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":43531,"sent_ms":43600,"type":"session.output_transcript.delta","elapsed_ms":43400,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":43697,"sent_ms":43800,"type":"session.output_audio.delta","elapsed_ms":21800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":44013,"sent_ms":44200,"type":"session.input_transcript.delta","elapsed_ms":43800,"delta":" gel","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":44016,"sent_ms":44200,"type":"session.input_transcript.delta","elapsed_ms":43800,"delta":"ince","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":44102,"sent_ms":44200,"type":"session.output_audio.delta","elapsed_ms":22000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":44398,"sent_ms":44400,"type":"session.input_transcript.delta","elapsed_ms":44200,"delta":" destek","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":44494,"sent_ms":44600,"type":"session.output_transcript.delta","elapsed_ms":44400,"delta":" I\u0027ll","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":44577,"sent_ms":44600,"type":"session.output_audio.delta","elapsed_ms":22200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":44684,"sent_ms":44800,"type":"session.output_transcript.delta","elapsed_ms":44600,"delta":" play","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":44798,"sent_ms":44800,"type":"session.input_transcript.delta","elapsed_ms":44600,"delta":" oyn","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":44800,"type":"client.progress","sent_ms":45000}
+{"t_ms":44803,"sent_ms":45000,"type":"session.input_transcript.delta","elapsed_ms":44600,"delta":"ar\u0131m","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":44889,"sent_ms":45000,"type":"session.output_transcript.delta","elapsed_ms":44800,"delta":" support","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":44925,"sent_ms":45000,"type":"session.output_audio.delta","elapsed_ms":22400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":45306,"sent_ms":45400,"type":"session.output_transcript.delta","elapsed_ms":45200,"delta":" when","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":45339,"sent_ms":45400,"type":"session.output_audio.delta","elapsed_ms":22600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":45401,"sent_ms":45400,"type":"session.input_transcript.delta","elapsed_ms":45200,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":45433,"sent_ms":45600,"type":"session.input_transcript.delta","elapsed_ms":45200,"delta":" Siz","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":45499,"sent_ms":45600,"type":"session.output_transcript.delta","elapsed_ms":45400,"delta":" I","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":45500,"sent_ms":45600,"type":"session.output_transcript.delta","elapsed_ms":45400,"delta":" get","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":45728,"sent_ms":45800,"type":"session.output_transcript.delta","elapsed_ms":45600,"delta":" there","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":45765,"sent_ms":45800,"type":"session.output_audio.delta","elapsed_ms":22800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":45803,"sent_ms":46000,"type":"session.input_transcript.delta","elapsed_ms":45600,"delta":" sald\u0131r","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":45810,"sent_ms":46000,"type":"session.input_transcript.delta","elapsed_ms":45600,"delta":"\u0131ya","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":45891,"sent_ms":46000,"type":"session.output_transcript.delta","elapsed_ms":45800,"delta":",","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":45895,"sent_ms":46000,"type":"session.output_transcript.delta","elapsed_ms":45800,"delta":" you","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":46097,"sent_ms":46200,"type":"session.output_transcript.delta","elapsed_ms":46000,"delta":" go","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":46131,"sent_ms":46200,"type":"session.output_audio.delta","elapsed_ms":23000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":46202,"sent_ms":46400,"type":"session.input_transcript.delta","elapsed_ms":46000,"delta":" ge\u00E7","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":46213,"sent_ms":46400,"type":"session.input_transcript.delta","elapsed_ms":46000,"delta":"in","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":46287,"sent_ms":46400,"type":"session.output_transcript.delta","elapsed_ms":46200,"delta":" on","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":46291,"sent_ms":46400,"type":"session.output_transcript.delta","elapsed_ms":46200,"delta":" the","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":46494,"sent_ms":46600,"type":"session.output_transcript.delta","elapsed_ms":46400,"delta":" attack","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":46530,"sent_ms":46600,"type":"session.output_audio.delta","elapsed_ms":23200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":46895,"sent_ms":47000,"type":"session.output_transcript.delta","elapsed_ms":46800,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":46897,"sent_ms":47000,"type":"session.output_transcript.delta","elapsed_ms":46800,"delta":" Deal","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":46937,"sent_ms":47000,"type":"session.output_audio.delta","elapsed_ms":23400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":47094,"sent_ms":47200,"type":"session.input_transcript.delta","elapsed_ms":46800,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":47102,"sent_ms":47200,"type":"session.input_transcript.delta","elapsed_ms":46800,"delta":" An","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":47109,"sent_ms":47200,"type":"session.input_transcript.delta","elapsed_ms":46800,"delta":"la","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":47116,"sent_ms":47200,"type":"session.input_transcript.delta","elapsed_ms":46800,"delta":"\u015Ft","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":47126,"sent_ms":47200,"type":"session.input_transcript.delta","elapsed_ms":46800,"delta":"\u0131k","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":47288,"sent_ms":47400,"type":"session.output_transcript.delta","elapsed_ms":47200,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":47320,"sent_ms":47400,"type":"session.output_audio.delta","elapsed_ms":23600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":47604,"sent_ms":47800,"type":"session.input_transcript.delta","elapsed_ms":47400,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":47609,"sent_ms":47800,"type":"session.input_transcript.delta","elapsed_ms":47400,"delta":" O","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":47704,"sent_ms":47800,"type":"session.output_audio.delta","elapsed_ms":23800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":48019,"sent_ms":48200,"type":"session.input_transcript.delta","elapsed_ms":47800,"delta":" zaman","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":48119,"sent_ms":48200,"type":"session.output_audio.delta","elapsed_ms":24000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":48400,"sent_ms":48600,"type":"session.input_transcript.delta","elapsed_ms":48200,"delta":" saat","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":48498,"sent_ms":48600,"type":"session.output_audio.delta","elapsed_ms":24200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":48797,"sent_ms":48800,"type":"session.input_transcript.delta","elapsed_ms":48600,"delta":" dok","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":48805,"sent_ms":49000,"type":"session.input_transcript.delta","elapsed_ms":48600,"delta":"uz","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":48815,"sent_ms":49000,"type":"session.input_transcript.delta","elapsed_ms":48600,"delta":"da","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":48906,"sent_ms":49000,"type":"session.output_audio.delta","elapsed_ms":24400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":49296,"sent_ms":49400,"type":"session.output_transcript.delta","elapsed_ms":49200,"delta":" Then","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":49330,"sent_ms":49400,"type":"session.output_audio.delta","elapsed_ms":24600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":49402,"sent_ms":49600,"type":"session.input_transcript.delta","elapsed_ms":49200,"delta":" burada","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":49490,"sent_ms":49600,"type":"session.output_transcript.delta","elapsed_ms":49400,"delta":" let\u0027s","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":49705,"sent_ms":49800,"type":"session.output_transcript.delta","elapsed_ms":49600,"delta":" meet","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":49733,"sent_ms":49800,"type":"session.output_audio.delta","elapsed_ms":24800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":49801,"type":"client.progress","sent_ms":50000}
+{"t_ms":49893,"sent_ms":50000,"type":"session.output_transcript.delta","elapsed_ms":49800,"delta":" here","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":50008,"sent_ms":50200,"type":"session.input_transcript.delta","elapsed_ms":49800,"delta":" bul","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":50015,"sent_ms":50200,"type":"session.input_transcript.delta","elapsed_ms":49800,"delta":"u\u015F","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":50019,"sent_ms":50200,"type":"session.input_transcript.delta","elapsed_ms":49800,"delta":"uyor","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":50030,"sent_ms":50200,"type":"session.input_transcript.delta","elapsed_ms":49800,"delta":"uz","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":50097,"sent_ms":50200,"type":"session.output_transcript.delta","elapsed_ms":50000,"delta":" at","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":50128,"sent_ms":50200,"type":"session.output_audio.delta","elapsed_ms":25000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":50300,"sent_ms":50400,"type":"session.output_transcript.delta","elapsed_ms":50200,"delta":" nine","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":50488,"sent_ms":50600,"type":"session.output_transcript.delta","elapsed_ms":50400,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":50526,"sent_ms":50600,"type":"session.output_audio.delta","elapsed_ms":25200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":50899,"sent_ms":51000,"type":"session.output_audio.delta","elapsed_ms":25400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":51347,"sent_ms":51400,"type":"session.output_audio.delta","elapsed_ms":25600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":51705,"sent_ms":51800,"type":"session.output_audio.delta","elapsed_ms":25800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":51814,"sent_ms":52000,"type":"session.input_transcript.delta","elapsed_ms":51600,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":51821,"sent_ms":52000,"type":"session.input_transcript.delta","elapsed_ms":51600,"delta":" G\u00F6r","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":51821,"sent_ms":52000,"type":"session.input_transcript.delta","elapsed_ms":51600,"delta":"\u00FC\u015F","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":51825,"sent_ms":52000,"type":"session.input_transcript.delta","elapsed_ms":51600,"delta":"\u00FCr","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":51833,"sent_ms":52000,"type":"session.input_transcript.delta","elapsed_ms":51600,"delta":"\u00FCz","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":52091,"sent_ms":52200,"type":"session.output_transcript.delta","elapsed_ms":52000,"delta":" See","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":52137,"sent_ms":52200,"type":"session.output_audio.delta","elapsed_ms":26000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":52286,"sent_ms":52400,"type":"session.output_transcript.delta","elapsed_ms":52200,"delta":" you","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":52405,"sent_ms":52600,"type":"session.input_transcript.delta","elapsed_ms":52200,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":52412,"sent_ms":52600,"type":"session.input_transcript.delta","elapsed_ms":52200,"delta":" Ben","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":52500,"sent_ms":52600,"type":"session.output_transcript.delta","elapsed_ms":52400,"delta":",","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":52533,"sent_ms":52600,"type":"session.output_audio.delta","elapsed_ms":26200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":52703,"sent_ms":52800,"type":"session.output_transcript.delta","elapsed_ms":52600,"delta":" I\u0027m","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":52807,"sent_ms":53000,"type":"session.input_transcript.delta","elapsed_ms":52600,"delta":" \u015Fimdi","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":52896,"sent_ms":53000,"type":"session.output_transcript.delta","elapsed_ms":52800,"delta":" off","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":52931,"sent_ms":53000,"type":"session.output_audio.delta","elapsed_ms":26400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":53048,"sent_ms":53200,"type":"session.input_transcript.delta","elapsed_ms":52800,"delta":" bir","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":53171,"sent_ms":53200,"type":"session.output_transcript.delta","elapsed_ms":53000,"delta":" now","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":53209,"sent_ms":53400,"type":"session.input_transcript.delta","elapsed_ms":53000,"delta":" kah","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":53216,"sent_ms":53400,"type":"session.input_transcript.delta","elapsed_ms":53000,"delta":"ve","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":53300,"sent_ms":53400,"type":"session.output_transcript.delta","elapsed_ms":53200,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":53332,"sent_ms":53400,"type":"session.output_audio.delta","elapsed_ms":26600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":53650,"sent_ms":53800,"type":"session.input_transcript.delta","elapsed_ms":53400,"delta":" al","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":53657,"sent_ms":53800,"type":"session.input_transcript.delta","elapsed_ms":53400,"delta":"\u0131p","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":53753,"sent_ms":53800,"type":"session.output_audio.delta","elapsed_ms":26800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":53910,"sent_ms":54000,"type":"session.output_transcript.delta","elapsed_ms":53800,"delta":" I\u0027ll","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":54126,"sent_ms":54200,"type":"session.output_transcript.delta","elapsed_ms":54000,"delta":" grab","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":54150,"sent_ms":54200,"type":"session.output_audio.delta","elapsed_ms":27000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":54240,"sent_ms":54400,"type":"session.input_transcript.delta","elapsed_ms":54000,"delta":" gel","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":54248,"sent_ms":54400,"type":"session.input_transcript.delta","elapsed_ms":54000,"delta":"iyorum","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":54330,"sent_ms":54400,"type":"session.output_transcript.delta","elapsed_ms":54200,"delta":" a","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":54551,"sent_ms":54600,"type":"session.output_transcript.delta","elapsed_ms":54400,"delta":" coffee","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":54582,"sent_ms":54600,"type":"session.output_audio.delta","elapsed_ms":27200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":54708,"sent_ms":54800,"type":"session.output_transcript.delta","elapsed_ms":54600,"delta":" and","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":54800,"type":"client.progress","sent_ms":55000}
+{"t_ms":54918,"sent_ms":55000,"type":"session.output_transcript.delta","elapsed_ms":54800,"delta":" come","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":54921,"sent_ms":55000,"type":"session.output_transcript.delta","elapsed_ms":54800,"delta":" back","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":54955,"sent_ms":55000,"type":"session.output_audio.delta","elapsed_ms":27400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":55297,"sent_ms":55400,"type":"session.output_transcript.delta","elapsed_ms":55200,"delta":".","audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":55332,"sent_ms":55400,"type":"session.output_audio.delta","elapsed_ms":27600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":55718,"sent_ms":55800,"type":"session.output_audio.delta","elapsed_ms":27800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":56095,"sent_ms":56200,"type":"session.output_audio.delta","elapsed_ms":28000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":56603,"sent_ms":56600,"type":"session.output_audio.delta","elapsed_ms":28200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":56921,"sent_ms":57000,"type":"session.output_audio.delta","elapsed_ms":28400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":57317,"sent_ms":57400,"type":"session.output_audio.delta","elapsed_ms":28600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":57710,"sent_ms":57800,"type":"session.output_audio.delta","elapsed_ms":28800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":58099,"sent_ms":58200,"type":"session.output_audio.delta","elapsed_ms":29000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":58507,"sent_ms":58600,"type":"session.output_audio.delta","elapsed_ms":29200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":58904,"sent_ms":59000,"type":"session.output_audio.delta","elapsed_ms":29400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":59349,"sent_ms":59400,"type":"session.output_audio.delta","elapsed_ms":29600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":59797,"sent_ms":59800,"type":"session.output_audio.delta","elapsed_ms":29800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":59800,"type":"client.progress","sent_ms":60000}
+{"t_ms":60108,"sent_ms":60200,"type":"session.output_audio.delta","elapsed_ms":30000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":60517,"sent_ms":60600,"type":"session.output_audio.delta","elapsed_ms":30200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":60917,"sent_ms":61000,"type":"session.output_audio.delta","elapsed_ms":30400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":61312,"sent_ms":61400,"type":"session.output_audio.delta","elapsed_ms":30600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":61600,"type":"client.close_sent","sent_ms":61600}
+{"t_ms":61715,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":30800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":61939,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":31000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":61981,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":31200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":62049,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":31400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":62092,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":31600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":62125,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":31800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":62169,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":32000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":62218,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":32200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":62271,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":32400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":62333,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":32600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":62377,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":32800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":62465,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":33000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":62482,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":33200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":62531,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":33400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":62565,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":33600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":62630,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":33800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":62683,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":34000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":62749,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":34200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":62771,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":34400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":62850,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":34600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":62884,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":34800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":62964,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":35000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":63010,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":35200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":63059,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":35400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":63116,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":35600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":63148,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":35800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":63218,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":36000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":63320,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":36200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":63350,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":36400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":63463,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":36600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":63463,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":36800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":63510,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":37000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":63534,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":37200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":63592,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":37400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":63645,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":37600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":63699,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":37800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":63763,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":38000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":63802,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":38200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":63897,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":38400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":63920,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":38600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":63993,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":38800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":64046,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":39000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":64101,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":39200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":64159,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":39400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":64203,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":39600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":64265,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":39800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":64328,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":40000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":64388,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":40200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":64448,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":40400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":64490,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":40600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":64543,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":40800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":64626,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":41000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":64682,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":41200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":64737,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":41400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":64801,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":41600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":64861,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":41800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":64911,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":42000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":64971,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":42200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":65044,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":42400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":65141,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":42600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":65167,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":42800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":65244,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":43000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":65442,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":43200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":65459,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":43400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":65459,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":43600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":65467,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":43800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":65561,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":44000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":65625,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":44200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":65652,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":44400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":65743,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":44600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":65796,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":44800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":65874,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":45000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":65923,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":45200,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":65984,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":45400,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":66049,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":45600,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":66109,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":45800,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":66121,"sent_ms":61600,"type":"session.output_audio.delta","elapsed_ms":46000,"delta":null,"audio_bytes":19200,"expires_at":null,"session":null,"error":null}
+{"t_ms":66390,"sent_ms":61600,"type":"session.closed","elapsed_ms":null,"delta":null,"audio_bytes":null,"expires_at":null,"session":null,"error":null}
+{"t_ms":67536,"type":"client.ended","reason":"Server closed the connection (NormalClosure: bye)"}

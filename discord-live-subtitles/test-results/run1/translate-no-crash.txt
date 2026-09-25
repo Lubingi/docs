@@ -1,0 +1,52 @@
+dialogue-norwegian-4sp-20260926-002606.wav: 57.7s @ 24000 Hz
+  connection: Connecting — Connecting to OpenAI…
+  connection: Connected — Connected
+[   5.2s] Speaker 1  Hey everyone, can you hear me?
+                    (Hey allesammen, hører dere meg?)
+[   9.1s] ?          Yes, we can hear you fine. How did things go at work today?
+                    (Ja, vi hører deg fint. Hvordan gikk det på jobb i dag?)
+[  10.7s] ?          Pretty okay.
+                    (Helt greit.)
+[  12.9s] Speaker 1  But I'm really exhausted.
+                    (Men jeg er skikkelig sliten.)
+[  14.9s] Speaker 1  Should we play a bit tonight?
+                    (Skal vi spille litt i kveld?)
+[  16.9s] ?          I'm in.
+                    (Jeg er med, men jeg må)
+[  19.3s] Speaker 2  But I have to eat dinner first.
+                    (spise middag først)
+[  20.5s] ?          Same here.
+                    (. Samme her.)
+[  23.5s] Speaker 3  How about we start at eight
+                    (Hva med å starte klokka åtte?)
+[  27.7s] Speaker 3  eight works well for me.
+                    (Åtte passer bra for meg.)
+[  31.7s] Speaker 3  I've finally fixed the new headset.
+                    (Jeg har endelig fikset den nye headsettet)
+[  35.5s] Speaker 1  Great, so we're up and running. We could hardly hear you.
+                    (. Så bra! Forrige gang hørte vi deg nesten ikke)
+[  38.3s] Speaker 2  Who was it you remember that match
+                    (. Husker dere den kampen?)
+[  41.7s] Speaker 2  we were so close to winning.
+                    (Vi var så nære å vinne)
+[  45.4s] Speaker 3  Yeah, that was absolutely wild.
+                    (. Ja, det var helt vilt.)
+[  47.2s] Speaker 3  This time, we have to communicate better
+                    (Denne gangen må vi snakke mer sammen.)
+[  47.5s] ?          Enig.
+                    (Enig.)
+[  52.0s] Speaker 3  . Emmy, I can follow the map and speak up.
+                    (Jeg kan følge med på kartet og si ifra)
+[  55.0s] Speaker 1  Perfect, then see you at eight.
+                    (. Perfekt. Da ses vi klokka åtte)
+[  58.9s] Speaker 2  Take good care,
+                    (. Ha det bra så lenge)
+  connection: Reconnecting — Connection dropped (Connection ended) — reconnecting in 1s
+  connection: Stopped — Stopped
+Unhandled exception. System.ObjectDisposedException: The CancellationTokenSource has been disposed.
+   at System.Threading.CancellationTokenSource.Cancel()
+   at LiveSubtitles.Core.Translation.RealtimeTranslationSession.DisposeAsync() in /root/discord-live-translate/docs/discord-live-subtitles/src/LiveSubtitles.Core/Translation/RealtimeTranslationSession.cs:line 183
+   at LiveSubtitles.Core.Translation.TranslationConnection.StopAsync() in /root/discord-live-translate/docs/discord-live-subtitles/src/LiveSubtitles.Core/Translation/TranslationConnection.cs:line 329
+   at LiveSubtitles.Core.Pipeline.SubtitlePipeline.StopAsync() in /root/discord-live-translate/docs/discord-live-subtitles/src/LiveSubtitles.Core/Pipeline/SubtitlePipeline.cs:line 137
+   at Program.<Main>$(String[] args) in /root/discord-live-translate/docs/discord-live-subtitles/tools/LiveSubtitles.Cli/Program.cs:line 111
+   at Program.<Main>(String[] args)

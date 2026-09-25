@@ -1,0 +1,51 @@
+dialogue-norwegian-4sp-20260926-002606.wav: 57.7s @ 24000 Hz
+  connection: Connecting — Connecting to OpenAI…
+  connection: Connected — Connected
+[   7.8s] Speaker 1  Hey everyone, can you hear me?
+                    (Hey allesammen, hører dere meg?)
+[   9.6s] ?          Yes, we can hear you fine. How did work go today?
+                    (Ja, vi hører deg fint. Hvordan gikk det på jobb i dag?)
+[  11.1s] ?          It was fine,
+                    (Helt greit.)
+[  13.2s] Speaker 1  but I'm really tired.
+                    (Men jeg er skikkelig sliten.)
+[  14.5s] Speaker 1  Shall we play a bit tonight
+                    (Skal vi spille litt i kveld?)
+[  16.9s] ?          ?
+                    (Jeg er med, men jeg må)
+[  20.8s] Speaker 2  I'm in, but I have to eat dinner first.
+                    (spise middag først)
+[  21.1s] ?          . Samme her.
+                    (. Samme her.)
+[  24.2s] Speaker 3  Same here, how about we start at
+                    (Hva med å starte klokka åtte?)
+[  28.4s] Speaker 3  eight? Eight works for me,
+                    (Åtte passer bra for meg.)
+[  32.9s] Speaker 3  I've finally fixed the new headset.
+                    (Jeg har endelig fikset den nye headsettet)
+[  35.6s] Speaker 1  Great, because earlier we could hardly hear you.
+                    (. Så bra! Forrige gang hørte vi deg nesten ikke)
+[  38.2s] Speaker 2  Do you remember that match?
+                    (. Husker dere den kampen?)
+[  42.0s] Speaker 2  We were so close to winning.
+                    (Vi var så nære å vinne)
+[  44.2s] Speaker 3  Yeah, that was totally
+                    (. Ja, det var helt vilt.)
+[  46.8s] Speaker 3  wild. This time we need to talk more together.
+                    (Denne gangen må vi snakke mer sammen.)
+[  48.0s] ?          Right, Emil?
+                    (Enig.)
+[  51.2s] Speaker 3  I can keep up on the mapand
+                    (Jeg kan følge med på kartet og si ifra)
+[  55.4s] Speaker 1  let you know. Perfect. Then we'll see each other at eight.
+                    (. Perfekt. Da ses vi klokka åtte)
+[  58.9s] Speaker 2  Bye, so long.
+                    (. Ha det bra så lenge)
+  connection: Reconnecting — Connection dropped (Connection ended) — reconnecting in 1s
+  connection: Stopped — Stopped
+  connection: Stopped — Stopped
+audio sent: 0.94 min of 0.96 min · est. cost $0.048
+  Speaker 2: 5 segments, 10.8s
+  Speaker 1: 5 segments, 11.8s
+  Speaker 3: 8 segments, 19.9s
+report written to /root/discord-live-translate/docs/discord-live-subtitles/test-results/run1/report-no.json

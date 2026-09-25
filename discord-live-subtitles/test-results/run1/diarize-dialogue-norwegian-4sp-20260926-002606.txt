@@ -1,0 +1,26 @@
+dialogue-norwegian-4sp-20260926-002606.wav: 57.7s @ 24000 Hz
+  segment   1:    0.19s –    2.43s  Speaker 1  (best 0.00, next 0.00)
+  segment   2:    3.10s –    7.17s  ?          (best 0.34, next 0.00)
+  segment   3:    7.65s –    8.86s  ?          (best 0.36, next 0.00)
+  segment   4:    9.34s –   10.78s  Speaker 1  (best 0.54, next 0.00)
+  segment   5:   11.26s –   12.58s  Speaker 1  (best 0.58, next 0.00)
+  segment   6:   13.06s –   14.40s  ?          (best 0.20, next 0.00)
+  segment   7:   14.88s –   17.06s  Speaker 2  (best 0.26, next 0.00)
+  segment   8:   17.63s –   18.75s  ?          (best 0.33, next 0.31)
+  segment   9:   19.23s –   20.96s  Speaker 3  (best 0.82, next 0.40)
+  segment  10:   22.98s –   25.31s  Speaker 3  (best 0.59, next 0.26)
+  segment  11:   25.79s –   28.67s  Speaker 3  (best 0.69, next 0.33)
+  segment  12:   30.27s –   33.44s  Speaker 1  (best 0.62, next 0.38)
+  segment  13:   33.92s –   35.81s  Speaker 2  (best 0.62, next 0.32)
+  segment  14:   36.29s –   38.50s  Speaker 2  (best 0.72, next 0.31)
+  segment  15:   39.81s –   42.08s  Speaker 3  (best 0.56, next 0.31)
+  segment  16:   42.56s –   45.02s  Speaker 3  (best 0.75, next 0.44)
+  segment  17:   45.50s –   46.05s  ?          (best 0.45, next 0.28)
+  segment  18:   46.53s –   48.77s  Speaker 3  (best 0.68, next 0.38)
+  segment  19:   49.28s –   52.42s  Speaker 1  (best 0.66, next 0.42)
+  segment  20:   52.99s –   55.65s  Speaker 2  (best 0.78, next 0.36)
+audio that would be sent: 56.4s of 57.7s
+final speakers (after retroactive fixes and merges):
+  Speaker 2: 5 segments, 10.8s
+  Speaker 1: 5 segments, 11.8s
+  Speaker 3: 8 segments, 19.9s

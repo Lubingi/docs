@@ -1,0 +1,31 @@
+dialogue-english-2sp-20260926-002636.wav: 62.2s @ 24000 Hz
+  connection: Connecting — Connecting to OpenAI…
+  connection: Connected — Connected
+[  10.1s] Speaker 1  Yeah, folks, Alex, you still down for gaming tonight? Yeah, Sam, I'm in. Thinking we start around eight, that cool?
+                    (Yo Alex, you still down for gaming tonight? Yeah, Sam, I'm in. Thinking we start around eight. That cool?)
+[  19.6s] Speaker 1  Eight works, but it might be a bit late for me, though. I can jump on by 8:30 if needed. No worries, 8:30 is fine, and we'll probably wait for you if it's just the three of us
+                    (Eight works. Might be a bit late for me though. I can jump on by eight thirty if needed. No worries. Eight thirty is fine. We'll prob wait for you if it's just the three of us.)
+[  23.8s] Speaker 1  Sweet. Who's hosting the server, you or me?
+                    (Sweet. Who's hosting the server, you or me?)
+[  29.8s] Speaker 1  I can host itif my upload holds up, otherwise you can, no biggie.
+                    (I can host, if my upload holds up. Otherwise you can. No biggie)
+[  34.9s] Speaker 1  Cool, can you set up a Discord voice channel with push to talk? My mic's been acting funky
+                    (. Cool. Can you set up a Discord voice channel with push to talk? My mic's being funky lately)
+[  41.1s] Speaker 1  lately. Yeah, I'll make the channel and ping everyone. BTW, do we want to run ranked or just mess around
+                    (. Yeah, I'll make the channel and ping everyone. BTW, do we wanna run ranked or just mess around?)
+[  47.7s] Speaker 1  ? Let's mess around for the first couple matches, warm up, and then maybe try ranked,
+                    (Let's mess around for the first couple matches. Warm up, and then maybe try ranked if we're vibing)
+[  53.2s] Speaker 1  if we're feeling it. I'll ping the usual crew and see who's free.
+                    (. Sounds perfect. I'll ping the usual crew. See who's free)
+[  53.2s] ?          . Sweet.
+                    (. Sweet.)
+[  57.1s] Speaker 1  Sweet, bring snacks. I've already got caffeine covered, LOL
+                    (Bring snacks. I already got caffeine covered. LOL.)
+[  63.1s] Speaker 1  . Haha, nice. See you at 8:30 then. Don't be late, Sam's gonna roast you.
+                    (Haha, nice. See ya at eight thirty then. Don't be late. Sam's gonna roast you)
+  connection: Reconnecting — Connection dropped (Connection ended) — reconnecting in 1s
+  connection: Stopped — Stopped
+  connection: Stopped — Stopped
+audio sent: 1.03 min of 1.04 min · est. cost $0.053
+  Speaker 1: 10 segments, 55.0s
+report written to /root/discord-live-translate/docs/discord-live-subtitles/test-results/run1/report-en.json

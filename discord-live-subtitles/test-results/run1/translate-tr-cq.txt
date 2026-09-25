@@ -1,0 +1,35 @@
+dialogue-turkish-3sp-20260926-002552.wav: 55.5s @ 24000 Hz (call-quality simulation on)
+  connection: Connecting — Connecting to OpenAI…
+  connection: Connected — Connected
+[   5.7s] Speaker 1  Hello, folks. Can you hear me?
+                    (Selam millet, beni duyabiliyor musunuz?)
+[  10.3s] Speaker 2  Yes, we can hear you, but it’s a little crackly.
+                    (Evet, sesin geliyor. Ama biraz cızırtılı.)
+[  14.5s] Speaker 1  Okay, I changed the microphone. How is it now?
+                    (Tamam, mikrofonu değiştirdim. Şimdi nasıl?)
+[  15.5s] ?          Now it’s much better
+                    (Şimdi çok daha iyi.)
+[  17.9s] ?          . What time do we start tonight
+                    (Bu akşam kaçta başlıyoruz?)
+[  23.5s] Speaker 2  ? I think we should start at nine. I’ll be ready after dinner.
+                    (Bence dokuzda başlayalım. Ben yemekten sonra hazır olurum)
+[  27.5s] Speaker 1  I might be a little late. I’ll log on as soon as I finish work
+                    (. Ben biraz geç kalabilirim. İşten çıkınca hemen bağlanırım.)
+[  31.7s] Speaker 1  . No problem, Elif. The three of us can play the first match
+                    (Sorun değil, Elif. İlk maçı biz üçümüz oynarız.)
+[  38.9s] Speaker 3  . But let’s not lose again like last week. It was really annoying.
+                    (Ama geçen haftaki gibi yine kaybetmeyelim. Çok sinir bozucuydu.)
+[  44.5s] Speaker 2  We were all running in different directions in that match. This time, let’s plan ahead.
+                    (O maçta herkes farklı yere koştu. Bu sefer önceden plan yapalım.)
+[  52.1s] Speaker 1  Okay, when I get there, I’ll play support. You go on the attack. Deal. Then we’ll meet here at nine.
+                    (Tamam, ben gelince destek oynarım. Siz saldırıya geçin. Anlaştık. O zaman saat dokuzda burada buluşuyoruz)
+[  56.8s] Speaker 3  Goodbye. I’ll go have a coffee now and come back.
+                    (. Görüşürüz. Ben şimdi bir kahve alıp geliyorum)
+  connection: Reconnecting — Connection dropped (Connection ended) — reconnecting in 1s
+  connection: Stopped — Stopped
+  connection: Stopped — Stopped
+audio sent: 0.92 min of 0.92 min · est. cost $0.047
+  Speaker 3: 4 segments, 12.8s
+  Speaker 1: 5 segments, 22.7s
+  Speaker 2: 3 segments, 13.2s
+report written to /root/discord-live-translate/docs/discord-live-subtitles/test-results/run1/report-tr-cq.json

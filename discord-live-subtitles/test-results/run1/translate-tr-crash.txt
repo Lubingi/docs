@@ -1,0 +1,38 @@
+dialogue-turkish-3sp-20260926-002552.wav: 55.5s @ 24000 Hz
+  connection: Connecting — Connecting to OpenAI…
+  connection: Connected — Connected
+[   5.4s] Speaker 1  Hello, folks. Can you hear me?
+                    (Selam millet, beni duyabiliyor musunuz?)
+[  10.0s] ?          Yes, we can hear you, but it’s a little scratchy.
+                    (Evet, sesin geliyor. Ama biraz cızırtılı.)
+[  13.6s] Speaker 1  Okay, I changed the microphone. How is it now?
+                    (. Tamam, mikrofonu değiştirdim. Şimdi nasıl?)
+[  15.6s] Speaker 2  Now it’s much better.
+                    (Şimdi çok daha iyi.)
+[  18.6s] Speaker 2  What time are we starting tonight?
+                    (Bu akşam kaçta başlıyoruz?)
+[  22.6s] Speaker 3  I think we should start at nine. I’ll be ready after dinner
+                    (Bence dokuzda başlayalım. Ben yemekten sonra hazır olurum)
+[  27.4s] Speaker 1  . I might be a little late; I’ll call as soon as I get off
+                    (. Ben biraz geç kalabilirim. İşten çıkınca hemen bağlanırım.)
+[  29.8s] Speaker 1  work. No problem, Elif.
+                    (Sorun değil, Elif.)
+[  31.6s] Speaker 1  The three of us will play the first match
+                    (İlk maçı biz üçümüz oynarız.)
+[  37.4s] Speaker 2  . But let’s not lose again like last week.
+                    (Ama geçen haftaki gibi yine kaybetmeyelim. Çok sinir bozucuydu)
+[  43.4s] Speaker 3  It was really frustrating. In that match, everyone ran to different places; this time, let's make a plan beforehand
+                    (. O maçta herkes farklı yere koştu. Bu sefer önceden plan yapalım.)
+[  53.0s] Speaker 1  . Okay, I'll play support when I get there; you go on the offensive. Deal. Then let's meet here at nine.
+                    (Tamam, ben gelince destek oynarım. Siz saldırıya geçin. Anlaştık. O zaman saat dokuzda burada buluşuyoruz)
+[  57.8s] Speaker 2  See you. I'm just getting a coffee.
+                    (. Görüşürüz. Ben şimdi bir kahve alıp geliyorum)
+  connection: Reconnecting — Connection dropped (Connection ended) — reconnecting in 1s
+  connection: Stopped — Stopped
+Unhandled exception. System.ObjectDisposedException: The CancellationTokenSource has been disposed.
+   at System.Threading.CancellationTokenSource.Cancel()
+   at LiveSubtitles.Core.Translation.RealtimeTranslationSession.DisposeAsync() in /root/discord-live-translate/docs/discord-live-subtitles/src/LiveSubtitles.Core/Translation/RealtimeTranslationSession.cs:line 183
+   at LiveSubtitles.Core.Translation.TranslationConnection.StopAsync() in /root/discord-live-translate/docs/discord-live-subtitles/src/LiveSubtitles.Core/Translation/TranslationConnection.cs:line 329
+   at LiveSubtitles.Core.Pipeline.SubtitlePipeline.StopAsync() in /root/discord-live-translate/docs/discord-live-subtitles/src/LiveSubtitles.Core/Pipeline/SubtitlePipeline.cs:line 137
+   at Program.<Main>$(String[] args) in /root/discord-live-translate/docs/discord-live-subtitles/tools/LiveSubtitles.Cli/Program.cs:line 111
+   at Program.<Main>(String[] args)
