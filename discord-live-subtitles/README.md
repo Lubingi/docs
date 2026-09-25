@@ -210,3 +210,32 @@ Testing:
 
 Headless check: `dotnet run --project tools/LiveSubtitles.Cli -- diarize some.wav` prints each segment's speaker
 with similarity scores.
+
+### Stage 4: cost tracking, reconnects, call-quality simulation, polish
+
+1. **Cost:** the top bar shows `≈ $0.012 this session (0.3 min)`. It updates as speech is sent. Silence between
+   speakers is not sent, so a quiet call costs very little.
+2. **Spending cap:** in Settings → Cost, set e.g. `0.05`, then play a long file or video.
+   - When the cap is reached, the session pauses by itself.
+   - The overlay shows "Paused — spending cap reached", and a message explains how to continue.
+   - Resume only works after you raise or clear the cap.
+3. **Reconnect:** while a file or video is playing, disconnect from the network (turn off Wi-Fi or unplug the
+   cable) for 10 seconds, then reconnect.
+   - The status line and a small pill on the overlay show "Reconnecting…" with an increasing delay
+     (1 s, 2 s, 4 s … up to 30 s).
+   - Speech captured while offline (up to 20 s) is sent after reconnecting.
+   - The history keeps every line. OpenAI sessions are also rotated automatically shortly before they expire,
+     during a pause in speech.
+   - An invalid key is not retried endlessly: the status says what is wrong.
+4. **Call-quality simulation:** tick it on the Session tab (Audio file) or the Test tools tab. You can toggle it
+   while a file plays. The effect:
+   - narrows the voice band;
+   - varies each line's volume, as with different people's microphones;
+   - adds light compression and a quiet noise floor;
+   - drops rare 20–40 ms packets.
+
+   Generated dialogues then behave more like a real call, which is a harder test for speaker labels.
+5. **Latency:** the top bar shows the text lag (how far subtitles trail the audio) and how long after someone
+   stops talking their line becomes final. The Debug tab shows these values for each segment.
+6. **Errors** go to `%APPDATA%\LiveSubtitles\logs\livesubtitles-YYYYMMDD.log` (Debug tab → Open log folder).
+   Logs are kept for 14 days.

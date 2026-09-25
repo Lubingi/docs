@@ -5,12 +5,6 @@ using NAudio.Wave;
 
 namespace LiveSubtitles.App.Audio;
 
-/// <summary>Optional effect applied to test audio before it is played and analysed (call-quality simulation).</summary>
-public interface IAudioEffect
-{
-    void Process(Span<float> mono, int sampleRate);
-}
-
 /// <summary>
 /// Test mode: plays a local .mp3/.wav/.m4a/.aac/.wma file in real time through the full pipeline, as if it were a
 /// live call, optionally also through the speakers. Supports play/pause/seek. The file is only read, never modified.

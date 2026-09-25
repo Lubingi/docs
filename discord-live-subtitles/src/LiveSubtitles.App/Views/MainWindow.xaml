@@ -21,7 +21,7 @@
                     <TextBlock Text="{Binding ConnectionStatus}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" />
                     <TextBlock Text="{Binding SourceStatus}" Foreground="{StaticResource Muted}" TextTrimming="CharacterEllipsis" />
                     <TextBlock Foreground="{StaticResource Muted}" TextTrimming="CharacterEllipsis">
-                        <Run Text="{Binding LatencyText, Mode=OneWay}" /> <Run Text="{Binding SentText, Mode=OneWay}" />
+                        <Run Text="{Binding CostText, Mode=OneWay}" /> <Run Text="{Binding LatencyText, Mode=OneWay}" /> <Run Text="{Binding SentText, Mode=OneWay}" />
                     </TextBlock>
                     <TextBlock Text="{Binding LastError}" Foreground="Firebrick" TextWrapping="Wrap" />
                 </StackPanel>
@@ -67,6 +67,7 @@
                                 <TextBox Text="{Binding AudioFilePath, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding CanEditSource}" />
                             </DockPanel>
                             <CheckBox Content="Also play the file through my speakers" IsChecked="{Binding PlayFileToSpeakers}" IsEnabled="{Binding CanEditSource}" />
+                            <CheckBox Content="Call-quality simulation (band-limit, compression, noise, volume differences, rare dropouts) — can be toggled while playing" IsChecked="{Binding CallQuality}" />
                             <Border BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="4" Padding="8" Margin="0,6,0,0"
                                     Visibility="{Binding HasFileSession, Converter={StaticResource BoolToVis}}">
                                 <DockPanel>
@@ -180,6 +181,7 @@
                             <Button Content="▶ Play through the pipeline" Command="{Binding PlayDialogueCommand}" />
                             <Button Content="Open test audio folder" Command="{Binding OpenTestAudioFolderCommand}" />
                         </StackPanel>
+                        <CheckBox Content="Play with call-quality simulation (sounds more like a real Discord call)" IsChecked="{Binding CallQuality}" Margin="0,6,0,0" />
                         <TextBlock Text="{Binding DialogueStatus}" TextWrapping="Wrap" Margin="0,8,0,0" />
                         <TextBox Text="{Binding DialogueScript, Mode=OneWay}" IsReadOnly="True" TextWrapping="Wrap" Margin="0,6,0,0" MinHeight="120" MaxHeight="260"
                                  VerticalScrollBarVisibility="Auto" FontFamily="Segoe UI" />
@@ -322,6 +324,20 @@
                             <ComboBox ItemsSource="{Binding OutputLanguages}" SelectedValuePath="Value" SelectedValue="{Binding Settings.OutputLanguage}" Width="200" IsEnabled="{Binding CanEditSource}" />
                         </StackPanel>
                         <CheckBox Content="Send audio continuously (also long silences): slightly better accuracy, much higher cost" IsChecked="{Binding Settings.SendContinuously}" IsEnabled="{Binding CanEditSource}" />
+
+                        <TextBlock Style="{StaticResource SectionHeader}" Text="Cost" />
+                        <StackPanel Orientation="Horizontal" Margin="0,2">
+                            <TextBlock Text="Spending cap per session ($)" Width="200" VerticalAlignment="Center" />
+                            <TextBox Text="{Binding SpendingCapText, UpdateSourceTrigger=LostFocus}" Width="80" />
+                            <TextBlock Text="  empty = no cap; the session pauses automatically when reached" VerticalAlignment="Center" Foreground="{StaticResource Muted}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,2">
+                            <TextBlock Text="Price per minute: translate $" Width="200" VerticalAlignment="Center" />
+                            <TextBox Text="{Binding Settings.TranslateUsdPerMinute}" Width="80" />
+                            <TextBlock Text="  original text $" VerticalAlignment="Center" />
+                            <TextBox Text="{Binding Settings.TranscribeUsdPerMinute}" Width="80" />
+                        </StackPanel>
+                        <TextBlock Style="{StaticResource Hint}" Text="The running cost shown at the top is an estimate (audio minutes sent × these prices). Check platform.openai.com/usage for exact billing." />
 
                         <TextBlock Style="{StaticResource SectionHeader}" Text="App" />
                         <CheckBox Content="Minimise and close to the system tray" IsChecked="{Binding Settings.MinimizeToTray}" />

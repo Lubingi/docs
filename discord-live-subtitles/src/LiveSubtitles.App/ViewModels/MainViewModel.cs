@@ -4,6 +4,7 @@ using System.Windows.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LiveSubtitles.App.Audio;
+using LiveSubtitles.Core.Audio;
 using LiveSubtitles.App.Services;
 using LiveSubtitles.App.Views;
 using LiveSubtitles.Core.Diagnostics;
@@ -58,6 +59,7 @@ public partial class MainViewModel : ObservableObject
         _selectedSource = SourceOptions.First(o => o.Value == Settings.Source);
         _audioFilePath = Settings.LastAudioFile ?? "";
         _playFileToSpeakers = Settings.PlayFileToSpeakers;
+        _callQuality = Settings.CallQualitySimulation;
         _showOriginal = Settings.ShowOriginal;
         _selectedSameLanguage = SameLanguageOptions.First(o => o.Value == Settings.SameLanguage);
         _selectedNoiseReduction = NoiseReductionOptions.FirstOrDefault(o => o.Value == Settings.NoiseReduction) ?? NoiseReductionOptions[0];
@@ -73,6 +75,7 @@ public partial class MainViewModel : ObservableObject
         Session.SourceStatus += s => UiThread.Post(() => SourceStatus = s);
         Session.Level += (l, p) => UiThread.Post(() => { InputLevel = LevelToMeter(l); SpeechProbability = p; });
         Session.ServerError += e => UiThread.Post(() => LastError = "OpenAI: " + e);
+        Session.AudioSent += ms => _usage?.AddAudio(ms);
         Session.SourceStopped += ex => UiThread.Post(() => { if (ex != null) LastError = "Audio source stopped: " + ex.Message; });
         log.Logged += (level, text) => { if (level >= LogLevel.Warning) UiThread.Post(() => Debug.Log(text)); };
 
@@ -128,6 +131,7 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty] private OutputDevice? _selectedDevice;
     [ObservableProperty] private string _audioFilePath;
     [ObservableProperty] private bool _playFileToSpeakers;
+    [ObservableProperty] private bool _callQuality;
     [ObservableProperty] [NotifyPropertyChangedFor(nameof(ShowDevicePicker))] private bool _fallbackToDevice;
     [ObservableProperty] private bool _showOriginal;
     [ObservableProperty] private Option<SameLanguageMode> _selectedSameLanguage;
@@ -139,6 +143,12 @@ public partial class MainViewModel : ObservableObject
     partial void OnSelectedDeviceChanged(OutputDevice? value) { Settings.OutputDeviceId = value?.Id; SaveSettings(); }
     partial void OnAudioFilePathChanged(string value) { Settings.LastAudioFile = value; SaveSettings(); }
     partial void OnPlayFileToSpeakersChanged(bool value) { Settings.PlayFileToSpeakers = value; SaveSettings(); }
+    partial void OnCallQualityChanged(bool value)
+    {
+        Settings.CallQualitySimulation = value;
+        SaveSettings();
+        if (Session.FileSource is { } f) f.Effect = CreateFileEffect(); // applies immediately while playing
+    }
     partial void OnFallbackToDeviceChanged(bool value) { Settings.FallbackToDeviceLoopback = value; SaveSettings(); }
     partial void OnShowOriginalChanged(bool value) { Settings.ShowOriginal = value; SaveSettings(); }
     partial void OnSelectedSameLanguageChanged(Option<SameLanguageMode> value) { Settings.SameLanguage = value.Value; SaveSettings(); }
@@ -161,6 +171,7 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty] private string _sourceStatus = "";
     [ObservableProperty] private string _latencyText = "";
     [ObservableProperty] private string _sentText = "";
+    [ObservableProperty] private string _costText = "";
     [ObservableProperty] private string _lastError = "";
     [ObservableProperty] private double _inputLevel;
     [ObservableProperty] private double _speechProbability;
@@ -173,7 +184,12 @@ public partial class MainViewModel : ObservableObject
 
     private void OnStatus(PipelineStatus s)
     {
-        ConnectionStatus = s.Paused ? "Paused" : s.ConnectionMessage;
+        ConnectionStatus = s.Paused ? (_capPaused ? "Paused — spending cap reached" : "Paused") : s.ConnectionMessage;
+        if (_usage != null)
+            CostText = $"≈ ${_usage.CostUsd:0.000} this session ({_usage.Minutes:0.0} min)" + (_usage.CapUsd is { } cap ? $" · cap ${cap:0.00}" : "");
+        Overlay.StatusText = s.Paused ? ConnectionStatus
+            : s.Connection is ConnectionState.Reconnecting or ConnectionState.Connecting or ConnectionState.Failed ? s.ConnectionMessage
+            : "";
         var parts = new List<string>();
         if (s.AvgTextLagMs is { } lag) parts.Add($"text lag {lag / 1000:0.0}s");
         if (s.LastFinalLatencyMs is { } fin) parts.Add($"final {fin / 1000:0.0}s after speech");
@@ -286,7 +302,7 @@ public partial class MainViewModel : ObservableObject
         }
     }
 
-    private IAudioEffect? CreateFileEffect() => null;
+    private IAudioEffect? CreateFileEffect() => Settings.CallQualitySimulation ? new CallQualitySimulator() : null;
 
     private async Task StartSessionAsync()
     {
@@ -299,8 +315,12 @@ public partial class MainViewModel : ObservableObject
             if (string.IsNullOrWhiteSpace(key)) return;
         }
         if (Settings.Source == SourceKind.Device && Settings.OutputDeviceId == "") Settings.OutputDeviceId = null;
+        _capPaused = false;
         SaveNow();
         Overlay.Clear();
+        _usage = new UsageTracker(Settings.TranslateUsdPerMinute, Settings.TranscribeUsdPerMinute, Settings.ShowOriginal, Settings.SpendingCapUsd);
+        _usage.CapReached += () => UiThread.Post(OnCapReached);
+        CostText = "";
         try
         {
             await Session.StartAsync(Settings, key, CreateSpeakerIdentifier(), CreateTextProcessor(), CreateFileEffect());
@@ -338,10 +358,36 @@ public partial class MainViewModel : ObservableObject
         UpdateTray();
     }
 
+    private UsageTracker? _usage;
+    private bool _capPaused;
+
+    private void OnCapReached()
+    {
+        if (!IsRunning || IsPaused) return;
+        _capPaused = true;
+        IsPaused = true;
+        Session.SetPaused(true);
+        LastError = $"Spending cap of ${Settings.SpendingCapUsd:0.00} reached — paused. Raise or clear the cap in Settings to continue.";
+        _log.Warn("Spending cap reached; paused");
+        UpdateTray();
+    }
+
     [RelayCommand]
     public void TogglePause()
     {
         if (!IsRunning) return;
+        if (IsPaused && _usage != null)
+        {
+            _usage.CapUsd = Settings.SpendingCapUsd is > 0 ? Settings.SpendingCapUsd : null;
+            if (_usage.IsOverCap)
+            {
+                LastError = "Still over the spending cap. Raise or clear it in Settings first.";
+                return;
+            }
+            _usage.ResetCapNotification();
+            _capPaused = false;
+            LastError = "";
+        }
         IsPaused = !IsPaused;
         Session.SetPaused(IsPaused);
         UpdateTray();

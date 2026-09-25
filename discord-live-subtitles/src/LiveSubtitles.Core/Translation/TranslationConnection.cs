@@ -20,6 +20,8 @@ public sealed record ReconnectPolicy
     public TimeSpan MaxBacklog { get; init; } = TimeSpan.FromSeconds(20);
     /// <summary>Start a fresh session this long before the server-side expiry, during a quiet moment.</summary>
     public TimeSpan RotateBeforeExpiry { get; init; } = TimeSpan.FromMinutes(3);
+    /// <summary>Never rotate a session younger than this (guards against a very short server-side expiry).</summary>
+    public TimeSpan MinSessionAge { get; init; } = TimeSpan.FromMinutes(1);
 
     public TimeSpan DelayFor(int attempt)
     {
@@ -213,6 +215,7 @@ public sealed class TranslationConnection : IAsyncDisposable
     private ActiveSession Install(ActiveSession active)
     {
         active.Offset = _globalModelMs;
+        active.InstalledAt = DateTimeOffset.UtcNow;
         active.Session.EventReceived += ev => OnServerEvent(active, ev);
         _current = active;
         _chunk.Clear();
@@ -223,6 +226,7 @@ public sealed class TranslationConnection : IAsyncDisposable
     {
         if (_rotating || active.ExpiresAt is not { } expires) return false;
         var now = DateTimeOffset.UtcNow;
+        if (now - active.InstalledAt < _policy.MinSessionAge) return false;
         if (now < expires - _policy.RotateBeforeExpiry) return false;
         bool quiet = now - _lastSpeechSent > TimeSpan.FromSeconds(2);
         return quiet || now > expires - TimeSpan.FromSeconds(20);
@@ -343,6 +347,7 @@ public sealed class TranslationConnection : IAsyncDisposable
 
         public ITranslationSession Session { get; }
         public double Offset { get; set; }
+        public DateTimeOffset InstalledAt { get; set; }
         public double SentMs { get; set; }
         public DateTimeOffset? ExpiresAt { get; set; }
         public Task EndedTask => _ended.Task;

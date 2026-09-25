@@ -15,6 +15,10 @@
                 Visibility="{Binding IsMovable, Converter={StaticResource BoolToVis}}">
             <TextBlock Foreground="White" FontSize="12" Text="⠿ Drag to move · resize from the corner · Ctrl+Alt+T to lock (click-through)" />
         </Border>
+        <Border VerticalAlignment="Top" HorizontalAlignment="Left" Margin="8,6,0,0" Background="#CC202225" CornerRadius="10" Padding="10,3"
+                Visibility="{Binding HasStatus, Converter={StaticResource BoolToVis}}">
+            <TextBlock Text="{Binding StatusText}" Foreground="#FFD54F" FontSize="13" />
+        </Border>
         <ItemsControl x:Name="Lines" ItemsSource="{Binding Lines}" VerticalAlignment="Bottom" Margin="8,30,8,8">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>

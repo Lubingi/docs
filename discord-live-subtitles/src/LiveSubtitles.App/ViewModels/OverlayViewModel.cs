@@ -51,6 +51,9 @@ public partial class OverlayViewModel : ObservableObject
     public OverlaySettings Placement => _settings;
 
     [ObservableProperty] [NotifyPropertyChangedFor(nameof(IsMovable))] private bool _clickThrough;
+    /// <summary>Small status pill shown on the overlay (reconnecting, paused, cap reached); empty when all is well.</summary>
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(HasStatus))] private string _statusText = "";
+    public bool HasStatus => StatusText.Length > 0;
     public bool IsMovable => !ClickThrough;
 
     public string FontFamily => _settings.FontFamily;
