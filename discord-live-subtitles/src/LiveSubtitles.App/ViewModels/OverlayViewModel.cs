@@ -14,6 +14,9 @@ public partial class OverlayLineViewModel : ObservableObject
 
     public int SegmentId { get; }
     public int? SpeakerId { get; set; }
+    /// <summary>Consecutive lines by the same speaker shown together (segment id → line).</summary>
+    public SortedDictionary<int, TranscriptLine> Members { get; } = new();
+    public int LastSegmentId => Members.Count == 0 ? SegmentId : Members.Keys.Max();
     public DateTime LastChange { get; set; } = DateTime.UtcNow;
 
     [ObservableProperty] private string _name = "";
@@ -95,35 +98,62 @@ public partial class OverlayViewModel : ObservableObject
     public void Clear() => Lines.Clear();
 
     /// <summary>Apply a transcript update (call on the UI thread).</summary>
+    private const int MaxMergedChars = 220;
+
     public void Apply(TranscriptLine line)
     {
-        var existing = Lines.FirstOrDefault(l => l.SegmentId == line.SegmentId);
+        var group = Lines.FirstOrDefault(l => l.Members.ContainsKey(line.SegmentId));
         if (line.Hidden || !line.HasText)
         {
-            if (existing != null) Lines.Remove(existing);
+            if (group == null) return;
+            group.Members.Remove(line.SegmentId);
+            if (group.Members.Count == 0) Lines.Remove(group);
+            else Render(group);
             return;
         }
-        if (existing == null)
+        if (group == null)
         {
-            existing = new OverlayLineViewModel(line.SegmentId);
-            int index = 0;
-            while (index < Lines.Count && Lines[index].SegmentId < line.SegmentId) index++;
-            Lines.Insert(index, existing);
+            // Pauses split one person's speech into several segments; show them as one subtitle line.
+            var last = Lines.LastOrDefault();
+            bool merge = last != null
+                         && last.LastSegmentId < line.SegmentId
+                         && line.SegmentId - last.LastSegmentId <= 2
+                         && IsNamedSpeaker(line) && last.Members.Values.All(m => m.SpeakerLabel == line.SpeakerLabel)
+                         && (DateTime.UtcNow - last.LastChange).TotalSeconds < _settings.FadeSeconds
+                         && last.Text.Length + line.DisplayText.Length < MaxMergedChars;
+            if (merge) group = last;
+            else
+            {
+                group = new OverlayLineViewModel(line.SegmentId);
+                int index = 0;
+                while (index < Lines.Count && Lines[index].SegmentId < line.SegmentId) index++;
+                Lines.Insert(index, group);
+            }
         }
-        var color = ParseColor(line.SpeakerColor);
-        existing.SpeakerId = line.SpeakerId;
-        existing.Name = line.SpeakerLabel;
-        existing.NameSeparator = line.SpeakerLabel.Length > 0 ? ": " : "";
-        existing.NameBrush = new SolidColorBrush(color);
-        existing.TextBrush = new SolidColorBrush(Blend(color, Colors.White, 0.35));
-        existing.Text = line.DisplayText;
-        existing.Original = line.SameLanguage ? "" : line.Original;
-        existing.ShowOriginal = _settings.ShowOriginal && existing.Original.Length > 0;
-        if (existing.IsFinal != line.IsFinal || existing.Opacity < 1) existing.LastChange = DateTime.UtcNow;
-        if (!line.IsFinal) existing.LastChange = DateTime.UtcNow;
-        existing.IsFinal = line.IsFinal;
-        existing.Opacity = 1;
+        group!.Members[line.SegmentId] = line;
+        Render(group);
         TrimToMax();
+    }
+
+    private static bool IsNamedSpeaker(TranscriptLine l) => l.SpeakerLabel.Length > 0 && l.SpeakerLabel is not ("?" or "…") && !l.SpeakerUncertain;
+
+    private void Render(OverlayLineViewModel group)
+    {
+        var members = group.Members.Values.ToList();
+        var first = members[0];
+        var color = ParseColor(first.SpeakerColor);
+        group.SpeakerId = first.SpeakerId;
+        group.Name = first.SpeakerLabel;
+        group.NameSeparator = first.SpeakerLabel.Length > 0 ? ": " : "";
+        group.NameBrush = new SolidColorBrush(color);
+        group.TextBrush = new SolidColorBrush(Blend(color, Colors.White, 0.35));
+        group.Text = string.Join(" ", members.Select(m => m.DisplayText).Where(t => t.Length > 0));
+        group.Original = string.Join(" ", members.Where(m => !m.SameLanguage).Select(m => m.Original).Where(t => t.Length > 0));
+        group.ShowOriginal = _settings.ShowOriginal && group.Original.Length > 0;
+        bool isFinal = members.All(m => m.IsFinal);
+        if (!isFinal || group.IsFinal != isFinal || group.Opacity < 1) group.LastChange = DateTime.UtcNow;
+        group.IsFinal = isFinal;
+        group.Opacity = 1;
     }
 
     private void TrimToMax()

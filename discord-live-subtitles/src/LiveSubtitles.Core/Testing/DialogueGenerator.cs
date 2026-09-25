@@ -101,10 +101,7 @@ public sealed class DialogueGenerator
         }
         else
         {
-            script = BuiltInScripts[request.Language]
-                .Take(Math.Clamp(request.Lines, 4, 12))
-                .Select(l => l with { Speaker = l.Speaker % speakers })
-                .ToList();
+            script = MapSpeakers(BuiltInScripts[request.Language].Take(Math.Clamp(request.Lines, 4, 12)).ToList(), speakers);
         }
 
         const int rate = 24000; // TTS "pcm" output is 24 kHz 16-bit mono
@@ -185,6 +182,29 @@ public sealed class DialogueGenerator
         using var doc = JsonDocument.Parse(await resp.Content.ReadAsStringAsync(ct).ConfigureAwait(false));
         var content = doc.RootElement.GetProperty("choices")[0].GetProperty("message").GetProperty("content").GetString() ?? "";
         return ParseScript(content, request.Speakers);
+    }
+
+    /// <summary>Fits a 4-person script to fewer voices without anyone answering themselves: a change of speaker
+    /// in the script always stays a change of voice (the least recently heard other voice takes over).</summary>
+    internal static List<DialogueLine> MapSpeakers(IReadOnlyList<DialogueLine> script, int voices)
+    {
+        var map = new Dictionary<int, int>();
+        var lastUsed = new int[voices];
+        var result = new List<DialogueLine>();
+        for (int i = 0; i < script.Count; i++)
+        {
+            int original = script[i].Speaker;
+            int? previous = result.Count > 0 ? result[^1].Speaker : null;
+            bool sameAsBefore = i > 0 && script[i - 1].Speaker == original;
+            int voice;
+            if (sameAsBefore) voice = previous!.Value;
+            else if (map.TryGetValue(original, out var v) && v != previous) voice = v;
+            else voice = Enumerable.Range(0, voices).Where(x => x != previous).OrderBy(x => lastUsed[x]).First();
+            map[original] = voice;
+            lastUsed[voice] = i + 1;
+            result.Add(script[i] with { Speaker = voice });
+        }
+        return result;
     }
 
     internal static IReadOnlyList<DialogueLine> ParseScript(string json, int speakers)

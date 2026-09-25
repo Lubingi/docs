@@ -64,6 +64,7 @@ public sealed class AppSettings
     public PipelineOptions ToPipelineOptions() => new()
     {
         ShowOriginal = ShowOriginal,
+        OutputLanguage = OutputLanguage,
         SameLanguage = SameLanguage,
         Segmenter = new SegmenterOptions
         {
@@ -153,7 +154,7 @@ public sealed class AdvancedSettings
 {
     public float VadThreshold { get; set; } = 0.5f;
     public int MinSilenceMs { get; set; } = 300;
-    public int TailMs { get; set; } = 1500;
+    public int TailMs { get; set; } = 3000;
     public int MaxSegmentMs { get; set; } = 15000;
     public int CloseLagMs { get; set; } = 2500;
     public int FinalizeIdleMs { get; set; } = 2200;

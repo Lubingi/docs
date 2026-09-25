@@ -542,9 +542,9 @@ public sealed class SubtitlePipeline : IAsyncDisposable
 
     private TranscriptLine BuildLine(SegmentState st)
     {
-        var translation = _text.ProcessTranslation(_translationAttr.TextFor(st.Id)).Trim();
-        var original = _options.ShowOriginal ? _text.ProcessOriginal(_originalAttr.TextFor(st.Id)).Trim() : "";
-        bool sameLanguage = st.IsFinal && original.Length > 0 && (translation.Length == 0 || Normalize(translation) == Normalize(original));
+        var translation = CleanStart(_text.ProcessTranslation(_translationAttr.TextFor(st.Id)));
+        var original = _options.ShowOriginal ? CleanStart(_text.ProcessOriginal(_originalAttr.TextFor(st.Id))) : "";
+        bool sameLanguage = IsSameLanguage(st, translation, original);
         if (sameLanguage) translation = "";
 
         // Provisional speaker from the early check until the full segment has been assigned.
@@ -570,6 +570,23 @@ public sealed class SubtitlePipeline : IAsyncDisposable
         };
         return TranscriptRelabeler.Relabel(line, _speakers, _options.SameLanguage, st.Decision == SegmentDecision.Suppressed);
     }
+
+    /// <summary>
+    /// Speech already in the subtitle language. The model's output for it is unreliable (the live test saw nothing for
+    /// 47 s, then paraphrases), so English speech is recognised from the original transcript and shown word for word.
+    /// An empty translation alone is not evidence: it also happens when a line's text bled into the next line.
+    /// </summary>
+    private bool IsSameLanguage(SegmentState st, string translation, string original)
+    {
+        if (original.Length == 0) return false;
+        if (_options.OutputLanguage.StartsWith("en", StringComparison.OrdinalIgnoreCase))
+            return LanguageGuess.LooksEnglish(original) && (st.IsFinal || original.Count(char.IsWhiteSpace) >= 3);
+        return st.IsFinal && (translation.Length == 0 || Normalize(translation) == Normalize(original))
+               && original.Count(char.IsWhiteSpace) >= 2 && (st.StreamEndMs ?? 0) - st.StreamStartMs >= 1500;
+    }
+
+    /// <summary>Drops stray punctuation left at the start of a line ("? Okay" → "Okay").</summary>
+    private static string CleanStart(string text) => text.TrimStart(' ', '.', ',', '?', '!', ';', ':', '…').Trim();
 
     private static string Normalize(string s) =>
         new string(s.Where(char.IsLetterOrDigit).Select(char.ToLowerInvariant).ToArray());

@@ -17,7 +17,7 @@ public sealed record SegmenterOptions
     /// <summary>Audio kept from before the detected onset so the first syllable is not cut.</summary>
     public int PreRollMs { get; init; } = 320;
     /// <summary>After speech stops, keep sending real audio this long so the model can finish the sentence.</summary>
-    public int TailMs { get; init; } = 1500;
+    public int TailMs { get; init; } = 3000;
     /// <summary>Long monologues are split into pieces of at most this length.</summary>
     public int MaxSegmentMs { get; init; } = 15000;
     /// <summary>When muted speakers exist, identify the speaker after this much speech before sending audio.</summary>

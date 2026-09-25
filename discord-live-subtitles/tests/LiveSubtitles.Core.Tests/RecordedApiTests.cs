@@ -71,3 +71,24 @@ public class RecordedApiTests
     [InlineData("no end", 0)]
     public void CountsSentences(string text, int expected) => Assert.Equal(expected, StreamAttributor.CountSentences(text));
 }
+
+public class LanguageGuessTests
+{
+    [Theory]
+    [InlineData("Selam millet, beni duyabiliyor musunuz?", false)]
+    [InlineData("Ama geçen haftaki gibi yine kaybetmeyelim.", false)]
+    [InlineData("Ja, vi hører deg fint. Hvordan gikk det på jobb i dag?", false)]
+    [InlineData("Jeg er med, men jeg må spise middag først.", false)]
+    [InlineData("Samme her.", false)]
+    [InlineData("Enig.", false)]
+    [InlineData("Perfekt. Da ses vi klokka åtte.", false)]
+    [InlineData("Denne gangen må vi snakke mer sammen.", false)]
+    [InlineData("Tamam, ben gelince destek oynarım.", false)]
+    [InlineData("Yo Alex, you still down for gaming tonight?", true)]
+    [InlineData("Eight works. Might be a bit late for me though.", true)]
+    [InlineData("Who's hosting the server, you or me?", true)]
+    [InlineData("I can host, if my upload holds up. Otherwise you can. No biggie.", true)]
+    [InlineData("Let's mess around for the first couple matches.", true)]
+    [InlineData("Sounds good.", true)]
+    public void RecognisesEnglish(string text, bool english) => Assert.Equal(english, LiveSubtitles.Core.Text.LanguageGuess.LooksEnglish(text));
+}

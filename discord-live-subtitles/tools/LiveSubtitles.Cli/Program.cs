@@ -174,7 +174,7 @@ switch (args[0])
         await session.ConnectAsync(CancellationToken.None);
         Write(new { t_ms = Math.Round(clock.Elapsed.TotalMilliseconds), type = "client.connected", file = Path.GetFileName(args[1]), audio_seconds = pcm24.Length / 24000.0 });
         var withTail = pcm24.Concat(new float[24000 * 6]).ToArray();
-        clock.Restart();
+        var pace = Stopwatch.StartNew(); // real-time pacing; the event clock keeps running from the start
         for (int i = 0; i < withTail.Length; i += TranslationProtocol.ChunkSamples)
         {
             var piece = withTail.AsSpan(i, Math.Min(TranslationProtocol.ChunkSamples, withTail.Length - i)).ToArray();
@@ -183,7 +183,7 @@ switch (args[0])
             sentMs += TranslationProtocol.ChunkMs;
             if (sentMs % 5000 == 0) Write(new { t_ms = Math.Round(clock.Elapsed.TotalMilliseconds), type = "client.progress", sent_ms = sentMs });
             var due = TimeSpan.FromMilliseconds(sentMs);
-            if (due > clock.Elapsed) await Task.Delay(due - clock.Elapsed);
+            if (due > pace.Elapsed) await Task.Delay(due - pace.Elapsed);
         }
         Write(new { t_ms = Math.Round(clock.Elapsed.TotalMilliseconds), type = "client.close_sent", sent_ms = sentMs });
         var closeTask = session.CloseAsync(TimeSpan.FromSeconds(15));

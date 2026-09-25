@@ -119,15 +119,26 @@ official SDK type definitions and the official cookbook guide for `gpt-realtime-
   70+ supported input languages. English is one of the 13 output languages.
 - Output arrives as streamed `session.output_transcript.delta` events. The original-language
   `session.input_transcript.delta` events arrive only if input transcription (`gpt-realtime-whisper`) is enabled.
-  **There are no "done" events** and no turns. The app decides when a line is final: when the model has moved
-  past that speech segment, or when no more text arrives shortly after the speaker stops.
+  **There are no "done" events** and no turns. `elapsed_ms` on each delta is the input-audio position *when the
+  text was emitted*, not the time of the words. Measured on the live API, text trails speech by about 1–1.5 s, and a
+  sentence's end arrives up to 2.7 s after the speaker stops. The app matches text to speech segments using:
+  - that timing;
+  - sentence punctuation, including a trailing `.` or `?` that arrives on its own after the next person has
+    started;
+  - the original-language transcript, which lines up better with the speech and says how many sentences each
+    line should have.
+
+  A line is final when the text has moved past it, or when nothing new arrives shortly after the speaker stops.
 - Translated **audio cannot be switched off**. The app ignores `session.output_audio.delta`.
 - The model **does not accept prompts or glossaries**, so the glossary is applied locally to the text (stage 2).
-- The model does not translate speech that is already in the output language. See "Speech that is already in
-  English" on the Session tab.
-- When audio stops and later resumes, the model treats it as continuous. The app therefore sends a short
-  real-silence tail after speech (default 1.5 s) and pads to a whole 200 ms frame, so the model finishes each
-  sentence. **Send continuously** (Settings) sends everything, for the best quality at a higher cost.
+- For speech already in English, the model is inconsistent: in testing it produced nothing for 47 s, then
+  paraphrased. So the app recognises English speech from the original transcript (a small local word check) and
+  shows the speaker's exact words. See "Speech that is already in English" on the Session tab.
+- OpenAI's docs say to keep sending audio, silence included ("model time treats the resumed audio as
+  contiguous"). Sending everything costs $3/hour even when nobody talks. By default the app sends speech plus
+  3 s of real silence after it, then stops until the next speech. The 3 s covers the up-to-2.7 s the model needs
+  to finish a sentence. It also pads to a whole 200 ms frame. **Send continuously** (Settings) follows the docs
+  exactly, at the higher cost.
 
 ## Privacy
 
@@ -297,22 +308,30 @@ The result is in the `smoke-test-output` artifact.
 - **Overlapping speech:** Discord mixes all voices into one stream, so when two people talk at once the line goes
   to whoever dominates. Short interjections ("yes", "haha") under about 1 s often show "?", because they are too
   short to identify a voice reliably.
-- **Line boundaries:** the translation API streams text without utterance boundaries. The app matches text to
-  speech segments by audio timing. When one person answers the instant another stops, the first words of the
-  answer can end up on the previous line. The *Advanced tuning* values and the Debug tab help here.
+- **Line boundaries:** the translation API streams text without utterance boundaries, about 1–1.5 s behind the
+  speech. The app matches text to speech segments by timing, punctuation and the original transcript. On recorded
+  API output this fixed every cross-speaker bleed in the Norwegian test (previously 5 of 20 lines). A word can
+  still land on the neighbouring line when turns are very fast, and more so if the original-language text is
+  turned off, since it anchors the matching.
+- **Fast replies:** turns are split on pauses of 0.3 s. When two people still end up in one segment, the app
+  notices the voice change and doesn't learn from that segment. Its line is labelled with whoever starts it, or
+  "?".
 - **Glossary:** the model has no glossary or prompt input, so the glossary can only fix the text afterwards. It
   cannot stop the model from mistranslating a slang word in the first place.
-- **Same-language speech:** the model does not produce a translation for speech that's already in English. Such
-  lines use the original transcript (if enabled). To save cost for people who always speak English, mute them.
+- **Same-language speech:** English speech is shown from the original transcript (so keep "Show the original"
+  on), and the check is a simple word list. Mixed Turkish/English sentences count as Turkish and get translated.
+  To save cost for people who always speak English, mute them.
 - **Exclusive fullscreen games** hide every overlay. Use borderless windowed mode.
 - **Speaker labels** depend on audio quality. Discord's noise suppression and very similar voices can split one
   person into two labels or merge two people. Use Merge and "This line was said by" to correct it; the profiles
   learn from these corrections.
 - The cost shown is an estimate from audio minutes sent. OpenAI's billing is authoritative.
-- I verified the OpenAI API details from OpenAI's official SDK type definitions and cookbook guide. Everything
-  except a live call to OpenAI and the Windows audio devices is covered by automated tests: the WebSocket
-  protocol against a local fake server, the audio pipeline on real speech, and diarization on real
-  multi-speaker recordings.
+- **Testing so far:**
+  - The API details were checked against OpenAI's documentation, SDK and a live test run
+    (see `VPS-TEST-BRIEF.md`). That run found 6 bugs, all fixed.
+  - The automated tests replay text recorded from the real API, and run diarization on real multi-speaker
+    recordings and a fast-turn-taking reproduction.
+  - What hasn't been tested yet: real Discord audio on Windows.
 
 ## Troubleshooting
 

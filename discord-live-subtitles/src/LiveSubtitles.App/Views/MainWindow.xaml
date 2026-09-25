@@ -95,7 +95,7 @@
                             <TextBlock Text="Speech that is already in English:" VerticalAlignment="Center" Width="230" />
                             <ComboBox ItemsSource="{Binding SameLanguageOptions}" SelectedItem="{Binding SelectedSameLanguage}" Width="280" IsEnabled="{Binding CanEditSource}" />
                         </StackPanel>
-                        <TextBlock Style="{StaticResource Hint}" Text="The model never re-translates English into English. With “show as-is”, English speakers appear using the original transcript (needs the option above). To avoid paying for someone who always speaks English, mute them on the Speakers tab." />
+                        <TextBlock Style="{StaticResource Hint}" Text="English speech is recognised from the original transcript (needs the option above) and shown word for word, because the model's own output for it is unreliable. To avoid paying for someone who always speaks English, mute them on the Speakers tab." />
                         <StackPanel Orientation="Horizontal" Margin="0,4">
                             <TextBlock Text="OpenAI noise reduction:" VerticalAlignment="Center" Width="230" />
                             <ComboBox ItemsSource="{Binding NoiseReductionOptions}" SelectedItem="{Binding SelectedNoiseReduction}" Width="280" IsEnabled="{Binding CanEditSource}" />

@@ -9,6 +9,8 @@ public sealed record PipelineOptions
     public SegmenterOptions Segmenter { get; init; } = new();
     public AttributionOptions Attribution { get; init; } = new();
     public bool ShowOriginal { get; init; } = true;
+    /// <summary>Subtitle language code ("en"); used to recognise speech that is already in it.</summary>
+    public string OutputLanguage { get; init; } = "en";
     /// <summary>What to do with speech that is already in the output language (the model does not translate it).</summary>
     public SameLanguageMode SameLanguage { get; init; } = SameLanguageMode.ShowOriginal;
     /// <summary>Speaker is "muted" only if matched at least this confidently during early identification.</summary>

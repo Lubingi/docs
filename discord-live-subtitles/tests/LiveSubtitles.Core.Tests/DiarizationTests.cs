@@ -174,6 +174,21 @@ public class DialogueScriptTests
         Assert.Equal(2, lines[1].Speaker);
     }
 
+    [Theory]
+    [InlineData(2)]
+    [InlineData(3)]
+    [InlineData(4)]
+    public void FewerVoicesNeverAnswerThemselves(int voices)
+    {
+        foreach (var script in LiveSubtitles.Core.Testing.DialogueGenerator.BuiltInScripts.Values)
+        {
+            var mapped = LiveSubtitles.Core.Testing.DialogueGenerator.MapSpeakers(script, voices);
+            for (int i = 1; i < script.Length; i++)
+                Assert.Equal(script[i].Speaker == script[i - 1].Speaker, mapped[i].Speaker == mapped[i - 1].Speaker);
+            Assert.Equal(voices, mapped.Select(l => l.Speaker).Distinct().Count());
+        }
+    }
+
     [Fact]
     public void BuiltInScriptsUseAllFourVoices()
     {

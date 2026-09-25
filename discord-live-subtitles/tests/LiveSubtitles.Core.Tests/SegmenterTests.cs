@@ -35,8 +35,8 @@ public class SegmenterTests
 
         var sent = ev.OfType<SendFrame>().ToList();
         double sentMs = sent.Count * 32;
-        // speech (2.6 s) + preroll + short pause + tail ≈ 5 s; the long leading/trailing silence is not sent
-        Assert.InRange(sentMs, 4000, 5600);
+        // speech (2.6 s) + preroll + short pause + 3 s tail ≈ 6.5 s; the long leading/trailing silence is not sent
+        Assert.InRange(sentMs, 5500, 7100);
         Assert.Single(ev.OfType<GateClosed>());
         // frames are in chronological order
         Assert.True(sent.Zip(sent.Skip(1)).All(p => p.Second.StreamMs > p.First.StreamMs));
