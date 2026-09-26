@@ -39,7 +39,8 @@ The installer isn't code-signed, so Windows SmartScreen may say *"Windows protec
 **More info → Run anyway**. Uninstall from *Settings → Apps*. The uninstaller asks whether to also delete your
 settings, voice profiles, logs and the saved API key.
 
-**Option B: build the installer yourself.** Install the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
+**Option B: build the installer yourself.** With NSIS, which works on Linux too (`apt install nsis`) or
+Windows (`winget install NSIS.NSIS`, then use Git Bash), run `installer/build-installer-nsis.sh`. Or with Inno Setup: install the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
 and Inno Setup 6 (`winget install JRSoftware.InnoSetup`), then run:
 
 ```powershell
