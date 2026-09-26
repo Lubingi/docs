@@ -1,0 +1,1 @@
+11 pauses set to 8 s: 57.0s → 138.8s

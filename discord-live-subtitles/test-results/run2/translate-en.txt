@@ -1,0 +1,49 @@
+dialogue-english-2sp-20260926-021853.wav: 57.5s @ 24000 Hz
+  connection: Connecting — Connecting to OpenAI…
+  connection: Connected — Connected
+[   5.2s] Speaker 1  Hey Jamie, you around for a game night later?
+                    (Hey Jamie, you around for a game night later?)
+[   8.7s] Speaker 2  Yeah, Alex, I'm down. What time are you thinking?
+                    (Yeah, Alex, I'm down. What time are you thinking?)
+[  10.7s] Speaker 1  
+                    (Maybe around eight?)
+[  14.9s] Speaker 1  Gotta eat first, but can hop on by eight fifteen.
+                    (Gotta eat first, but can hop on by eight fifteen.)
+[  19.9s] Speaker 2  Cool, eight fifteen works. Do you wanna run some ranked or mess around in casual?
+                    (Cool, eight fifteen works. Do you wanna run some ranked or mess around in casual?)
+[  22.5s] Speaker 1  Let's do casual first.
+                    (Let's do casual first.)
+  connection: Reconnecting — Connection dropped (Connection lost: The remote party closed the WebSocket connection without completing the close handshake.) — reconnecting in 1s
+  connection: Reconnecting — Reconnecting (attempt 2)…
+  connection: Connected — Connected
+[  26.4s] Speaker 1  Warm up, and then Let's do casual first. Warm up and then go ranked if we're vibing.
+                    (Warm up, and then Let's do casual first. Warm up and then go ranked if we're vibing.)
+[  30.6s] Speaker 2  Sweet. I'll get the rest of the crew in the server and set up a lobby.
+                    (Sweet. I'll get the rest of the crew in the server and set up a lobby.)
+[  31.7s] ?          
+                    (Awesome!)
+[  34.0s] Speaker 1  Can you set up a voice channel and drop the link?
+                    (Can you set up a voice channel and drop the link?)
+[  38.1s] Speaker 2  Yep, will do. Also want to try that new map patch.
+                    (Yep, will do. Also want to try that new map patch.)
+[  39.7s] Speaker 1  
+                    (Totally.)
+[  43.0s] Speaker 1  Heard it's a bit wonky, but should be funny to mess with.
+                    (Heard it's a bit wonky, but should be funny to mess with.)
+[  45.0s] ?          Cool, I'll queue up some chill
+                    (Cool, I'll queue up some chill)
+[  47.8s] Speaker 2  
+                    (playlists and snacks ready.)
+[  48.8s] ?          
+                    (LOL Perfect.)
+[  52.1s] Speaker 1  I'll patch the mic and grab food.
+                    (I'll patch the mic and grab food.)
+[  54.0s] Speaker 1  See you at 8:15.
+                    (See you at 8:15.)
+[  59.6s] Speaker 2  See you then. Stay online so I can ping you
+                    (See you then. Stay online so I can ping you)
+  connection: Stopped — Stopped
+audio sent: 1.04 min of 0.96 min · est. cost $0.053
+  Speaker 2: 6 segments, 21.8s
+  Speaker 1: 10 segments, 23.1s
+report written to test-results/run2/report-en.json

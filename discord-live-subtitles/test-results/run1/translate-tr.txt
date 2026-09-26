@@ -1,0 +1,40 @@
+dialogue-turkish-3sp-20260926-002552.wav: 55.5s @ 24000 Hz
+  connection: Connecting — Connecting to OpenAI…
+  connection: Connected — Connected
+[   5.0s] Speaker 1  Hey folks, can you hear me?
+                    (Selam millet, beni duyabiliyor musunuz?)
+[  10.3s] ?          Yes, I can hear you. But it’s a bit crackly.
+                    (Evet, sesin geliyor. Ama biraz cızırtılı.)
+[  13.8s] Speaker 1  Okay, I changed the microphone. How about now?
+                    (Tamam, mikrofonu değiştirdim. Şimdi nasıl?)
+[  15.6s] Speaker 2  Now it’s much better.
+                    (Şimdi çok daha iyi.)
+[  18.3s] Speaker 2  What time does this start tonight?
+                    (Bu akşam kaçta başlıyoruz?)
+[  23.7s] Speaker 3  I think we should start at nine. I'll be ready after dinner.
+                    (Bence dokuzda başlayalım. Ben yemekten sonra hazır olurum.)
+[  27.5s] Speaker 1  I might be a little late. I'll join as soon as I get off work.
+                    (Ben biraz geç kalabilirim. İşten çıkınca hemen bağlanırım.)
+[  29.2s] Speaker 1  No problem.
+                    (Sorun değil, Elif.)
+[  33.2s] Speaker 1  Elif, we can watch the first match, the three of us.
+                    (İlk maçı biz üçümüz oynarız.)
+  connection: Reconnecting — Connection dropped (Connection lost: The remote party closed the WebSocket connection without completing the close handshake.) — reconnecting in 1s
+  connection: Reconnecting — Reconnecting (attempt 2)…
+  connection: Connected — Connected
+[  39.0s] Speaker 2  But theyA very frustrating day.
+                    (Ama geçen haftaki gibi yine Çok sinir bozucuydu.)
+[  43.7s] Speaker 3  In that match, everyone ran in different directions. This time, let's make a plan beforehand
+                    (O maçta herkes farklı yere koştu. Bu sefer önceden plan yapalım.)
+[  51.9s] Speaker 1  . Okay, when I get there, I'll play support. You make the push. Deal—then let's meet here at nine.
+                    (Tamam, ben gelince destek oynarım. Siz saldırıya geçin. Anlaştık. O zaman saat dokuzda burada buluşuyoruz.)
+[  57.6s] Speaker 2  See you. I'm just going to grab a coffee now.
+                    (. Görüşürüz, ben şimdi bir kahve alıp geliyorum.)
+  connection: Reconnecting — Connection dropped (Connection ended) — reconnecting in 1s
+  connection: Stopped — Stopped
+  connection: Stopped — Stopped
+audio sent: 0.92 min of 0.92 min · est. cost $0.047
+  Speaker 2: 4 segments, 12.7s
+  Speaker 1: 6 segments, 22.4s
+  Speaker 3: 3 segments, 13.2s
+report written to /root/discord-live-translate/docs/discord-live-subtitles/test-results/run1/report-tr.json

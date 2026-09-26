@@ -1,0 +1,305 @@
+no-gaps.wav: 138.8s @ 24000 Hz
+  connection: Connecting — Connecting to OpenAI…
+  connection: Connected — Connected
+  connection: Reconnecting — Connection dropped (Connection lost: The remote party closed the WebSocket connection without completing the close handshake.) — reconnecting in 1s
+  connection: Reconnecting — Reconnecting (attempt 2)…
+[   5.4s] Speaker 1  Hey, everyone
+                    (Hey allesammen.)
+  connection: Connected — Connected
+[   6.1s] Speaker 1  Hey, everyoneHello
+                    (Hey allesammen.)
+[   6.4s] Speaker 1  Hey, everyoneHello everyone
+                    (Hey allesammen.)
+[   6.4s] Speaker 1  Hey, everyoneHello everyone,
+                    (Hey allesammen.)
+[   6.4s] Speaker 1  Hey, everyoneHello everyone, can
+                    (Hey allesammen.)
+[   6.4s] ?          
+                    (Listen)
+[   6.6s] Speaker 1  Hey, everyoneHello everyone, can you
+                    (Hey allesammen.)
+[   6.6s] Speaker 1  Hey, everyoneHello everyone, can you hear
+                    (Hey allesammen.)
+[   6.6s] ?          
+                    (Listenmen)
+[   6.6s] ?          
+                    (Listenmen h)
+[   6.6s] ?          
+                    (Listenmen hører)
+[   6.7s] Speaker 1  Hey, everyoneHello everyone, can you hear me
+                    (Hey allesammen.)
+[   6.7s] ?          
+                    (Listenmen hører dere)
+[   6.7s] Speaker 1  Hey, everyoneHello everyone, can you hear me?
+                    (Hey allesammen.)
+[   6.7s] ?          
+                    (Listenmen hører dere meg)
+[   6.7s] ?          
+                    (Listenmen hører dere meg?)
+[  15.4s] ?          Yes, we can hear you just
+                    (Ja, vi hører deg fint)
+[  16.0s] Speaker 2  fine.
+                    ()
+[  20.1s] Speaker 2  How did it go at work today?
+                    (Hvordan gikk det på jobb i dag?)
+[  27.1s] ?          Fine, all right.
+                    (Helt greit.)
+[  28.8s] ?          But I'm completely exhausted.
+                    (Men jeg er skikkelig sliten.)
+[  32.6s] ?          Want to play a little tonight?
+                    (Skal vi spille litt i kveld?)
+[  42.0s] Speaker 3  I'm in, but I need to eat
+                    (Jeg er med, men jeg må spise)
+[  45.3s] ?          dinner
+                    (middag først)
+[  51.4s] ?          dinner
+                    (middag først Summ)
+[  51.4s] ?          dinner
+                    (middag først Summen)
+[  52.0s] ?          dinner
+                    (middag først Summen her)
+[  52.4s] ?          dinner
+                    (middag først Summen her var)
+[  52.9s] ?          dinner
+                    (middag først Summen her var ned)
+[  53.2s] ?          dinner
+                    (middag først Summen her var ned å)
+[  53.2s] ?          dinner
+                    (middag først Summen her var ned å starte)
+[  53.5s] ?          dinner
+                    (middag først Summen her var ned å starte kl)
+[  53.5s] ?          dinner
+                    (middag først Summen her var ned å starte klokka)
+[  56.4s] ?          This is Vara, it
+                    (åtte.)
+[  57.5s] Speaker 2  starts at eight.
+                    ()
+[  62.4s] ?          This is Vara, it
+                    (åtte. Å)
+[  62.4s] ?          This is Vara, it
+                    (åtte. Åtte)
+[  62.8s] ?          This is Vara, it
+                    (åtte. Åtte passer)
+[  63.0s] ?          This is Vara, it
+                    (åtte. Åtte passer bra)
+[  63.4s] ?          This is Vara, it
+                    (åtte. Åtte passer bra for)
+  connection: Reconnecting — Connection dropped (Connection lost: The remote party closed the WebSocket connection without completing the close handshake.) — reconnecting in 1s
+  connection: Reconnecting — Reconnecting (attempt 2)…
+  connection: Connected — Connected
+[  65.9s] Speaker 2  Eight works
+                    ()
+[  66.0s] Speaker 2  Eight works
+                    (Pass)
+[  66.0s] Speaker 2  Eight works
+                    (Passer)
+[  66.1s] Speaker 2  Eight works
+                    (Passer bra)
+[  66.1s] Speaker 2  Eight works
+                    (Passer bra for)
+[  66.2s] Speaker 2  Eight works
+                    (Passer bra for meg)
+[  66.2s] Speaker 2  Eight works
+                    (Passer bra for meg.)
+[  66.4s] Speaker 2  Eight worksHow
+                    (Passer bra for meg.)
+[  66.5s] Speaker 2  Eight worksHow are
+                    (Passer bra for meg.)
+[  66.5s] Speaker 2  Eight worksHow are you
+                    (Passer bra for meg.)
+[  66.5s] Speaker 2  Eight worksHow are you,
+                    (Passer bra for meg.)
+[  66.5s] Speaker 2  Eight worksHow are you, everyone
+                    (Passer bra for meg.)
+[  66.7s] Speaker 2  Eight worksHow are you, everyone?
+                    (Passer bra for meg.)
+[  70.1s] Speaker 2  I've finally got a new headset.
+                    (Jeg har endelig fikset den nye headsettet.)
+[  75.3s] Speaker 2  I've finally got a new headset.
+                    (Jeg har endelig fikset den nye headsettet. Så)
+[  75.9s] Speaker 2  I've finally got a new headset.
+                    (Jeg har endelig fikset den nye headsettet. Så bra)
+[  75.9s] Speaker 2  I've finally got a new headset.
+                    (Jeg har endelig fikset den nye headsettet. Så bra.)
+[  76.7s] Speaker 2  I've finally got a new headset.
+                    (Jeg har endelig fikset den nye headsettet. Så bra. For)
+[  76.7s] Speaker 2  I've finally got a new headset.
+                    (Jeg har endelig fikset den nye headsettet. Så bra. Forrige)
+[  76.9s] Speaker 2  I've finally got a new headset.
+                    (Jeg har endelig fikset den nye headsettet. Så bra. Forrige gang)
+[  77.4s] Speaker 2  I've finally got a new headset.
+                    (Jeg har endelig fikset den nye headsettet. Så bra. Forrige gang h)
+[  77.4s] Speaker 2  I've finally got a new headset.
+                    (Jeg har endelig fikset den nye headsettet. Så bra. Forrige gang hørte)
+[  79.9s] ?          we
+                    ()
+[  79.9s] ?          we could
+                    ()
+[  79.9s] ?          we could hardly
+                    ()
+[  80.7s] ?          we could hardly hear
+                    ()
+[  80.7s] ?          we could hardly hear you
+                    ()
+[  80.7s] ?          we could hardly hear you.
+                    ()
+[  81.0s] ?          So, last time,
+                    (vi deg nesten ikke.)
+[  87.9s] ?          we could hardly hear you.
+                    (Hus)
+[  88.0s] ?          we could hardly hear you.
+                    (Husk)
+[  88.0s] ?          we could hardly hear you.
+                    (Huskar)
+[  88.0s] ?          we could hardly hear you.
+                    (Huskar dere)
+[  88.0s] ?          we could hardly hear you.
+                    (Huskar dere den)
+[  88.1s] ?          we could hardly hear you.
+                    (Huskar dere den?)
+[  88.4s] ?          we could hardly hear you.
+                    (Huskar dere den? kampen)
+[  89.1s] ?          we could hardly hear you.
+                    (Huskar dere den? kampen?)
+[  89.1s] ?          we could hardly hear you.
+                    (Huskar dere den? kampen? Vi)
+[  90.4s] ?          we could hardly hear you.
+                    (Huskar dere den? kampen? Vi var)
+[  90.5s] ?          we could hardly hear you.
+                    (Huskar dere den? kampen? Vi var så)
+[  90.5s] ?          That
+                    ()
+[  90.5s] Speaker 3  Do you remember that?
+                    ()
+[  90.6s] ?          we could hardly hear you.
+                    (Huskar dere den? kampen? Vi var så n)
+[  90.6s] ?          we could hardly hear you.
+                    (Huskar dere den? kampen? Vi var så nære)
+[  90.6s] ?          we could hardly hear you.
+                    (Huskar dere den? kampen? Vi var så nære å)
+[  90.8s] ?          That match
+                    ()
+[  90.8s] ?          That match?
+                    ()
+[  91.3s] ?          we could hardly hear you.
+                    (Huskar dere den? kampen? Vi var så nære å vin)
+[  91.3s] ?          we could hardly hear you.
+                    (Huskar dere den? kampen? Vi var så nære å vinne)
+[  91.3s] ?          we could hardly hear you.
+                    (Huskar dere den? kampen? Vi var så nære å vinne.)
+[  94.4s] Speaker 3  We were so close to winning.
+                    ()
+[  99.7s] Speaker 3  We were so close to winning.
+                    (Ja)
+[ 100.1s] Speaker 3  We were so close to winning.
+                    (Ja,)
+[ 100.1s] Speaker 3  We were so close to winning.
+                    (Ja, det)
+[ 100.4s] Speaker 3  We were so close to winning.
+                    (Ja, det var)
+[ 100.9s] Speaker 3  We were so close to winning.
+                    (Ja, det var helt)
+[ 101.7s] Speaker 3  We were so close to winning.
+                    (Ja, det var helt v)
+[ 101.7s] Speaker 3  We were so close to winning.
+                    (Ja, det var helt vilt)
+[ 102.4s] Speaker 3  We were so close to winning.
+                    (Ja, det var helt vilt.)
+[ 102.4s] Speaker 3  We were so close to winning.
+                    (Ja, det var helt vilt. Denne)
+[ 102.6s] Speaker 3  We were so close to winning.
+                    (Ja, det var helt vilt. Denne gangen)
+[ 102.8s] Speaker 3  We were so close to winning.
+                    (Ja, det var helt vilt. Denne gangen må)
+[ 102.9s] Speaker 3  We were so close to winning.
+                    (Ja, det var helt vilt. Denne gangen må vi)
+[ 103.2s] Speaker 3  We were so close to winning.
+                    (Ja, det var helt vilt. Denne gangen må vi sn)
+[ 103.2s] Speaker 3  We were so close to winning.
+                    (Ja, det var helt vilt. Denne gangen må vi snakke)
+[ 103.6s] Speaker 3  We were so close to winning.
+                    (Ja, det var helt vilt. Denne gangen må vi snakke mer)
+[ 104.5s] Speaker 3  We were so close to winning.
+                    (Ja, det var helt vilt. Denne gangen må vi snakke mer sammen)
+[ 109.8s] Speaker 2  Yeah, that was wild. This time we have to communicate better
+                    ()
+[ 112.3s] Speaker 2  Yeah, that was wild. This time we have to communicate better.
+                    ()
+[ 113.0s] Speaker 2  Yeah, that was wild. This time we have to communicate better.
+                    (En)
+[ 113.0s] Speaker 2  Yeah, that was wild. This time we have to communicate better.
+                    (Enig)
+[ 113.5s] Speaker 2  Yeah, that was wild. This time we have to communicate better.
+                    (Enig.)
+[ 113.5s] Speaker 2  Yeah, that was wild. This time we have to communicate better.
+                    (Enig. Jeg)
+[ 113.7s] Speaker 2  Yeah, that was wild. This time we have to communicate better.
+                    (Enig. Jeg kan)
+[ 114.1s] Speaker 2  Yeah, that was wild. This time we have to communicate better.
+                    (Enig. Jeg kan følge)
+[ 114.3s] Speaker 2  Yeah, that was wild. This time we have to communicate better.
+                    (Enig. Jeg kan følge med)
+[ 114.5s] Speaker 2  Yeah, that was wild. This time we have to communicate better.
+                    (Enig. Jeg kan følge med på)
+[ 115.0s] Speaker 2  Yeah, that was wild. This time we have to communicate better.
+                    (Enig. Jeg kan følge med på kart)
+[ 115.0s] Speaker 2  Yeah, that was wild. This time we have to communicate better.
+                    (Enig. Jeg kan følge med på kartet)
+[ 115.1s] Speaker 2  Yeah, that was wild. This time we have to communicate better.
+                    (Enig. Jeg kan følge med på kartet og)
+[ 115.1s] ?          I agree,
+                    ()
+[ 115.5s] Speaker 2  Yeah, that was wild. This time we have to communicate better.
+                    (Enig. Jeg kan følge med på kartet og si)
+[ 116.5s] Speaker 2  Yeah, that was wild. This time we have to communicate better.
+                    (Enig. Jeg kan følge med på kartet og si if)
+[ 116.5s] Speaker 2  Yeah, that was wild. This time we have to communicate better.
+                    (Enig. Jeg kan følge med på kartet og si ifra)
+[ 119.8s] Speaker 2  I can watch the map and call it out.
+                    ()
+[ 125.5s] Speaker 2  Yeah, that was wild. This time we have to communicate better.
+                    (Enig. Jeg kan følge med på kartet og si ifra Perf)
+[ 125.5s] Speaker 2  Yeah, that was wild. This time we have to communicate better.
+                    (Enig. Jeg kan følge med på kartet og si ifra Perfekt)
+[ 125.5s] Speaker 2  Yeah, that was wild. This time we have to communicate better.
+                    (Enig. Jeg kan følge med på kartet og si ifra Perfekt.)
+[ 126.4s] ?          I agree,
+                    (Da)
+[ 126.8s] ?          I agree,
+                    (Da ses)
+[ 127.1s] ?          I agree,
+                    (Da ses vi)
+[ 127.1s] ?          I agree,
+                    (Da ses vi kl)
+[ 127.1s] ?          I agree,
+                    (Da ses vi klokka)
+[ 127.8s] ?          Perfect,
+                    ()
+[ 128.0s] ?          I agree,
+                    (Da ses vi klokka å)
+[ 128.0s] ?          I agree,
+                    (Da ses vi klokka åtte)
+[ 128.0s] ?          I agree,
+                    (Da ses vi klokka åtte.)
+[ 131.9s] ?          then see you at eight.
+                    ()
+[ 136.3s] Speaker 2  I can watch the map and call it out.
+                    (Ha)
+[ 136.5s] Speaker 2  I can watch the map and call it out.
+                    (Ha det)
+[ 136.9s] Speaker 2  I can watch the map and call it out.
+                    (Ha det bra)
+[ 137.3s] Speaker 2  I can watch the map and call it out.
+                    (Ha det bra så)
+[ 138.3s] Speaker 2  I can watch the map and call it out.
+                    (Ha det bra så lenge)
+[ 138.3s] Speaker 2  I can watch the map and call it out.
+                    (Ha det bra så lenge.)
+[ 141.8s] Speaker 3  Have a good one, see you later.
+                    ()
+  connection: Stopped — Stopped
+audio sent: 1.51 min of 2.31 min · est. cost $0.077
+  Speaker 3: 4 segments, 8.2s
+  Speaker 2: 8 segments, 16.5s
+  Speaker 1: 1 segments, 1.9s
+report written to test-results/run2/report-no-gaps-default.json

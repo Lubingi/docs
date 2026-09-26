@@ -1,0 +1,33 @@
+dialogue-norwegian-4sp-20260926-021822.wav: 57.0s @ 24000 Hz (call-quality simulation on)
+  segment   1:    0.22s –    0.96s  ?          (best 0.00, next 0.00)
+  segment   2:    1.25s –    2.05s  ?          (best 0.00, next 0.00)
+  segment   3:    2.34s –    3.33s  ?          (best 0.00, next 0.00)
+  segment   4:    3.65s –    4.38s  ?          (best 0.00, next 0.00)
+  segment   5:    4.67s –    6.08s  Speaker 1  (best 0.00, next 0.00)
+  segment   6:    6.37s –    8.16s  Speaker 1  (best 0.53, next 0.00)
+  segment   7:    8.45s –    9.60s  ?          (best 0.13, next 0.00)
+  segment   8:    9.89s –   11.84s  Speaker 2  (best 0.10, next 0.00)
+  segment   9:   12.13s –   13.92s  ?          (best 0.44, next 0.12)
+  segment  10:   14.34s –   16.22s  Speaker 3  (best 0.24, next 0.14)
+  segment  11:   16.51s –   19.20s  Speaker 3  (best 0.46, next 0.22)
+  segment  12:   20.16s –   21.34s  ?          (best 0.39, next 0.25)
+  segment  13:   21.63s –   23.33s  Speaker 1  (best 0.53, next 0.22)
+  segment  14:   23.74s –   25.76s  Speaker 1  (best 0.53, next 0.39)
+  segment  15:   26.05s –   28.64s  Speaker 1  (best 0.75, next 0.29)
+  segment  16:   28.93s –   30.14s  ?          (best 0.39, next 0.29)
+  segment  17:   30.43s –   32.58s  Speaker 2  (best 0.58, next 0.28)
+  segment  18:   33.63s –   35.46s  Speaker 3  (best 0.67, next 0.31)
+  segment  19:   35.81s –   38.08s  Speaker 3  (best 0.70, next 0.27)
+  segment  20:   38.69s –   39.55s  Speaker 1  (best 0.54, next 0.21)
+  segment  21:   39.84s –   41.38s  Speaker 1  (best 0.62, next 0.18)
+  segment  22:   41.66s –   44.13s  Speaker 1  (best 0.71, next 0.34)
+  segment  23:   44.42s –   45.18s  ?          (best 0.39, next 0.18)
+  segment  24:   45.47s –   48.13s  Speaker 1  (best 0.71, next 0.31)
+  segment  25:   48.64s –   49.66s  ?          (best 0.36, next 0.32)
+  segment  26:   50.24s –   52.03s  Speaker 2  (best 0.61, next 0.39)
+  segment  27:   52.64s –   55.23s  Speaker 3  (best 0.73, next 0.38)
+audio that would be sent: 56.7s of 57.0s
+final speakers (after retroactive fixes and merges):
+  Speaker 3: 5 segments, 11.7s
+  Speaker 2: 3 segments, 6.2s
+  Speaker 1: 9 segments, 17.9s

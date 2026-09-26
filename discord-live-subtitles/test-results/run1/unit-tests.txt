@@ -1,0 +1,68 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  LiveSubtitles.Core -> /root/discord-live-translate/docs/discord-live-subtitles/src/LiveSubtitles.Core/bin/Release/net10.0/LiveSubtitles.Core.dll
+  LiveSubtitles.Core.Tests -> /root/discord-live-translate/docs/discord-live-subtitles/tests/LiveSubtitles.Core.Tests/bin/Release/net10.0/LiveSubtitles.Core.Tests.dll
+Test run for /root/discord-live-translate/docs/discord-live-subtitles/tests/LiveSubtitles.Core.Tests/bin/Release/net10.0/LiveSubtitles.Core.Tests.dll (.NETCoreApp,Version=v10.0)
+VSTest version 18.0.2 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v3.1.5+1b188a7b0a (64-bit .NET 10.0.12)
+[xUnit.net 00:00:00.14]   Discovering: LiveSubtitles.Core.Tests
+[xUnit.net 00:00:00.26]   Discovered:  LiveSubtitles.Core.Tests
+[xUnit.net 00:00:00.35]   Starting:    LiveSubtitles.Core.Tests
+  Passed LiveSubtitles.Core.Tests.DialogueScriptTests.ParsesModelJsonAndClampsSpeakers [185 ms]
+  Passed LiveSubtitles.Core.Tests.ExportTests.TextIncludesOriginalAndSameLanguageLines [215 ms]
+  Passed LiveSubtitles.Core.Tests.ExportTests.SrtHasSequentialNonOverlappingCues [7 ms]
+  Passed LiveSubtitles.Core.Tests.DialogueScriptTests.BuiltInScriptsUseAllFourVoices [14 ms]
+  Passed LiveSubtitles.Core.Tests.GlossaryTests.DistanceIsDamerau(a: "emre", b: "erme", expected: 1) [1 ms]
+  Passed LiveSubtitles.Core.Tests.GlossaryTests.DistanceIsDamerau(a: "sindre", b: "sindri", expected: 1) [< 1 ms]
+  Passed LiveSubtitles.Core.Tests.GlossaryTests.DistanceIsDamerau(a: "emre", b: "emir", expected: 2) [< 1 ms]
+  Passed LiveSubtitles.Core.Tests.GlossaryTests.ReplacesWholeWordsOnlyAndKeepsSentenceCase [28 ms]
+  Passed LiveSubtitles.Core.Tests.GlossaryTests.KeepAsIsFixesNearMissNames [29 ms]
+  Passed LiveSubtitles.Core.Tests.GlossaryTests.OriginalCanBeExcluded [1 ms]
+  Passed LiveSubtitles.Core.Tests.ResamplerTests.PreservesInBandToneAndLength(inRate: 44100, outRate: 16000) [93 ms]
+  Passed LiveSubtitles.Core.Tests.CallQualityTests.ProducesBoundedCallLikeAudio [51 ms]
+  Passed LiveSubtitles.Core.Tests.ResamplerTests.PreservesInBandToneAndLength(inRate: 48000, outRate: 24000) [68 ms]
+  Passed LiveSubtitles.Core.Tests.ResamplerTests.PreservesInBandToneAndLength(inRate: 44100, outRate: 24000) [68 ms]
+  Passed LiveSubtitles.Core.Tests.ConnectionTests.AuthFailureIsNotRetried [237 ms]
+  Passed LiveSubtitles.Core.Tests.ResamplerTests.PreservesInBandToneAndLength(inRate: 16000, outRate: 24000) [69 ms]
+  Passed LiveSubtitles.Core.Tests.ResamplerTests.PreservesInBandToneAndLength(inRate: 48000, outRate: 16000) [65 ms]
+  Passed LiveSubtitles.Core.Tests.ResamplerTests.RemovesContentAboveNewNyquist [32 ms]
+  Passed LiveSubtitles.Core.Tests.SegmenterTests.EarlyEventFiresOncePerSegment [13 ms]
+  Passed LiveSubtitles.Core.Tests.SegmenterTests.SplitsOnPausesAndSendsPreRollAndTail [10 ms]
+  Passed LiveSubtitles.Core.Tests.SegmenterTests.LongSpeechIsSplitAtMaxLength [3 ms]
+  Passed LiveSubtitles.Core.Tests.SegmenterTests.ShortPausesDoNotSplit [1 ms]
+  Passed LiveSubtitles.Core.Tests.SegmenterTests.ContinuousModeSendsEverything [2 ms]
+  Passed LiveSubtitles.Core.Tests.SegmenterTests.ClicksAreIgnored [2 ms]
+  Passed LiveSubtitles.Core.Tests.ProtocolTests.DisabledOptionsAreSentAsNull [5 ms]
+  Passed LiveSubtitles.Core.Tests.ProtocolTests.AppendIsBase64Pcm [3 ms]
+  Passed LiveSubtitles.Core.Tests.ProtocolTests.ParsesDeltaErrorAndSession [7 ms]
+  Passed LiveSubtitles.Core.Tests.ProtocolTests.SessionUpdateMatchesDocumentedShape [< 1 ms]
+  Passed LiveSubtitles.Core.Tests.ConnectionTests.ReconnectsAndReplaysBacklogOnContinuousTimeline [164 ms]
+  Passed LiveSubtitles.Core.Tests.AttributionTests.TextNeverGoesToASegmentThatHasNotStarted [7 ms]
+  Passed LiveSubtitles.Core.Tests.AttributionTests.SentenceEndDetection(text: "", expected: False) [4 ms]
+  Passed LiveSubtitles.Core.Tests.AttributionTests.SentenceEndDetection(text: "Hello.", expected: True) [< 1 ms]
+  Passed LiveSubtitles.Core.Tests.AttributionTests.SentenceEndDetection(text: "Really?\"", expected: True) [< 1 ms]
+  Passed LiveSubtitles.Core.Tests.AttributionTests.SentenceEndDetection(text: "and then", expected: False) [< 1 ms]
+  Passed LiveSubtitles.Core.Tests.AttributionTests.LaggingTextStaysWithSpeakerUntilTheirSentenceEnds [1 ms]
+  Passed LiveSubtitles.Core.Tests.AttributionTests.IsDoneAfterIdleOrWhenPassed [2 ms]
+  Passed LiveSubtitles.Core.Tests.AttributionTests.MovesOnAfterCloseLagEvenWithoutPunctuation [< 1 ms]
+  Passed LiveSubtitles.Core.Tests.AttributionTests.EmptySegmentIsSkipped [< 1 ms]
+  Passed LiveSubtitles.Core.Tests.UsageTests.CostAndCap [4 ms]
+  Passed LiveSubtitles.Core.Tests.SpeakerModelTests.EmbeddingMatchesPythonReference [459 ms]
+  Passed LiveSubtitles.Core.Tests.SpeakerModelTests.FbankMatchesKaldiNativeFbank [36 ms]
+  Passed LiveSubtitles.Core.Tests.WebSocketSessionTests.SpeaksTheProtocol [334 ms]
+  Passed LiveSubtitles.Core.Tests.DiarizationTests.RenamedVoiceIsRecognisedInALaterSession [1 s]
+  Passed LiveSubtitles.Core.Tests.RotationTests.SessionIsRotatedBeforeExpiryWhileQuiet [1 s]
+  Passed LiveSubtitles.Core.Tests.DiarizationTests.TwoSpeakersAreSeparated [781 ms]
+  Passed LiveSubtitles.Core.Tests.PipelineTests.RealSpeechProducesAttributedFinalLines [2 s]
+  Passed LiveSubtitles.Core.Tests.DiarizationTests.FourSpeakerConversationIsConsistent [1 s]
+[xUnit.net 00:00:05.29]   Finished:    LiveSubtitles.Core.Tests
+  Passed LiveSubtitles.Core.Tests.DiarizationTests.MergeAndReassignUpdateLabels [597 ms]
+  Passed LiveSubtitles.Core.Tests.DiarizationTests.UnrelatedNoiseIsNotForcedOntoASpeaker [588 ms]
+
+Test Run Successful.
+Total tests: 49
+     Passed: 49
+ Total time: 6.1178 Seconds

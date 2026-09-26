@@ -1,0 +1,13 @@
+--- a/src/LiveSubtitles.Core/Translation/RealtimeTranslationSession.cs	2026-09-26 00:06:22.506827316 +0200
++++ b/src/LiveSubtitles.Core/Translation/RealtimeTranslationSession.cs	2026-09-26 00:40:05.577563294 +0200
+@@ -178,8 +178,10 @@
+         _ => $"OpenAI returned HTTP {(int)status} while connecting.",
+     };
+ 
++    private int _disposed;
+     public async ValueTask DisposeAsync()
+     {
++        if (Interlocked.Exchange(ref _disposed, 1) != 0) return; // TEST-ONLY PATCH
+         _cts.Cancel();
+         _outgoing.Writer.TryComplete();
+         try

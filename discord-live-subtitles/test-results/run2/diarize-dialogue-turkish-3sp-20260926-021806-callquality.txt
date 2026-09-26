@@ -1,0 +1,28 @@
+dialogue-turkish-3sp-20260926-021806.wav: 58.4s @ 24000 Hz (call-quality simulation on)
+  segment   1:    0.22s –    1.41s  ?          (best 0.00, next 0.00)
+  segment   2:    1.70s –    3.04s  ?          (best 0.00, next 0.00)
+  segment   3:    3.71s –    4.51s  ?          (best 0.00, next 0.00)
+  segment   4:    4.80s –    7.26s  Speaker 1  (best 0.00, next 0.00)
+  segment   5:    7.87s –    8.64s  ?          (best 0.24, next 0.00)
+  segment   6:    8.93s –   10.37s  Speaker 2  (best 0.24, next 0.00)
+  segment   7:   10.66s –   11.49s  ?          (best 0.46, next 0.28)
+  segment   8:   12.86s –   14.69s  Speaker 3  (best 0.33, next 0.16)
+  segment   9:   14.98s –   17.02s  Speaker 3  (best 0.57, next 0.29)
+  segment  10:   17.92s –   20.48s  Speaker 1  (best 0.63, next 0.32)
+  segment  11:   20.77s –   23.17s  Speaker 1  (best 0.68, next 0.25)
+  segment  12:   23.46s –   25.57s  Speaker 2  (best 0.54, next 0.29)
+  segment  13:   25.86s –   27.81s  Speaker 2  (best 0.62, next 0.30)
+  segment  14:   28.32s –   29.92s  Speaker 3  (best 0.60, next 0.26)
+  segment  15:   30.21s –   32.51s  Speaker 3  (best 0.63, next 0.28)
+  segment  16:   32.90s –   37.82s  Speaker 2  (best 0.53, next 0.40)
+  segment  17:   38.66s –   41.34s  Speaker 2  (best 0.72, next 0.31)
+  segment  18:   41.63s –   43.39s  Speaker 2  (best 0.68, next 0.32)
+  segment  19:   44.32s –   45.12s  Speaker 3  (best 0.53, next 0.25)
+  segment  20:   45.41s –   48.54s  Speaker 3  (best 0.79, next 0.43)
+  segment  21:   48.83s –   52.90s  Speaker 1  (best 0.67, next 0.50)
+  segment  22:   53.60s –   56.61s  Speaker 2  (best 0.66, next 0.41)
+audio that would be sent: 58.2s of 58.4s
+final speakers (after retroactive fixes and merges):
+  Speaker 2: 8 segments, 20.0s
+  Speaker 1: 4 segments, 11.9s
+  Speaker 3: 6 segments, 12.3s

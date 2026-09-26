@@ -1,0 +1,13 @@
+<Project>
+  <!-- Makes the local ONNX models available next to the executable in a "models" folder.
+       The download itself lives in Models.proj and runs once per build. Nothing here runs at app runtime. -->
+  <Target Name="LiveSubsDownloadModels" BeforeTargets="BeforeBuild" Condition="'$(SkipModelDownload)' != 'true'">
+    <MSBuild Projects="$(MSBuildThisFileDirectory)Models.proj" Targets="Download"
+             Properties="ModelsDir=$(RepoRoot)models\" RemoveProperties="Configuration;Platform;TargetFramework;RuntimeIdentifier;SelfContained">
+      <Output TaskParameter="TargetOutputs" ItemName="_LiveSubsModelFile" />
+    </MSBuild>
+    <ItemGroup>
+      <None Include="@(_LiveSubsModelFile)" Link="models\%(_LiveSubsModelFile.Filename)%(_LiveSubsModelFile.Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    </ItemGroup>
+  </Target>
+</Project>

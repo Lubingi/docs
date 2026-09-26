@@ -1,0 +1,67 @@
+dialogue-norwegian-4sp-20260926-021822.wav: 57.0s @ 24000 Hz
+  connection: Connecting — Connecting to OpenAI…
+  connection: Connected — Connected
+[   5.0s] Speaker 1  Hey, everyone, can you hear
+                    (Hey Allahsammen.)
+[   6.8s] ?          me?
+                    (hører dere meg?)
+[   7.7s] ?          Yes, we hear
+                    (Ja, vi hører deg fint)
+[   8.9s] Speaker 2  you fine.
+                    ()
+[  10.5s] Speaker 2  How did work go today?
+                    (Hvordan gikk det på jobb i dag?)
+[  12.0s] ?          Fine.
+                    (Helt greit.)
+[  15.4s] ?          But I'm really exhausted.
+                    (Men jeg er skikkelig sliten.)
+[  18.4s] ?          Shall we play a bit tonight?
+                    (Skal vi spille litt i kveld?)
+[  19.3s] Speaker 3  
+                    (Jeg er med, men jeg må spise)
+[  23.4s] ?          I'm in, but I have to eat dinner first.
+                    (middag først.)
+[  24.9s] Speaker 2  These meetings usually
+                    (Samme her.)
+[  26.6s] Speaker 2  start at eight.
+                    (Vanja starter klokka åtte.)
+[  28.1s] Speaker 2  Eight works well for me.
+                    (Åtte passer bra for meg.)
+[  31.5s] Speaker 2  I've finally managed to get a new headset.
+                    (Jeg har endelig fikset den nye headsettet.)
+[  33.2s] ?          Great.
+                    (Så bra!)
+[  36.9s] ?          Last time we could hardly hear you.
+                    (Forrige gang hørte vi deg nesten ikke.)
+[  38.4s] ?          Do you remember
+                    (Husker dere den kampen?)
+[  42.3s] Speaker 3  that match? We were so close to winning.
+                    (Vi var så nære å vinne.)
+[  42.8s] ?          
+                    (Ja, det var helt vilt)
+[  44.7s] Speaker 2  Yeah, that was absolutely
+                    ()
+[  47.7s] ?          
+                    (Enig.)
+[  47.8s] ?          I
+                    (Enig.)
+[  47.8s] ?          I can
+                    (Enig.)
+[  47.8s] Speaker 2  wild this time, we need to talk it over together.
+                    (Denne gangen må vi snakke mer sammen.)
+[  48.0s] ?          I can watch
+                    (Enig.)
+[  51.2s] Speaker 2  the mapand call it out.
+                    (Jeg kan følge med på kartet og si ifra.)
+[  52.3s] ?          Perfect.
+                    (Perfekt.)
+[  54.3s] ?          Then we'll see each other at eight.
+                    (Da sees vi klokka åtte.)
+[  58.6s] Speaker 3  Bye for now.
+                    (Ha det bra så lenge)
+  connection: Stopped — Stopped
+audio sent: 0.97 min of 0.95 min · est. cost $0.049
+  Speaker 3: 3 segments, 7.0s
+  Speaker 2: 9 segments, 18.2s
+  Speaker 1: 1 segments, 1.9s
+report written to test-results/run2/report-no.json

@@ -1,0 +1,34 @@
+dialogue-english-2sp-20260926-002636.wav: 62.2s @ 24000 Hz
+  connection: Connecting — Connecting to OpenAI…
+  connection: Connected — Connected
+[   9.5s] Speaker 1  Yo Alex, you still down for gaming tonight? Yeah, Sam, I'm in. Thinking we start around eight. That cool?
+                    (Yo Alex, you still down for gaming tonight? Yeah, Sam, I'm in. Thinking we start around eight. That cool?)
+[  19.7s] Speaker 1  Eight works. Might be a bit late for me though. I can jump on by 8:30 if needed. No worries, 8:30 is fine. We'll probably wait for you if it's just the three of us.
+                    (Eight works. Might be a bit late for me though. I can jump on by 8:30 if needed. No worries, 8:30 is fine. We'll probably wait for you if it's just the three of us.)
+[  23.4s] Speaker 1  Sweet. Who's hosting the server, you or me?
+                    (Sweet. Who's hosting the server, you or me?)
+[  29.0s] Speaker 1  I can host if my upload holds up. Otherwise you can. No biggie
+                    (I can host if my upload holds up. Otherwise you can. No biggie)
+[  34.9s] Speaker 1  . Cool. Can you set up a Discord voice channel with push to talk? My mic's being funky lately.
+                    (. Cool. Can you set up a Discord voice channel with push to talk? My mic's being funky lately.)
+[  41.2s] Speaker 1  Yeah, I'll make the channel and ping everyone. BTW, do we want to run ranked or just mess around
+                    (Yeah, I'll make the channel and ping everyone. BTW, do we want to run ranked or just mess around)
+[  47.8s] Speaker 1  ? Let's mess around for the first couple matches. Warm up, and then maybe try ranked if we're vibing
+                    (? Let's mess around for the first couple matches. Warm up, and then maybe try ranked if we're vibing)
+[  52.4s] Speaker 1  . Sounds perfect. I'll ping the usual crew. See who's free
+                    (. Sounds perfect. I'll ping the usual crew. See who's free)
+[  53.7s] ?          . Sweet.
+                    (. Sweet.)
+[  57.4s] Speaker 1  Bring snacks. I already got caffeine covered. LOL.
+                    (Bring snacks. I already got caffeine covered. LOL.)
+[  63.1s] Speaker 1  Haha, nice. See ya at 8:30 then. Don't be late, Sam's gonna roast you
+                    (Haha, nice. See ya at 8:30 then. Don't be late, Sam's gonna roast you)
+  connection: Reconnecting — Connection dropped (Connection ended) — reconnecting in 1s
+  connection: Stopped — Stopped
+Unhandled exception. System.ObjectDisposedException: The CancellationTokenSource has been disposed.
+   at System.Threading.CancellationTokenSource.Cancel()
+   at LiveSubtitles.Core.Translation.RealtimeTranslationSession.DisposeAsync() in /root/discord-live-translate/docs/discord-live-subtitles/src/LiveSubtitles.Core/Translation/RealtimeTranslationSession.cs:line 183
+   at LiveSubtitles.Core.Translation.TranslationConnection.StopAsync() in /root/discord-live-translate/docs/discord-live-subtitles/src/LiveSubtitles.Core/Translation/TranslationConnection.cs:line 329
+   at LiveSubtitles.Core.Pipeline.SubtitlePipeline.StopAsync() in /root/discord-live-translate/docs/discord-live-subtitles/src/LiveSubtitles.Core/Pipeline/SubtitlePipeline.cs:line 137
+   at Program.<Main>$(String[] args) in /root/discord-live-translate/docs/discord-live-subtitles/tools/LiveSubtitles.Cli/Program.cs:line 111
+   at Program.<Main>(String[] args)

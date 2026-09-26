@@ -1,0 +1,83 @@
+no-gaps.wav: 138.8s @ 24000 Hz
+  connection: Connecting — Connecting to OpenAI…
+  connection: Connected — Connected
+[   4.5s] Speaker 1  
+                    (Hey alle sammen.)
+[   6.9s] ?          
+                    (hører dere meg?)
+[  15.2s] ?          Yes, we can hear
+                    (Ja, vi hører deg fint)
+[  16.3s] Speaker 2  you just fine.
+                    ()
+  connection: Reconnecting — Connection dropped (Connection lost: The remote party closed the WebSocket connection without completing the close handshake.) — reconnecting in 1s
+  connection: Reconnecting — Reconnecting (attempt 2)…
+  connection: Connected — Connected
+[  19.6s] Speaker 2  How did it go at
+                    (Hvordan gikk det på jobb i dag?)
+[  20.2s] Speaker 2  How did it go at
+                    (Hvordan gikk det på jobb i dag? og)
+[  20.2s] Speaker 2  How did it go at
+                    (Hvordan gikk det på jobb i dag? og job)
+[  20.2s] Speaker 2  How did it go at
+                    (Hvordan gikk det på jobb i dag? og jobbe)
+[  20.2s] Speaker 2  How did it go at
+                    (Hvordan gikk det på jobb i dag? og jobbe i)
+[  20.2s] Speaker 2  How did it go at
+                    (Hvordan gikk det på jobb i dag? og jobbe i dag)
+  connection: Reconnecting — Connection dropped (Connection lost: The remote party closed the WebSocket connection without completing the close handshake.) — reconnecting in 1s
+  connection: Reconnecting — Reconnecting (attempt 2)…
+  connection: Connected — Connected
+[  28.0s] ?          Totally crazy,
+                    (Helt gøyt.)
+[  28.9s] ?          but I'm dead beat.
+                    (Men jeg er skikkelig sliten.)
+[  32.7s] ?          Let's play a bit tonight?
+                    (Skal vi spille litt i kveld?)
+  connection: Reconnecting — Connection dropped (Connection lost: The remote party closed the WebSocket connection without completing the close handshake.) — reconnecting in 1s
+  connection: Reconnecting — Reconnecting (attempt 2)…
+  connection: Connected — Connected
+  connection: Reconnecting — Connection dropped (Connection lost: The remote party closed the WebSocket connection without completing the close handshake.) — reconnecting in 1s
+  connection: Reconnecting — Reconnecting (attempt 2)…
+  connection: Connected — Connected
+[  42.4s] Speaker 3  Yeah, man,And I am withbut I
+                    (Eg er Jeg er med.)
+[  45.8s] ?          have to eat dinner first.
+                    (men jeg må spise middag først.)
+[  56.3s] ?          A summit meeting will
+                    (Samene her var nede å starte klokka åtte.)
+[  57.7s] Speaker 2  start at eight
+                    ()
+[  65.5s] Speaker 2  Okay, that works well for me.
+                    (Åtte passer bra for meg.)
+[  69.9s] Speaker 2  I've finally gotten this new headset.
+                    (Jeg har endelig fikset den nye headsettet.)
+[  77.5s] ?          
+                    (Så bra.)
+[  78.1s] ?          So
+                    (Så bra.)
+[  83.2s] ?          good, last time we could hardly hear you.
+                    (Forrige gang hørte vi deg nesten ikke.)
+[  90.2s] Speaker 3  You have to take that fight.
+                    (Husker dere den kampen?)
+[  94.4s] Speaker 3  We were so close to winning.
+                    (Vi var så nære å vinne.)
+[ 102.6s] ?          Yes, it was totally
+                    (Ja, det var helt vilt)
+[ 109.3s] Speaker 2  wild. This time we'll have to talk more together.
+                    (Denne gangen må vi snakke med samen)
+[ 115.1s] ?          Okay,
+                    (Enig.)
+[ 119.8s] Speaker 2  I can follow along on the map and let you know.
+                    (Jeg kan følge med på kartet og si ifra)
+[ 127.2s] ?          Are you ready?
+                    (Perfekt.)
+[ 131.7s] ?          Then we'll see each other at eight.
+                    (Da sees vi klokka åtte)
+[ 142.3s] Speaker 3  Take care, see you then.
+                    (Ha det bra så lenge)
+  connection: Stopped — Stopped
+audio sent: 2.53 min of 2.31 min · est. cost $0.129
+  Speaker 3: 4 segments, 8.8s
+  Speaker 2: 8 segments, 16.5s
+  Speaker 1: 1 segments, 1.9s
+report written to test-results/run2/report-no-gaps-continuous.json
