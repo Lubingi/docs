@@ -24,6 +24,10 @@ public sealed record TranscriptLine
     public bool Hidden { get; init; }
 
     /// <summary>What the overlay shows as the main text.</summary>
-    public string DisplayText => Translation.Trim().Length > 0 ? Translation.Trim() : SameLanguage ? Original.Trim() : "";
+    /// <remarks>A finished line is never left blank: if the model produced no translation, the original is shown.</remarks>
+    public string DisplayText => Translation.Trim().Length > 0 ? Translation.Trim() : SameLanguage || IsFinal ? Original.Trim() : "";
+
+    /// <summary>The main text is the original (no translation), so the separate original line is not shown again.</summary>
+    public bool ShowsOriginalAsText => Translation.Trim().Length == 0 && DisplayText.Length > 0;
     public bool HasText => DisplayText.Length > 0;
 }

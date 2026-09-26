@@ -323,8 +323,13 @@ The result is in the `smoke-test-output` artifact.
   To save cost for people who always speak English, mute them.
 - **Exclusive fullscreen games** hide every overlay. Use borderless windowed mode.
 - **Speaker labels** depend on audio quality. Discord's noise suppression and very similar voices can split one
-  person into two labels or merge two people. Use Merge and "This line was said by" to correct it; the profiles
-  learn from these corrections.
+  person into two labels or merge two people. In testing, two similar female TTS voices ("coral" and "marin")
+  were merged consistently. Use Merge and "This line was said by" to correct it; the profiles learn from these
+  corrections. A voice gets its label from about its second short phrase, and earlier "?" lines are then
+  corrected.
+- **Connection drops:** OpenAI sometimes closes the connection (25 times in 16 minutes on one test day, including
+  with the plain API). The app reconnects in about 1.5–2 s and re-sends the speech not yet translated. Words from
+  around the drop can still be translated slightly differently.
 - The cost shown is an estimate from audio minutes sent. OpenAI's billing is authoritative.
 - **Testing so far:**
   - The API details were checked against OpenAI's documentation, SDK and a live test run

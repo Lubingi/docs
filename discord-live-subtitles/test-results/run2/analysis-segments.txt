@@ -1,0 +1,236 @@
+# Per-segment tables: segment, stream time, true script line+voice, label, SameLanguage, final latency, translation | original
+# Generated from report-*.json + exact line timings (zero-sample gaps in the generated WAVs)
+== test-results/run2/report-tr.json: dur 58.4s sent 62.7s avgTextLag 355ms
+   median firstText 3017 ms, median final 3749 ms, n=23
+  1   0.2-  1.4 L1ce       ?         SL=- fin=13257 | T: Hello everyone, can you hear me? | O:  Sailau millet beni duyabiliyor musunuz?
+  2   1.7-  3.0 L1ce       Speaker 1 SL=- fin=11616 | T:  | O: 
+  3   3.7-  4.5 L2ma       ?         SL=- fin=10118 | T:  | O:  Evet, sesim geliyor ama biraz
+  4   4.8-  5.7 L2ma       ?         SL=- fin= 8929 | T:  | O: 
+  5   6.0-  7.3 L2ma       ?         SL=- fin= 8361 | T:  Yes, you can hear me, but it's a bit crackly. | O:  cızırtılı.
+  6   7.8-  8.6 L3ce       ?         SL=- fin= 6546 | T:  Okay. | O:  Tamam, mikrofonu değiştirdim
+  7   8.9- 10.4 L3ce       Speaker 1 SL=- fin= 4404 | T:  | O: 
+  8  10.7- 11.5 L3ce       ?         SL=- fin= 3288 | T:  I changed the microphone. How is it now? | O: . Şimdi nasıl?
+  9  12.9- 14.7 L4as       Speaker 2 SL=- fin= 2676 | T:  Now it's much better. | O:  Şimdi çok daha iyi.
+ 10  15.0- 17.0 L4as       Speaker 2 SL=- fin= 3803 | T:  What time do we start tonight? | O:  Bu akşam kaçta başlıyoruz?
+ 11  17.9- 20.5 L5ma       Speaker 3 SL=- fin= 2968 | T:  I think we should start | O:  Bence dokuzda başlayalım.
+ 12  20.8- 23.2 L5ma       Speaker 3 SL=- fin= 3023 | T:  at nine. I'll be ready after dinner. | O:  Ben yemekten sonra hazır olurum.
+ 13  23.5- 25.5 L6ce       Speaker 1 SL=- fin= 2573 | T:  II might be a little late. | O:  Ben biraz geç Biraz geç kalabilirim.
+ 14  26.0- 28.2 L6ce       Speaker 1 SL=- fin= 2747 | T:  I'll call as soon as I get off work. | O:  İşten çıkınca hemen bağlanırım.
+ 15  28.7- 30.3 L7as       Speaker 2 SL=- fin= 2739 | T:  No problem, Elif. | O:  Sorun değil Elif.
+ 16  30.6- 32.9 L7as       Speaker 2 SL=- fin= 4068 | T:  The three of us will play the first match. | O:  İlk maçı biz üçümüz oynarız.
+ 17  33.3- 38.2 L8ma       Speaker 1 SL=- fin= 3749 | T:  But let's not lose again like last week. It was really frustrating. | O:  Ama geçen haftaki gibi yine kaybetmeyelim. Çok sinir bozucuydu.
+ 18  39.0- 41.7 L9ce       Speaker 1 SL=- fin= 3340 | T:  In that match, everyone ran off in different directions. | O:  O maçta herkes farklı yere koştu.
+ 19  42.0- 43.8 L9ce       Speaker 1 SL=- fin= 4207 | T:  This time, let's make a plan beforehand. | O:  Bu sefer önceden plan yapalım.
+ 20  44.7- 45.5 L10as      Speaker 2 SL=- fin= 3270 | T:  Okay, | O: . Tamam, ben gelince destek oynarım,
+ 21  45.8- 49.0 L10as      Speaker 2 SL=- fin= 1693 | T:  when I get there, I'll play support. | O:  siz saldırıya geçin.
+ 22  49.2- 53.3 L11ma      Speaker 3 SL=- fin= 3465 | T:  You all go on the attack. Deal. Then we meet here at nine. | O:  Anlaştık. O zaman saat dokuzda burada buluşuyoruz.
+ 23  54.0- 57.0 L12ce      Speaker 1 SL=- fin= 4950 | T:  See you. I'm just going to get a coffee now. | O: . Görüşürüz. Ben şimdilik bir kahve alıp geliyorum.
+== test-results/run2/report-tr-cq.json: dur 58.4s sent 62.7s avgTextLag 434ms
+   median firstText 2512 ms, median final 3275 ms, n=22
+  1   0.2-  1.4 L1ce       ?         SL=- fin= 4620 | T: Hey everyone, can you hear me? | O:  Selam millet.
+  2   1.7-  3.0 L1ce       ?         SL=- fin= 2506 | T:  | O:  beni duyabiliyor musunuz?
+  3   3.7-  4.5 L2ma       ?         SL=- fin= 3987 | T:  Yes, you can hear | O:  Evet, sesim geliyor ama biraz
+  4   4.8-  7.3 L2ma       Speaker 1 SL=- fin= 3633 | T:  me, but it's a little crackly. | O:  cızırtılı.
+  5   7.9-  8.6 L3ce       ?         SL=- fin= 3277 | T:  Alright, | O:  Tamam, mikrofonu değiştirdim
+  6   8.9- 10.4 L3ce       Speaker 2 SL=- fin= 2867 | T:  I've changed the microphone. | O: 
+  7  10.7- 11.5 L3ce       ?         SL=- fin= 3370 | T:  How about now? | O: . Şimdi nasıl?
+  8  12.9- 14.7 L4as       Speaker 3 SL=- fin= 2407 | T:  Now it's much better. | O:  Şimdi çok daha iyi.
+  9  15.0- 17.0 L4as       Speaker 3 SL=- fin= 4008 | T:  What time are we starting tonight? | O:  Bu akşam kaçta başlıyoruz?
+ 10  17.9- 20.5 L5ma       Speaker 1 SL=- fin= 3828 | T: I think let's start at nine. | O:  Bence Bence dokuzda başlayalım.
+ 11  20.8- 23.2 L5ma       Speaker 1 SL=- fin= 3008 | T:  I'll be ready after dinner. | O:  Ben yemekten sonra hazır olurum.
+ 12  23.5- 25.6 L6ce       Speaker 2 SL=- fin= 2607 | T:  I might be a little late. | O:  Ben biraz geç kalabilirim.
+ 13  25.9- 27.8 L6ce       Speaker 2 SL=- fin= 2788 | T:  I'll call you right after work. | O:  işten çıkınca hemen bağlanırım.
+ 14  28.3- 29.9 L7as       Speaker 3 SL=- fin= 3228 | T:  No problem, Elif. | O:  Sorun değil Elif.
+ 15  30.2- 32.5 L7as       Speaker 3 SL=- fin= 4650 | T:  The three of us can play the first match. | O:  İlk maçı biz üçümüz oynarız.
+ 16  32.9- 37.8 L8ma       Speaker 2 SL=- fin= 4262 | T:  But let's not lose again like last week; it was really frustrating. | O:  Ama geçen haftaki gibi yine kaybetmeyelim. Çok sinir bozucuydu.
+ 17  38.7- 41.3 L9ce       Speaker 2 SL=- fin= 3002 | T:  In that match, everyone ran to different spots. | O:  O maçta herkes farklı yere koştu.
+ 18  41.6- 43.4 L9ce       Speaker 2 SL=- fin= 4543 | T:  This time, let's plan ahead. | O:  Bu sefer önceden plan yapalım.
+ 19  44.3- 45.1 L10as      Speaker 3 SL=- fin= 3273 | T:  | O:  Tamam, ben gelince destek oynarım.
+ 20  45.4- 48.5 L10as      Speaker 3 SL=- fin= 2872 | T:  Okay, when I get there, I'll cover you—go on the attack. | O:  siz saldırıya geçin.
+ 21  48.8- 52.9 L11ma      Speaker 1 SL=- fin= 2380 | T:  Deal. Then let's meet here at nine. | O:  Anlaştık. O zaman saat dokuzda burada buluşuyoruz.
+ 22  53.6- 56.6 L12ce      Speaker 2 SL=- fin= 4853 | T:  See you. I'm going to get a coffee now and come back. | O:  Görüşürüz. Ben şimdi bir kahve alıp geliyorum
+== test-results/run2/report-no.json: dur 57.0s sent 58.0s avgTextLag 475ms
+   median firstText 2783 ms, median final 3202 ms, n=26
+  1   0.2-  2.0 L1ce       Speaker 1 SL=- fin= 3003 | T: Hey, everyone, can you hear | O:  Hey Allahsammen.
+  2   2.3-  3.3 L1ce       ?         SL=- fin= 3326 | T:  me? | O:  hører dere meg?
+  3   3.6-  4.4 L2ma       ?         SL=- fin= 3297 | T:  Yes, we hear | O:  Ja, vi hører deg fint
+  4   4.7-  6.1 L2ma       Speaker 2 SL=- fin= 2612 | T:  you fine. | O: 
+  5   6.4-  8.2 L2ma       Speaker 2 SL=- fin= 2346 | T:  How did work go today? | O: . Hvordan gikk det på jobb i dag?
+  6   8.4-  9.6 L3ce       ?         SL=- fin= 2452 | T:  Fine. | O:  Helt greit.
+  7   9.9- 11.8 L3ce       ?         SL=- fin= 3518 | T:  But I'm really exhausted. | O:  Men jeg er skikkelig sliten.
+  8  12.1- 13.9 L3ce       ?         SL=- fin= 4508 | T:  Shall we play a bit tonight? | O:  Skal vi spille litt i kveld?
+  9  14.3- 16.2 L4as       Speaker 3 SL=- fin= 3135 | T:  | O:  Jeg er med, men jeg må spise
+ 10  16.5- 19.2 L4as       ?         SL=- fin= 4166 | T:  I'm in, but I have to eat dinner first. | O:  middag først.
+ 11  20.1- 21.4 L5ma       Speaker 2 SL=- fin= 3527 | T:  These meetings usually | O:  Samme her.
+ 12  21.7- 23.3 L5ma       Speaker 2 SL=- fin= 3307 | T:  start at eight. | O:  Vanja starter klokka åtte.
+ 13  23.7- 25.8 L6co       Speaker 2 SL=- fin= 2298 | T:  Eight works well for me. | O:  Åtte passer bra for meg.
+ 14  26.0- 28.6 L6co       Speaker 2 SL=- fin= 2861 | T:  I've finally managed to get a new headset. | O:  Jeg har endelig fikset den nye headsettet.
+ 15  28.9- 30.1 L7ce       ?         SL=- fin= 3046 | T:  Great. | O:  Så bra!
+ 16  30.4- 32.6 L7ce       ?         SL=- fin= 4287 | T:  Last time we could hardly hear you. | O:  Forrige gang hørte vi deg nesten ikke.
+ 17  33.6- 35.5 L8as       ?         SL=- fin= 2939 | T:  Do you remember | O:  Husker dere den kampen?
+ 18  35.8- 38.1 L8as       Speaker 3 SL=- fin= 4207 | T:  that match? We were so close to winning. | O:  Vi var så nære å vinne.
+ 19  38.7- 39.6 L9co       ?         SL=- fin= 3270 | T:  | O:  Ja, det var helt vilt
+ 20  39.9- 41.4 L9co       Speaker 2 SL=- fin= 3286 | T:  Yeah, that was absolutely | O: 
+ 21  41.7- 44.1 L9co       Speaker 2 SL=- fin= 3687 | T:  wild this time, we need to talk it over together. | O: . Denne gangen må vi snakke mer sammen.
+ 22  44.4- 45.2 L10ma      ?         SL=- fin= 2524 | T:  I can watch | O:  Enig.
+ 23  45.4- 48.1 L10ma      Speaker 2 SL=- fin= 3127 | T:  the mapand call it out. | O:  Jeg kan følge med på kartet og si ifra.
+ 24  48.6- 49.7 L11ce      ?         SL=- fin= 2625 | T:  Perfect. | O:  Perfekt.
+ 25  50.2- 52.0 L11ce      ?         SL=- fin= 2306 | T:  Then we'll see each other at eight. | O:  Da sees vi klokka åtte.
+ 26  52.6- 55.2 L12as      Speaker 3 SL=- fin= 3361 | T:  Bye for now. | O:  Ha det bra så lenge
+== test-results/run2/report-en.json: dur 57.5s sent 62.5s avgTextLag 522ms
+   median firstText 0 ms, median final 2532 ms, n=19
+  1   0.2-  2.7 L1ce       Speaker 1 SL=Y fin= 2543 | T:  | O:  Hey Jamie, you around for a game night later?
+  2   3.6-  6.2 L2ma       Speaker 2 SL=Y fin= 2514 | T:  | O:  Yeah, Alex, I'm down. What time are you thinking?
+  3   6.7-  8.2 L3ce       Speaker 1 SL=- fin= 2490 | T:  | O:  Maybe around eight?
+  4   8.6- 11.7 L3ce       Speaker 1 SL=Y fin= 3200 | T:  | O:  Gotta eat first, but can hop on by eight fifteen.
+  5  13.3- 17.4 L4ma       Speaker 2 SL=Y fin= 2492 | T:  | O:  Cool, eight fifteen works. Do you wanna run some ranked or mess aroun
+  6  18.1- 20.0 L5ce       Speaker 1 SL=Y fin= 2507 | T:  | O:  Let's do casual first.
+  7  20.3- 22.9 L5ce       Speaker 1 SL=Y fin= 3427 | T:  | O:  Warm up, and then Let's do casual first. Warm up and then go ranked i
+  8  23.7- 28.1 L6ma       Speaker 2 SL=Y fin= 2502 | T:  | O:  Sweet. I'll get the rest of the crew in the server and set up a lobby
+  9  28.4- 29.2 L7ce       ?         SL=- fin= 2499 | T:  | O:  Awesome!
+ 10  29.4- 31.5 L7ce       Speaker 1 SL=Y fin= 2507 | T:  | O:  Can you set up a voice channel and drop the link?
+ 11  31.8- 35.4 L8ma       Speaker 2 SL=Y fin= 2765 | T:  | O:  Yep, will do. Also want to try that new map patch.
+ 12  36.2- 37.2 L9ce       Speaker 1 SL=- fin= 2524 | T:  | O:  Totally.
+ 13  37.4- 40.5 L9ce       Speaker 1 SL=Y fin= 2505 | T:  | O:  Heard it's a bit wonky, but should be funny to mess with.
+ 14  41.2- 42.0 L10ma      ?         SL=Y fin= 2962 | T:  | O:  Cool, I'll queue up some chill
+ 15  42.3- 45.2 L10ma      Speaker 2 SL=- fin= 2542 | T:  | O:  playlists and snacks ready.
+ 16  45.5- 46.1 L10ma      ?         SL=- fin= 2669 | T:  | O:  LOL Perfect.
+ 17  46.7- 49.6 L11ce      Speaker 1 SL=Y fin= 2532 | T:  | O:  I'll patch the mic and grab food.
+ 18  49.9- 51.3 L11ce      Speaker 1 SL=Y fin= 2748 | T:  | O:  See you at 8:15.
+ 19  52.0- 55.6 L12ma      Speaker 2 SL=Y fin= 3920 | T:  | O:  See you then. Stay online so I can ping you
+== test-results/run2/report-no-drop.json: dur 57.0s sent 62.0s avgTextLag 767ms
+   median firstText 2831 ms, median final 3340 ms, n=26
+  1   0.2-  2.0 L1ce       Speaker 1 SL=- fin= 3269 | T: Hey everyone, can | O:  Hey alle sammen.
+  2   2.3-  3.3 L1ce       ?         SL=- fin= 3611 | T:  you hear me? | O:  hører dere meg?
+  3   3.6-  4.4 L2ma       ?         SL=- fin= 3549 | T:  Yes, we can | O:  Ja, vi hører deg fint
+  4   4.7-  6.1 L2ma       Speaker 2 SL=- fin= 2698 | T:  hear you fine. | O: 
+  5   6.4-  8.2 L2ma       Speaker 2 SL=- fin= 1806 | T:  How did work go today? | O: . Hvordan gikk det på jobb i dag?
+  6   8.4-  9.6 L3ce       ?         SL=- fin= 2599 | T:  Totally fine. | O:  Helt greit.
+  7   9.9- 11.8 L3ce       ?         SL=- fin= 2478 | T:  But I'm really exhausted. | O:  Men jeg er skikkelig sliten.
+  8  12.1- 13.9 L3ce       ?         SL=- fin= 3768 | T:  Do you want to play a little tonight? | O:  Skal vi spille litt i kveld?
+  9  14.3- 16.2 L4as       Speaker 3 SL=- fin= 3411 | T:  | O:  Jeg er med, men jeg må spise
+ 10  16.5- 19.2 L4as       ?         SL=- fin= 2873 | T:  I'm in, butOn a lunch break. | O:  middag said middag först.
+ 11  20.1- 21.4 L5ma       Speaker 2 SL=- fin= 4072 | T:  SameYeah—once you hit start | O:  Samene her Hva med å starte klokka åtte?
+ 12  21.7- 23.3 L5ma       Speaker 2 SL=- fin= 2834 | T:  | O: 
+ 13  23.7- 25.8 L6co       Speaker 2 SL=- fin= 1581 | T: , the clock starts at eight. | O:  Åtte passer bra for meg.
+ 14  26.0- 28.6 L6co       Speaker 2 SL=- fin= 4115 | T:  Eight works fine for me. I've finally set up the new headset. | O:  Jeg har endelig fikset den nye headsetet.
+ 15  28.9- 30.1 L7ce       ?         SL=- fin= 2498 | T:  Great | O:  Så bra!
+ 16  30.4- 32.6 L7ce       ?         SL=- fin= 3194 | T: —last time we could hardly hear you. | O:  Forrige gang hørte vi deg nesten ikke.
+ 17  33.6- 35.5 L8as       ?         SL=- fin= 3584 | T:  Do you remember that match? | O: . Husker dere den kampen?
+ 18  35.8- 38.1 L8as       Speaker 3 SL=- fin= 4108 | T:  We were so close to winning. | O:  Vi var så nære å vinne.
+ 19  38.7- 39.6 L9co       ?         SL=- fin= 3482 | T:  | O:  Ja, det var helt vilt
+ 20  39.9- 41.4 L9co       Speaker 2 SL=- fin= 1727 | T:  | O: 
+ 21  41.7- 44.1 L9co       Speaker 2 SL=- fin= 2647 | T:  Yeah, it was absolutely wild. This time we all need to talk more together. | O: . Denne gangen må vi snakke mer sammen.
+ 22  44.4- 45.2 L10ma      ?         SL=- fin= 4264 | T:  Agreed? | O:  Enig.
+ 23  45.4- 48.1 L10ma      Speaker 2 SL=- fin= 4101 | T:  I can keep an eye on the map and let you know. | O:  Jeg kan følge med på kartet og si ifra.
+ 24  48.6- 49.7 L11ce      ?         SL=- fin= 2984 | T:  Perfect— | O:  Perfekt.
+ 25  50.2- 52.0 L11ce      ?         SL=- fin= 3547 | T: see you at eight. | O:  Da sees vi klokka åtte.
+ 26  52.6- 55.2 L12as      Speaker 3 SL=- fin= 5033 | T:  Take care—bye for now. | O:  Ha det bra så lenge
+== test-results/run2/report-tr-gaps-default.json: dur 147.6s sent 100.1s avgTextLag 3228ms
+   median firstText 2870 ms, median final 4109 ms, n=24
+  1   0.2-  1.4 L1ce       ?         SL=- fin= 3946 | T: Hi everyoneCan you hear me? | O:  سلام millet.
+  2   1.7-  3.0 L1ce       ?         SL=- fin= 2614 | T:  | O:  beni duyabiliyor Beni duyabiliyor musunuz?
+  3  11.0- 11.7 L2ma       ?         SL=- fin= 3907 | T:  Yes, they can hear me, | O:  Evet, sesim geliyor ama biraz
+  4  12.0- 14.5 L2ma       Speaker 1 SL=- fin= 4560 | T:  but it's a little scratchy. | O:  cızırtılı. Tamam mikrofonu değiştirdim.
+  5  22.6- 23.4 L3ce       ?         SL=- fin= 6213 | T:  Okay, I changed the microphone. | O:  Şimdi nasıl?
+  6  23.6- 25.1 L3ce       Speaker 2 SL=- fin= 4907 | T:  How is it now? | O:  Şimdi çok daha iyi.
+  7  25.4- 26.2 L3ce       Speaker 2 SL=- fin= 2531 | T:  | O:  Bu akşam kaçta başlıyoruz?
+  8  35.4- 37.0 L4as       Speaker 3 SL=- fin= 2865 | T:  Now it's much better. | O: 
+  9  37.3- 39.4 L4as       Speaker 3 SL=- fin= 4786 | T:  What time are we starting tonight? | O: 
+ 10  47.5- 50.0 L5ma       Speaker 1 SL=- fin= 4108 | T: I think let's start at nine. | O:  Bence dokuzda başlayalım.
+ 11  50.3- 52.7 L5ma       Speaker 1 SL=- fin= 5088 | T:  I'll be ready after dinner. | O:  Ben yemekten sonra hazır olurum.
+ 12  60.7- 62.8 L6ce       Speaker 2 SL=- fin= 2862 | T:  I might be a little late. | O:  Ben biraz geç kalabilirim.
+ 13  63.1- 65.0 L6ce       Speaker 2 SL=- fin= 4842 | T:  I'll call you as soon as I get off work. | O:  işten çıkınca hemen bağlanırım.
+ 14  73.2- 74.7 L7as       Speaker 3 SL=- fin= 2708 | T:  No problem, Elif. | O:  Sorun değil Elif.
+ 15  74.9- 77.2 L7as       Speaker 3 SL=- fin= 5822 | T:  The three of us will play the first match. | O:  İlk maçı biz üçümüz oynarız. Ama geçen haftaki gibi
+ 16  86.3- 88.2 L8ma       Speaker 2 SL=- fin= 5504 | T:  But let's | O:  yine kaybetmeyelim. Çok sinir
+ 17  88.4- 90.0 L8ma       Speaker 2 SL=- fin= 4269 | T:  not lose again like last | O: 
+ 18  90.2- 91.6            Speaker 2 SL=- fin= 2562 | T: This is how you do it. | O:  Çok sinir bozucuydu.
+ 19  99.6-102.3 L9ce       Speaker 2 SL=- fin= 3228 | T: It's here—everyone ran in a different direction. | O:  O maçta herkes farklı yere koştu.
+ 20 102.6-104.4 L9ce       Speaker 2 SL=- fin= 5532 | T:  This time, let's make a plan first. | O:  Bu sefer önceden plan yapalım.
+ 21 120.3-121.1 L10as      ?         SL=- fin= 3148 | T: Okay, when I come, I'll | O:  Tamam Tamam ben gelince destek oynarım,
+ 22 121.4-124.5 L10as      Speaker 3 SL=- fin= 4126 | T:  play support. You go on the attack. | O:  siz saldırıya geçin.
+ 23 132.3-136.5 L11ma      Speaker 1 SL=- fin= 4109 | T:  Alright, we'll meet here at nine. | O:  Anlaştık. O zaman saat dokuzda burada buluşuyoruz. Görüşürüz. Ben şim
+ 24 144.4-147.4 L12ce      Speaker 2 SL=- fin= 4055 | T:  See you—I'm off to get a coffee now. | O:  geliyorum.
+== test-results/run2/report-tr-gaps-continuous.json: dur 147.6s sent 174.2s avgTextLag 834ms
+   median firstText 2559 ms, median final 3949 ms, n=23
+  1   0.2-  1.4 L1ce       ?         SL=- fin= 2004 | T: Hello everyone. | O:  Сәләм милләт!
+  2   1.7-  3.0 L1ce       ?         SL=- fin= 3885 | T:  Can you hear me? | O:  beni duyabiliyor musunuz?
+  3  11.0- 11.7 L2ma       ?         SL=- fin= 4066 | T:  Yes, you can hear | O:  Evet, sesim geliyor ama biraz
+  4  12.0- 14.5 L2ma       Speaker 1 SL=- fin= 4690 | T:  me, but with a bit of static. | O:  cızırtılı.
+  5  22.6- 23.4 L3ce       ?         SL=- fin= 3346 | T: Okay, I changed the microphone | O:  Tamam mikrofonu değiştirdim.
+  6  23.6- 25.1 L3ce       Speaker 2 SL=- fin= 5118 | T:  now, how is it? | O: 
+  7  25.4- 26.2 L3ce       Speaker 2 SL=- fin= 3288 | T:  | O:  Şimdi nasıl? in the nozzle
+  8  35.1- 36.7 L4as       Speaker 3 SL=- fin= 2768 | T: Now it's much better. | O:  Şimdi çok daha iyi.
+  9  37.0- 39.1 L4as       Speaker 3 SL=- fin= 5228 | T:  What time are we starting tonight? | O:  Bu akşam kaçta başlıyoruz?
+ 10  47.7- 50.2 L5ma       Speaker 1 SL=- fin= 2944 | T:  I think we should start at nine. | O:  bence dokuzda başlayalım.
+ 11  50.5- 52.9 L5ma       Speaker 1 SL=- fin= 2631 | T:  I’ll beSo I'm ready. | O:  Ben yemekten sonra hazır Sonra hazır olurum.
+ 12  60.9- 63.0 L6ce       Speaker 2 SL=- fin= 4961 | T:  I might be a little late getting home from work; | O:  Ben biraz geç kalabilirim.
+ 13  63.3- 65.2 L6ce       Speaker 2 SL=- fin= 6546 | T:  I'll call as soon as I leave. | O:  İşten çıkınca hemen bağlanırım.
+ 14  73.4- 74.8 L7as       Speaker 3 SL=- fin= 1566 | T:  No problem. | O:  Sorun değil Elif.
+ 15  75.1- 77.5 L7as       Speaker 3 SL=- fin= 5719 | T:  Elif. The three of us will play the first game. | O:  İlk maçı biz üçümüz oynarız.
+ 16  86.4- 88.3 L8ma       Speaker 2 SL=- fin= 3554 | T:  But like last week, | O:  Ama geçen haftaki gibi yine kaybetmeyelim.
+ 17  88.6- 91.7 L8ma       Speaker 2 SL=- fin= 5923 | T:  let's not lose again. It was really frustrating. | O:  Çok sinir bozucuydu.
+ 18  99.7-102.4 L9ce       Speaker 2 SL=- fin= 3321 | T:  That match—everyone ran to different places. | O:  O maçta herkes farklı yere koştu.
+ 19 102.7-104.5            Speaker 2 SL=- fin= 5390 | T:  This time, let's plan beforehand. | O:  Bu sefer önceden plan yapalım.
+ 20 121.1-121.9 L10as      ?         SL=- fin= 3949 | T: Hello, everyone. | O:  Tamam, ben gelince Tamam ben gelince destek oynarım,
+ 21 122.1-125.2 L10as      Speaker 3 SL=- fin= 2625 | T:  When I come, I play support. You go on the offensive. | O:  siz saldırıya geçin.
+ 22 133.4-137.7 L11ma      Speaker 1 SL=- fin= 4401 | T: Deal. Then let's meet here at nine. | O:  Anlaştık. o zaman saat dokuzda burada buluşuyoruz.
+ 23 145.5-148.5 L12ce      Speaker 2 SL=- fin= 5671 | T:  See you, it’s Passion, I’ll grab a coffee and be right there. | O:  Görüşürüz. Ben şimdi bir kahve alıp geliyorum.
+== test-results/run2/report-no-gaps-default.json: dur 138.8s sent 90.9s avgTextLag 7789ms
+   median firstText 2710 ms, median final 3473 ms, n=27
+  1   0.2-  2.0 L1ce       Speaker 1 SL=- fin= 3319 | T: Hey, everyoneHello everyone, can you hear me? | O:  Hey allesammen.
+  2   2.3-  3.3 L1ce       ?         SL=- fin= 2495 | T:  | O:  Listenmen hører dere meg?
+  3  11.1- 11.9 L2ma       ?         SL=- fin= 3473 | T:  Yes, we can hear you just | O:  Ja, vi hører deg fint
+  4  12.2- 13.6 L2ma       Speaker 2 SL=- fin= 2448 | T:  fine. | O: 
+  5  13.9- 15.6 L2ma       Speaker 2 SL=- fin= 4452 | T:  How did it go at work today? | O: . Hvordan gikk det på jobb i dag?
+  6  23.5- 24.6 L3ce       ?         SL=- fin= 2539 | T:  Fine, all right. | O:  Helt greit.
+  7  24.9- 26.8 L3ce       ?         SL=- fin= 1973 | T:  But I'm completely exhausted. | O:  Men jeg er skikkelig sliten.
+  8  27.1- 28.9 L3ce       ?         SL=- fin= 3746 | T:  Want to play a little tonight? | O:  Skal vi spille litt i kveld?
+  9  36.9- 38.7 L4as       Speaker 3 SL=- fin= 3288 | T:  I'm in, but I need to eat | O:  Jeg er med, men jeg må spise
+ 10  39.0- 41.7 L4as       ?         SL=- fin= 3550 | T:  dinner | O:  middag først Summen her var ned å starte klokka
+ 11  49.9- 51.0 L5ma       ?         SL=- fin= 5423 | T: This is Vara, it | O:  åtte. Åtte passer bra for
+ 12  51.3- 53.0 L5ma       Speaker 2 SL=- fin= 4580 | T:  starts at eight. | O: 
+ 13  61.2- 62.8 L6co       Speaker 2 SL=- fin= 3035 | T:  Eight worksHow are you, everyone? | O:  Passer bra for meg.
+ 14  63.1- 65.7 L6co       Speaker 2 SL=- fin= 4395 | T:  I've finally got a new headset. | O:  Jeg har endelig fikset den nye headsettet. Så bra. Forrige gang hørte
+ 15  73.8- 74.9 L7ce       ?         SL=- fin= 6147 | T:  So, last time, | O:  vi deg nesten ikke.
+ 16  75.2- 77.3 L7ce       ?         SL=- fin= 2524 | T:  we could hardly hear you. | O:  Huskar dere den? kampen? Vi var så nære å vinne.
+ 17  86.1- 87.4 L8as       Speaker 3 SL=- fin= 3388 | T:  Do you remember that? | O: 
+ 18  87.6- 88.5 L8as       ?         SL=- fin= 2528 | T:  That match? | O: 
+ 19  88.9- 91.1 L8as       Speaker 3 SL=- fin= 4282 | T:  We were so close to winning. | O:  Ja, det var helt vilt. Denne gangen må vi snakke mer sammen
+ 20  98.9- 99.8 L9co       ?         SL=- fin= 2546 | T:  | O: 
+ 21 100.1-101.7 L9co       Speaker 2 SL=- fin= 2544 | T:  | O: 
+ 22 102.0-104.4 L9co       Speaker 2 SL=- fin= 6362 | T:  Yeah, that was wild. This time we have to communicate better. | O: . Enig. Jeg kan følge med på kartet og si ifra Perfekt.
+ 23 112.3-113.1 L10ma      ?         SL=- fin= 3042 | T:  I agree, | O:  Da ses vi klokka åtte.
+ 24 113.3-116.0 L10ma      Speaker 2 SL=- fin= 4768 | T:  I can watch the map and call it out. | O:  Ha det bra så lenge.
+ 25 124.3-125.3 L11ce      ?         SL=- fin= 3513 | T:  Perfect, | O: 
+ 26 125.8-127.6 L11ce      ?         SL=- fin= 5106 | T:  then see you at eight. | O: 
+ 27 136.3-138.8 L12as      Speaker 3 SL=- fin= 4763 | T:  Have a good one, see you later. | O: 
+== test-results/run2/report-no-gaps-continuous.json: dur 138.8s sent 151.6s avgTextLag 557ms
+   median firstText 2695 ms, median final 3764 ms, n=26
+  1   0.2-  2.0 L1ce       Speaker 1 SL=- fin= 2508 | T:  | O:  Hey alle sammen.
+  2   2.3-  3.3 L1ce       ?         SL=- fin= 3568 | T:  | O:  hører dere meg?
+  3  11.1- 11.9 L2ma       ?         SL=- fin= 3343 | T: Yes, we can hear | O:  Ja, vi hører deg fint
+  4  12.2- 13.6 L2ma       Speaker 2 SL=- fin= 2728 | T:  you just fine. | O: 
+  5  13.9- 15.6 L2ma       Speaker 2 SL=- fin= 3940 | T:  How did it go at | O: . Hvordan gikk det på jobb i dag? og jobbe i dag
+  6  23.5- 24.6 L3ce       ?         SL=- fin= 3376 | T: Totally crazy, | O:  Helt gøyt.
+  7  24.9- 26.8 L3ce       ?         SL=- fin= 2118 | T:  but I'm dead beat. | O:  Men jeg er skikkelig sliten.
+  8  27.1- 28.9 L3ce       ?         SL=- fin= 3847 | T:  Let's play a bit tonight? | O:  Skal vi spille litt i kveld?
+  9  36.9- 38.7 L4as       Speaker 3 SL=- fin= 3721 | T: Yeah, man,And I am withbut I | O:  Eg er Jeg er med.
+ 10  39.0- 41.7 L4as       ?         SL=- fin= 4090 | T:  have to eat dinner first. | O:  men jeg må spise middag først.
+ 11  49.9- 51.0 L5ma       ?         SL=- fin= 5328 | T:  A summit meeting will | O:  Samene her var nede å starte klokka åtte.
+ 12  51.3- 53.0 L5ma       Speaker 2 SL=- fin= 4785 | T:  start at eight | O: 
+ 13  61.2- 62.8 L6co       Speaker 2 SL=- fin= 2628 | T: Okay, that works well for me. | O:  Åtte passer bra for meg.
+ 14  63.1- 65.7 L6co       Speaker 2 SL=- fin= 4168 | T:  I've finally gotten this new headset. | O:  Jeg har endelig fikset den nye headsettet.
+ 15  73.8- 74.9 L7ce       ?         SL=- fin= 2659 | T:  So | O:  Så bra.
+ 16  75.2- 77.3 L7ce       ?         SL=- fin= 5872 | T:  good, last time we could hardly hear you. | O:  Forrige gang hørte vi deg nesten ikke.
+ 17  86.3- 88.1 L8as       Speaker 3 SL=- fin= 2688 | T:  You have to take that fight. | O:  Husker dere den kampen?
+ 18  88.4- 90.7 L8as       Speaker 3 SL=- fin= 4329 | T:  We were so close to winning. | O:  Vi var så nære å vinne.
+ 19  98.6- 99.5 L9co       ?         SL=- fin= 3808 | T:  Yes, it was totally | O:  Ja, det var helt vilt
+ 20  99.7-101.3 L9co       Speaker 2 SL=- fin= 1791 | T:  | O: 
+ 21 101.6-104.0 L9co       Speaker 2 SL=- fin= 5923 | T:  wild. This time we'll have to talk more together. | O: . Denne gangen må vi snakke med samen
+ 22 111.8-112.6 L10ma      ?         SL=- fin= 2993 | T:  Okay, | O:  Enig.
+ 23 112.9-115.6 L10ma      Speaker 2 SL=- fin= 4826 | T:  I can follow along on the map and let you know. | O:  Jeg kan følge med på kartet og si ifra
+ 24 124.1-125.1 L11ce      ?         SL=- fin= 2969 | T:  Are you ready? | O:  Perfekt.
+ 25 125.7-127.5 L11ce      ?         SL=- fin= 5136 | T:  Then we'll see each other at eight. | O:  Da sees vi klokka åtte
+ 26 135.4-137.9 L12as      Speaker 3 SL=- fin= 5256 | T:  Take care, see you then. | O: . Ha det bra så lenge

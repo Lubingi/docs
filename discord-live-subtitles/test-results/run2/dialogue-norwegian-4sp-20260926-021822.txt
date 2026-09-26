@@ -1,0 +1,14 @@
+Test dialogue — Norwegian, 4 speakers (generated with OpenAI TTS voices, not real people)
+
+Speaker 1 (cedar): Hei alle sammen, hører dere meg?
+Speaker 2 (marin): Ja, vi hører deg fint. Hvordan gikk det på jobb i dag?
+Speaker 1 (cedar): Helt greit, men jeg er skikkelig sliten. Skal vi spille litt i kveld?
+Speaker 3 (ash): Jeg er med, men jeg må spise middag først.
+Speaker 2 (marin): Samme her. Hva med å starte klokka åtte?
+Speaker 4 (coral): Åtte passer bra for meg. Jeg har endelig fikset det nye headsettet.
+Speaker 1 (cedar): Så bra! Forrige gang hørte vi deg nesten ikke.
+Speaker 3 (ash): Husker dere den kampen? Vi var så nære å vinne.
+Speaker 4 (coral): Ja, det var helt vilt. Denne gangen må vi snakke mer sammen.
+Speaker 2 (marin): Enig. Jeg kan følge med på kartet og si ifra.
+Speaker 1 (cedar): Perfekt. Da sees vi klokka åtte.
+Speaker 3 (ash): Ha det bra så lenge!

@@ -344,9 +344,10 @@ public sealed class SubtitlePipeline : IAsyncDisposable
         {
             var audio = e.Audio16;
             int id = e.SegmentId;
+            double start = e.StreamStartMs, end = e.StreamEndMs;
             QueueSpeakerWork(() =>
             {
-                var match = _speakers.Assign(id, audio);
+                var match = _speakers.Assign(id, audio, start, end);
                 Post(() => OnSpeakerAssigned(id, match));
             });
         }
@@ -589,7 +590,12 @@ public sealed class SubtitlePipeline : IAsyncDisposable
     {
         if (original.Length == 0) return false;
         if (_options.OutputLanguage.StartsWith("en", StringComparison.OrdinalIgnoreCase))
-            return LanguageGuess.LooksEnglish(original) && (st.IsFinal || original.Count(char.IsWhiteSpace) >= 3);
+        {
+            if (LanguageGuess.LooksEnglish(original) && (st.IsFinal || original.Count(char.IsWhiteSpace) >= 3)) return true;
+            // Short English replies ("Totally.", "playlists and snacks ready.") get no translation from the model; when the
+            // line is final, untranslated, and contains an English word but no Turkish/Nordic letters, it's English.
+            return st.IsFinal && translation.Length == 0 && !LanguageGuess.HasNonEnglishLetters(original) && LanguageGuess.EnglishWordCount(original) >= 1;
+        }
         return st.IsFinal && (translation.Length == 0 || Normalize(translation) == Normalize(original))
                && original.Count(char.IsWhiteSpace) >= 2 && (st.StreamEndMs ?? 0) - st.StreamStartMs >= 1500;
     }

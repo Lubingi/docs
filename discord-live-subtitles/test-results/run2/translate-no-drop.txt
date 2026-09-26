@@ -1,0 +1,116 @@
+dialogue-norwegian-4sp-20260926-021822.wav: 57.0s @ 24000 Hz
+  connection: Connecting — Connecting to OpenAI…
+  connection: Connected — Connected
+[   5.3s] Speaker 1  Hey everyone, can
+                    (Hey alle sammen.)
+[   6.9s] ?          you hear me?
+                    (hører dere meg?)
+[   7.9s] ?          Yes, we can
+                    (Ja, vi hører deg fint)
+[   8.8s] Speaker 2  hear you fine.
+                    ()
+[  10.0s] Speaker 2  How did work go today?
+                    (Hvordan gikk det på jobb i dag?)
+[  12.2s] ?          Totally fine.
+                    (Helt greit.)
+[  14.3s] ?          But I'm really exhausted.
+                    (Men jeg er skikkelig sliten.)
+[  17.7s] ?          Do you want to play a little tonight?
+                    (Skal vi spille litt i kveld?)
+[  19.6s] Speaker 3  
+                    (Jeg er med, men jeg må spise)
+  [test] dropping the OpenAI connection at 20.0s
+  connection: Reconnecting — Connection dropped (Connection ended) — reconnecting in 1s
+  connection: Reconnecting — Reconnecting (attempt 2)…
+  connection: Connected — Connected
+[  22.1s] ?          I'm in, but
+                    (middag)
+[  22.5s] ?          I'm in, but
+                    (middag said)
+[  22.5s] ?          I'm in, but
+                    (middag said mid)
+[  22.5s] ?          I'm in, but
+                    (middag said middag)
+[  22.6s] ?          I'm in, butOn
+                    (middag said middag)
+[  22.6s] ?          I'm in, butOn
+                    (middag said middag först)
+[  22.7s] ?          I'm in, butOn
+                    (middag said middag först.)
+[  22.7s] ?          I'm in, butOn a
+                    (middag said middag först.)
+[  22.8s] ?          I'm in, butOn a lunch
+                    (middag said middag först.)
+[  22.8s] ?          I'm in, butOn a lunch break
+                    (middag said middag först.)
+[  22.9s] ?          I'm in, butOn a lunch break.
+                    (middag said middag först.)
+  connection: Reconnecting — Connection dropped (Connection lost: The remote party closed the WebSocket connection without completing the close handshake.) — reconnecting in 1s
+  connection: Reconnecting — Reconnecting (attempt 2)…
+  connection: Connected — Connected
+[  25.4s] Speaker 2  Same
+                    (Samene her)
+[  25.6s] Speaker 2  Same
+                    (Samene her Hva)
+[  25.9s] Speaker 2  Same
+                    (Samene her Hva med)
+[  25.9s] Speaker 2  Same
+                    (Samene her Hva med å)
+[  26.0s] Speaker 2  SameYeah
+                    (Samene her Hva med å)
+[  26.0s] Speaker 2  SameYeah
+                    (Samene her Hva med å starte)
+[  26.0s] Speaker 2  SameYeah
+                    (Samene her Hva med å starte kl)
+[  26.0s] Speaker 2  SameYeah
+                    (Samene her Hva med å starte klokka)
+[  26.0s] Speaker 2  SameYeah—
+                    (Samene her Hva med å starte klokka)
+[  26.0s] Speaker 2  SameYeah—once
+                    (Samene her Hva med å starte klokka)
+[  26.0s] Speaker 2  SameYeah—once
+                    (Samene her Hva med å starte klokka å)
+[  26.0s] Speaker 2  SameYeah—once
+                    (Samene her Hva med å starte klokka åtte)
+[  26.0s] Speaker 2  SameYeah—once
+                    (Samene her Hva med å starte klokka åtte?)
+[  26.0s] Speaker 2  SameYeah—once you
+                    (Samene her Hva med å starte klokka åtte?)
+[  26.0s] Speaker 2  SameYeah—once you hit
+                    (Samene her Hva med å starte klokka åtte?)
+[  26.1s] Speaker 2  SameYeah—once you hit start
+                    (Samene her Hva med å starte klokka åtte?)
+[  27.4s] Speaker 2  the clock starts at eight.
+                    (Åtte passer bra for meg.)
+[  32.6s] ?          
+                    (Så bra!)
+[  32.8s] ?          Great
+                    (Så bra!)
+[  32.9s] Speaker 2  Eight works fine for me. I've finally set up the new headset.
+                    (Jeg har endelig fikset den nye headsetet.)
+[  35.8s] ?          —last time we could hardly hear you.
+                    (Forrige gang hørte vi deg nesten ikke.)
+[  39.1s] ?          Do you remember that match?
+                    (Husker dere den kampen?)
+[  42.2s] Speaker 3  We were so close to winning.
+                    (Vi var så nære å vinne.)
+[  43.1s] ?          
+                    (Ja, det var helt vilt)
+[  46.8s] Speaker 2  Yeah, it was absolutely wild. This time we all need to talk more together.
+                    (Denne gangen må vi snakke mer sammen.)
+[  49.4s] ?          Agreed?
+                    (Enig.)
+[  52.2s] Speaker 2  I can keep an eye on the map and let you know.
+                    (Jeg kan følge med på kartet og si ifra.)
+[  52.7s] ?          Perfect—
+                    (Perfekt.)
+[  55.6s] ?          see you at eight.
+                    (Da sees vi klokka åtte.)
+[  60.2s] Speaker 3  Take care—bye for now.
+                    (Ha det bra så lenge)
+  connection: Stopped — Stopped
+audio sent: 1.03 min of 0.95 min · est. cost $0.053
+  Speaker 3: 3 segments, 7.0s
+  Speaker 2: 9 segments, 18.2s
+  Speaker 1: 1 segments, 1.9s
+report written to test-results/run2/report-no-drop.json

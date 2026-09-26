@@ -17,7 +17,7 @@ public static class TranscriptExporter
             sb.Append('[').Append(l.StartedAt.ToLocalTime().ToString("HH:mm:ss", CultureInfo.InvariantCulture)).Append("] ");
             if (l.SpeakerLabel.Length > 0) sb.Append(l.SpeakerLabel).Append(": ");
             sb.AppendLine(l.DisplayText.Length > 0 ? l.DisplayText : l.Original);
-            if (includeOriginal && l.Original.Length > 0 && !l.SameLanguage && l.DisplayText.Length > 0)
+            if (includeOriginal && l.Original.Length > 0 && !l.ShowsOriginalAsText)
                 sb.Append("           (").Append(l.Original).AppendLine(")");
         }
         return sb.ToString();
@@ -45,7 +45,7 @@ public static class TranscriptExporter
             sb.Append(Srt(start)).Append(" --> ").Append(Srt(end)).AppendLine();
             var text = (l.SpeakerLabel.Length > 0 ? l.SpeakerLabel + ": " : "") + (l.DisplayText.Length > 0 ? l.DisplayText : l.Original);
             sb.AppendLine(text);
-            if (includeOriginal && l.Original.Length > 0 && !l.SameLanguage && l.DisplayText.Length > 0) sb.AppendLine(l.Original);
+            if (includeOriginal && l.Original.Length > 0 && !l.ShowsOriginalAsText) sb.AppendLine(l.Original);
             sb.AppendLine();
         }
         return sb.ToString();

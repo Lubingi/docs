@@ -1,0 +1,9 @@
+| File | Voices found/real | Correct | ? | Wrong | Two-voice segs | Merges/splits |
+| dialogue-english-2sp-20260926-021853 | 2/2 (final 2) | 16/19 | 3 | 0 | 0 | none |
+| dialogue-english-2sp-20260926-021853-callquality | 2/2 (final 2) | 16/19 | 3 | 0 | 0 | none |
+| dialogue-norwegian-4sp-20260926-021822 | 3/4 (final 3) | 9/26 | 13 | 4 | 0 | coral+marin→Speaker 2 |
+| dialogue-norwegian-4sp-20260926-021822-callquality | 3/4 (final 3) | 13/27 | 10 | 4 | 0 | coral+marin→Speaker 1 |
+| dialogue-turkish-2sp-20260926-021908 | 2/2 (final 2) | 18/23 | 5 | 0 | 0 | none |
+| dialogue-turkish-2sp-20260926-021908-callquality | 2/2 (final 2) | 17/23 | 6 | 0 | 0 | none |
+| dialogue-turkish-3sp-20260926-021806 | 3/3 (final 3) | 14/24 | 8 | 2 | 0 | cedar+marin→Speaker 1, marin→Speaker 1/Speaker 3 |
+| dialogue-turkish-3sp-20260926-021806-callquality | 3/3 (final 3) | 16/22 | 5 | 1 | 0 | cedar+marin→Speaker 2, marin→Speaker 1/Speaker 2 |

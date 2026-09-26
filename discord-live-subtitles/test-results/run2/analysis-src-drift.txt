@@ -1,0 +1,6 @@
+# EN elapsed_ms minus SRC (input transcript) elapsed_ms for deltas received within 300 ms of each other,
+# first sample per 10 s of wall time. Resets on reconnect (new session).
+tr-gaps-default: 0s:+200, 10s:+200, 20s:+3200, 30s:+6200, 40s:+5800, 50s:+400, 60s:+400, 70s:+200, 80s:+2800, 90s:+3000, 100s:-400, 120s:+1200, 130s:+800, 140s:+3200
+tr-gaps-continuous: 0s:-200, 10s:+200, 20s:+1000, 30s:+200, 40s:+200, 50s:+200, 60s:+0, 70s:+400, 80s:+200, 90s:+600, 100s:+200, 120s:-3400, 130s:-2000, 140s:+0
+no-gaps-default: 0s:+400, 10s:+400, 20s:+400, 30s:+200, 40s:+200, 50s:+3000, 60s:+5800, 70s:+3600, 80s:+4800, 90s:+5200, 100s:+5600, 110s:+5600, 120s:+8000, 130s:+10600
+no-gaps-continuous: 10s:+400, 20s:+0, 30s:+0, 40s:-600, 50s:+200, 60s:-200, 70s:+0, 80s:+200, 90s:+200, 100s:+400, 110s:+200, 120s:+200, 130s:+200

@@ -1,0 +1,104 @@
+# Late endings: translated text for segment N received after segment N+1 started
+report-tr.json: segs 23, sent 62.7s of 58.4s, median final 3749 ms, avg lag 355 ms
+  segments with text after next segment began: 18 (cross-speaker: 10)
+   seg 1 same  +11714..12316 ms: 'Hello everyone, can you hear me?'
+   seg 5 CROSS +6810..7494 ms: " Yes, you can hear me, but it's a bit crackly."
+   seg 6 same  +6682..6817 ms: ' Okay.'
+   seg 8 CROSS +2884..3479 ms: ' I changed the microphone. How is it now?'
+   seg 9 same  +1636..2050 ms: " Now it's much better."
+   seg 10 CROSS +419..787 ms: ' tonight?'
+   seg 11 same  +1736..2245 ms: ' I think we should start'
+   seg 12 CROSS +345..1537 ms: ". I'll be ready after dinner."
+   seg 13 same  +227..3603 ms: ' II might be a little late.'
+   seg 14 CROSS +925..1245 ms: " I'll call as soon as I get off work."
+   seg 15 same  +216..303 ms: ', Elif.'
+   seg 16 CROSS +981..1346 ms: ' of us will play the first match.'
+   seg 17 CROSS +5..581 ms: ' was really frustrating.'
+   seg 18 same  +229..1870 ms: ' match, everyone ran off in different directions.'
+   seg 19 CROSS +120..1155 ms: " time, let's make a plan beforehand."
+   seg 20 same  +1721..1954 ms: ' Okay,'
+   seg 21 CROSS +159..159 ms: '.'
+   seg 22 CROSS +44..846 ms: ' meet here at nine.'
+report-tr-gaps-default.json: segs 24, sent 100.1s of 147.6s, median final 4109 ms, avg lag 3228 ms
+  segments with text after next segment began: 12 (cross-speaker: 0)
+   seg 1 same  +1188..4678 ms: 'Hi everyoneCan you hear me?'
+   seg 3 same  +1115..2248 ms: ' Yes, they can hear me,'
+   seg 5 same  +1473..2946 ms: ' Okay, I changed the microphone.'
+   seg 6 same  +1191..2361 ms: ' How is it now?'
+   seg 8 same  +426..1310 ms: " it's much better."
+   seg 10 same  +428..1443 ms: " let's start at nine."
+   seg 12 same  +2..1238 ms: ' be a little late.'
+   seg 14 same  +326..787 ms: ', Elif.'
+   seg 16 same  +320..583 ms: " But let's"
+   seg 17 same  +39..114 ms: ' like last'
+   seg 19 same  +39..92 ms: ' direction.'
+   seg 21 same  +2329..2587 ms: "Okay, when I come, I'll"
+report-tr-gaps-continuous.json: segs 23, sent 174.2s of 147.6s, median final 3949 ms, avg lag 834 ms
+  segments with text after next segment began: 12 (cross-speaker: 1)
+   seg 1 same  +1073..1075 ms: 'Hello everyone.'
+   seg 3 same  +1318..2526 ms: ' Yes, you can hear'
+   seg 5 same  +1095..2579 ms: 'Okay, I changed the microphone'
+   seg 6 same  +1245..2617 ms: ' now, how is it?'
+   seg 8 same  +745..1489 ms: " it's much better."
+   seg 10 same  +294..1210 ms: ' start at nine.'
+   seg 11 CROSS +5223..5501 ms: "So I'm ready."
+   seg 12 same  +4819..5329 ms: ' I might be a little late getting home from work;'
+   seg 14 same  +251..251 ms: '.'
+   seg 16 same  +19..46 ms: ' week,'
+   seg 18 same  +3..3 ms: '.'
+   seg 20 same  +4249..4529 ms: 'Hello, everyone.'
+report-no.json: segs 26, sent 58.0s of 57.0s, median final 3202 ms, avg lag 475 ms
+  segments with text after next segment began: 23 (cross-speaker: 11)
+   seg 1 same  +916..2482 ms: 'Hey, everyone, can you hear'
+   seg 2 CROSS +1390..1733 ms: ' me?'
+   seg 3 same  +1907..2722 ms: ' Yes, we hear'
+   seg 4 same  +1138..1726 ms: ' you fine.'
+   seg 5 CROSS +394..1584 ms: ' How did work go today?'
+   seg 6 same  +563..1037 ms: ' Fine.'
+   seg 7 same  +40..1405 ms: " I'm really exhausted."
+   seg 8 CROSS +1017..1885 ms: ' Shall we play a bit tonight?'
+   seg 10 CROSS +482..1345 ms: ' I have to eat dinner first.'
+   seg 11 same  +1683..3038 ms: ' These meetings usually'
+   seg 12 CROSS +1097..1615 ms: ' start at eight.'
+   seg 13 same  +536..1610 ms: ' Eight works well for me.'
+   seg 14 CROSS +46..1133 ms: ' to get a new headset.'
+   seg 15 same  +1094..1331 ms: ' Great.'
+   seg 16 CROSS +339..1059 ms: ' time we could hardly hear you.'
+   seg 17 same  +2005..2225 ms: ' Do you remember'
+   seg 18 CROSS +628..1352 ms: '? We were so close to winning.'
+   seg 20 same  +894..2116 ms: ' Yeah, that was absolutely'
+   seg 21 CROSS +206..2545 ms: ' wild this time, we need to talk it over together.'
+   seg 22 same  +2339..2580 ms: ' I can watch'
+   seg 23 CROSS +1247..2498 ms: 'and call it out.'
+   seg 24 same  +979..1078 ms: ' Perfect.'
+   seg 25 CROSS +102..1158 ms: ' see each other at eight.'
+report-no-gaps-default.json: segs 27, sent 90.9s of 138.8s, median final 3473 ms, avg lag 7789 ms
+  segments with text after next segment began: 14 (cross-speaker: 1)
+   seg 1 same  +563..4328 ms: 'Hey, everyoneHello everyone, can you hear me?'
+   seg 3 same  +1186..2385 ms: ' Yes, we can hear you just'
+   seg 4 same  +1174..1314 ms: ' fine.'
+   seg 6 same  +262..808 ms: ', all right.'
+   seg 7 same  +175..1346 ms: " I'm completely exhausted."
+   seg 9 same  +996..2605 ms: " I'm in, but I need to eat"
+   seg 11 same  +1083..2876 ms: 'This is Vara, it'
+   seg 13 same  +272..3557 ms: ' Eight worksHow are you, everyone?'
+   seg 15 same  +938..1931 ms: ' So, last time,'
+   seg 17 same  +757..889 ms: ' Do you remember that?'
+   seg 18 same  +1642..1971 ms: ' That match?'
+   seg 22 CROSS +68..68 ms: '.'
+   seg 23 same  +880..1404 ms: ' I agree,'
+   seg 25 same  +897..1885 ms: ' Perfect,'
+report-no-gaps-continuous.json: segs 26, sent 151.6s of 138.8s, median final 3764 ms, avg lag 557 ms
+  segments with text after next segment began: 12 (cross-speaker: 0)
+   seg 3 same  +1387..2552 ms: 'Yes, we can hear'
+   seg 4 same  +1363..2087 ms: ' you just fine.'
+   seg 6 same  +1861..3090 ms: 'Totally crazy,'
+   seg 7 same  +920..1743 ms: " but I'm dead beat."
+   seg 9 same  +206..3313 ms: ',And I am withbut I'
+   seg 11 same  +1323..3085 ms: ' A summit meeting will'
+   seg 13 same  +330..1439 ms: ' well for me.'
+   seg 15 same  +2885..2885 ms: ' So'
+   seg 17 same  +62..966 ms: ' You have to take that fight.'
+   seg 19 same  +888..2478 ms: ' Yes, it was totally'
+   seg 22 same  +1570..1938 ms: ' Okay,'
+   seg 24 same  +17..17 ms: '?'

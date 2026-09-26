@@ -1,0 +1,24 @@
+dialogue-english-2sp-20260926-021853.wav: 57.5s @ 24000 Hz
+  segment   1:    0.19s –    2.69s  Speaker 1  (best 0.00, next 0.00)
+  segment   2:    3.55s –    6.18s  Speaker 2  (best 0.28, next 0.00)
+  segment   3:    6.69s –    8.22s  Speaker 1  (best 0.52, next 0.23)
+  segment   4:    8.61s –   11.71s  Speaker 1  (best 0.68, next 0.33)
+  segment   5:   13.31s –   17.41s  Speaker 2  (best 0.77, next 0.38)
+  segment   6:   18.08s –   20.00s  Speaker 1  (best 0.64, next 0.30)
+  segment   7:   20.29s –   22.94s  Speaker 1  (best 0.77, next 0.25)
+  segment   8:   23.74s –   28.10s  Speaker 2  (best 0.74, next 0.34)
+  segment   9:   28.38s –   29.15s  ?          (best 0.51, next 0.22)
+  segment  10:   29.44s –   31.52s  Speaker 1  (best 0.68, next 0.28)
+  segment  11:   31.81s –   35.36s  Speaker 2  (best 0.78, next 0.29)
+  segment  12:   36.16s –   37.15s  Speaker 1  (best 0.63, next 0.27)
+  segment  13:   37.44s –   40.51s  Speaker 1  (best 0.79, next 0.28)
+  segment  14:   41.15s –   42.02s  ?          (best 0.24, next 0.12)
+  segment  15:   42.30s –   45.25s  Speaker 2  (best 0.74, next 0.28)
+  segment  16:   45.54s –   46.14s  ?          (best 0.47, next 0.18)
+  segment  17:   46.72s –   49.60s  Speaker 1  (best 0.77, next 0.30)
+  segment  18:   49.89s –   51.26s  Speaker 1  (best 0.60, next 0.12)
+  segment  19:   51.97s –   55.65s  Speaker 2  (best 0.73, next 0.38)
+audio that would be sent: 57.3s of 57.5s
+final speakers (after retroactive fixes and merges):
+  Speaker 2: 6 segments, 21.8s
+  Speaker 1: 10 segments, 23.1s

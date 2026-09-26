@@ -57,7 +57,7 @@ public partial class HistoryViewModel : ObservableObject
         // Darken light speaker colours so they're readable on the white history background.
         row.SpeakerBrush = new SolidColorBrush(Color.FromRgb((byte)(color.R * 0.7), (byte)(color.G * 0.7), (byte)(color.B * 0.7)));
         row.Translation = line.DisplayText + (line.IsFinal ? "" : " …");
-        row.Original = line.SameLanguage ? "" : line.Original;
+        row.Original = line.ShowsOriginalAsText ? "" : line.Original;
         row.IsFinal = line.IsFinal;
         row.Confidence = line.SpeakerId == null ? "" : $"{line.SpeakerConfidence:0.00}";
     }

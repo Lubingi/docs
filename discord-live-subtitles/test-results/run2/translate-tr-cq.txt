@@ -1,0 +1,56 @@
+dialogue-turkish-3sp-20260926-021806.wav: 58.4s @ 24000 Hz (call-quality simulation on)
+  connection: Connecting — Connecting to OpenAI…
+  connection: Connected — Connected
+[   5.5s] ?          
+                    (beni duyabiliyor musunuz?)
+[   6.0s] ?          Hey everyone, can you hear me?
+                    (Selam millet.)
+[   8.5s] ?          Yes, you can hear
+                    (Evet, sesim geliyor ama biraz)
+[  10.9s] Speaker 1  me, but it's a little crackly.
+                    (cızırtılı.)
+[  11.9s] ?          Alright,
+                    (Tamam, mikrofonu değiştirdim)
+[  13.2s] Speaker 2  I've changed the microphone.
+                    ()
+[  14.8s] ?          How about now?
+                    (Şimdi nasıl?)
+[  17.1s] Speaker 3  Now it's much better.
+                    (Şimdi çok daha iyi.)
+  connection: Reconnecting — Connection dropped (Connection lost: The remote party closed the WebSocket connection without completing the close handshake.) — reconnecting in 1s
+[  21.0s] Speaker 3  What time are we starting tonight?
+                    (Bu akşam kaçta başlıyoruz?)
+  connection: Reconnecting — Reconnecting (attempt 2)…
+  connection: Connected — Connected
+[  24.3s] Speaker 1  I think let's start at nine.
+                    (Bence Bence dokuzda başlayalım.)
+[  26.2s] Speaker 1  I'll be ready after dinner.
+                    (Ben yemekten sonra hazır olurum.)
+[  28.2s] Speaker 2  I might be a little late.
+                    (Ben biraz geç kalabilirim.)
+[  30.6s] Speaker 2  I'll call you right after work.
+                    (işten çıkınca hemen bağlanırım.)
+[  33.1s] Speaker 3  No problem, Elif.
+                    (Sorun değil Elif.)
+[  37.2s] Speaker 3  The three of us can play the first match.
+                    (İlk maçı biz üçümüz oynarız.)
+[  42.1s] Speaker 2  But let's not lose again like last week; it was really frustrating.
+                    (Ama geçen haftaki gibi yine kaybetmeyelim. Çok sinir bozucuydu.)
+[  44.3s] Speaker 2  In that match, everyone ran to different spots.
+                    (O maçta herkes farklı yere koştu.)
+[  47.9s] Speaker 2  This time, let's plan ahead.
+                    (Bu sefer önceden plan yapalım.)
+[  48.4s] Speaker 3  
+                    (Tamam, ben gelince destek oynarım.)
+[  51.4s] Speaker 3  Okay, when I get there, I'll cover you—go on the attack.
+                    (siz saldırıya geçin.)
+[  55.3s] Speaker 1  Deal. Then let's meet here at nine.
+                    (Anlaştık. O zaman saat dokuzda burada buluşuyoruz.)
+[  61.4s] Speaker 2  See you. I'm going to get a coffee now and come back.
+                    (Görüşürüz. Ben şimdi bir kahve alıp geliyorum)
+  connection: Stopped — Stopped
+audio sent: 1.05 min of 0.97 min · est. cost $0.053
+  Speaker 2: 8 segments, 20.0s
+  Speaker 1: 4 segments, 11.9s
+  Speaker 3: 6 segments, 12.3s
+report written to test-results/run2/report-tr-cq.json

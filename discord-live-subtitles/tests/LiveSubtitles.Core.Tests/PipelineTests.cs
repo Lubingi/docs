@@ -9,6 +9,7 @@ using LiveSubtitles.Core.Vad;
 
 namespace LiveSubtitles.Core.Tests;
 
+[Collection("SpeakerModel")]
 public class PipelineTests
 {
     [Fact]

@@ -41,6 +41,7 @@ switch (args[0])
         var events = new List<SegmenterEvent>();
         int frames = Math.Min(to16.Length / 512, to24.Length / 768);
         int sent = 0;
+        var ended = new List<int>();
         for (int i = 0; i <= frames; i++)
         {
             events.Clear();
@@ -50,10 +51,11 @@ switch (args[0])
             {
                 if (e is SegmentEnded s)
                 {
+                    ended.Add(s.SegmentId);
                     string who = "";
                     if (registry != null)
                     {
-                        var m = registry.Assign(s.SegmentId, s.Audio16);
+                        var m = registry.Assign(s.SegmentId, s.Audio16, s.StreamStartMs, s.StreamEndMs);
                         who = $"  {registry.Describe(m.SpeakerId, m.Uncertain).Label,-10} (best {m.Similarity:0.00}, next {m.SecondBest:0.00})";
                     }
                     Console.WriteLine($"  segment {s.SegmentId,3}: {s.StreamStartMs / 1000,7:0.00}s – {s.StreamEndMs / 1000,7:0.00}s{who}");
@@ -64,6 +66,11 @@ switch (args[0])
         Console.WriteLine($"audio that would be sent: {sent * 0.032:0.0}s of {samples.Length / (double)rate:0.0}s");
         if (registry != null)
         {
+            Console.WriteLine("final labels per segment: " + string.Join(" ", ended.Select(id =>
+            {
+                var l = registry.Lookup(id);
+                return $"{id}={(l == null || l.Uncertain ? "?" : registry.Describe(l.SpeakerId, false).Label.Replace("Speaker ", "S"))}";
+            })));
             Console.WriteLine("final speakers (after retroactive fixes and merges):");
             foreach (var sp in registry.Snapshot()) Console.WriteLine($"  {sp.Label}: {sp.Segments} segments, {sp.SpeechSeconds:0.0}s");
         }
@@ -286,6 +293,7 @@ sealed class ConsoleLog : ILog
 {
     public void Write(LogLevel level, string message, Exception? exception = null)
     {
-        if (level >= LogLevel.Warning) Console.WriteLine($"  {level}: {message} {exception?.Message}");
+        // Info too: reconnects, replays ("re-sending the last … ms") and session rotation are logged at Info.
+        if (level >= LogLevel.Info) Console.WriteLine($"  {level}: {message} {exception?.Message}");
     }
 }

@@ -148,7 +148,7 @@ public partial class OverlayViewModel : ObservableObject
         group.NameBrush = new SolidColorBrush(color);
         group.TextBrush = new SolidColorBrush(Blend(color, Colors.White, 0.35));
         group.Text = string.Join(" ", members.Select(m => m.DisplayText).Where(t => t.Length > 0));
-        group.Original = string.Join(" ", members.Where(m => !m.SameLanguage).Select(m => m.Original).Where(t => t.Length > 0));
+        group.Original = string.Join(" ", members.Where(m => !m.ShowsOriginalAsText).Select(m => m.Original).Where(t => t.Length > 0));
         group.ShowOriginal = _settings.ShowOriginal && group.Original.Length > 0;
         bool isFinal = members.All(m => m.IsFinal);
         if (!isFinal || group.IsFinal != isFinal || group.Opacity < 1) group.LastChange = DateTime.UtcNow;

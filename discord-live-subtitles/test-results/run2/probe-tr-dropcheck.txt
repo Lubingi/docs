@@ -1,0 +1,3 @@
+dialogue-turkish-3sp-20260926-021806.wav: 58.4s @ 24000 Hz
+Hello, folks. I can hear you. Yes, you can hear me, but it's a bit fuzzy. Okay, I changed the mic. How is it now? Now it's much better. What time are we starting tonight? I think we should start at nine. Let me get ready after dinner. I might be a little late from work, but I'll log on right away. No problem, Elif, the three of us will play the first match. But let's not lose again like last week; it was so frustrating. In that match, everyone ran in different places
+254 text deltas; events written to test-results/run2/probe-tr-dropcheck.jsonl

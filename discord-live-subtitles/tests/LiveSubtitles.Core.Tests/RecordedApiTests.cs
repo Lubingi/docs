@@ -90,5 +90,7 @@ public class LanguageGuessTests
     [InlineData("I can host, if my upload holds up. Otherwise you can. No biggie.", true)]
     [InlineData("Let's mess around for the first couple matches.", true)]
     [InlineData("Sounds good.", true)]
+    [InlineData("Totally.", true)]
+    [InlineData("Awesome!", true)]
     public void RecognisesEnglish(string text, bool english) => Assert.Equal(english, LiveSubtitles.Core.Text.LanguageGuess.LooksEnglish(text));
 }

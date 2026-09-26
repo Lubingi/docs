@@ -1,0 +1,191 @@
+tr-gaps.wav: 147.6s @ 24000 Hz
+  connection: Connecting — Connecting to OpenAI…
+  connection: Connected — Connected
+[   3.4s] ?          Hello everyone.
+                    (Сәләм милләт!)
+[   6.9s] ?          Can you hear me?
+                    (beni duyabiliyor musunuz?)
+[  15.8s] ?          Yes, you can hear
+                    (Evet, sesim geliyor ama biraz)
+[  19.2s] Speaker 1  me, but with a bit of static.
+                    (cızırtılı.)
+  connection: Reconnecting — Connection dropped (Connection lost: The remote party closed the WebSocket connection without completing the close handshake.) — reconnecting in 1s
+  connection: Reconnecting — Reconnecting (attempt 2)…
+  connection: Connected — Connected
+[  26.7s] ?          Okay, I changed the microphone
+                    (Tamam mikrofonu değiştirdim.)
+  connection: Reconnecting — Connection dropped (Connection lost: The remote party closed the WebSocket connection without completing the close handshake.) — reconnecting in 1s
+  connection: Reconnecting — Reconnecting (attempt 2)…
+[  29.5s] Speaker 2  
+                    (Şimdi nasıl?)
+[  30.2s] Speaker 2  now, how is it?
+                    ()
+  connection: Connected — Connected
+[  31.2s] Speaker 2  
+                    (Şimdi nasıl? in)
+[  31.2s] Speaker 2  
+                    (Şimdi nasıl? in the)
+[  31.3s] Speaker 2  
+                    (Şimdi nasıl? in the nozzle)
+  connection: Reconnecting — Connection dropped (Connection lost: The remote party closed the WebSocket connection without completing the close handshake.) — reconnecting in 1s
+  connection: Reconnecting — Reconnecting (attempt 2)…
+  connection: Connected — Connected
+[  39.5s] Speaker 3  Now it's much better.
+                    (Şimdi çok daha iyi.)
+[  44.3s] Speaker 3  What time are we starting tonight?
+                    (Bu akşam kaçta başlıyoruz?)
+[  52.7s] Speaker 1  I think we should start at nine.
+                    (bence dokuzda başlayalım.)
+  connection: Reconnecting — Connection dropped (Connection lost: The remote party closed the WebSocket connection without completing the close handshake.) — reconnecting in 1s
+  connection: Reconnecting — Reconnecting (attempt 2)…
+[  55.1s] Speaker 1  I’ll be
+                    (Ben yemekten sonra hazır)
+  connection: Connected — Connected
+[  66.0s] Speaker 1  I’ll be
+                    (Ben yemekten sonra hazır Son)
+[  66.0s] Speaker 1  I’ll be
+                    (Ben yemekten sonra hazır Sonra)
+[  66.0s] Speaker 1  I’ll be
+                    (Ben yemekten sonra hazır Sonra hazır)
+[  66.0s] Speaker 1  I’ll be
+                    (Ben yemekten sonra hazır Sonra hazır olur)
+[  66.0s] Speaker 1  I’ll be
+                    (Ben yemekten sonra hazır Sonra hazır olurum)
+[  66.0s] Speaker 1  I’ll be
+                    (Ben yemekten sonra hazır Sonra hazır olurum.)
+[  66.1s] Speaker 1  I’ll beSo
+                    (Ben yemekten sonra hazır Sonra hazır olurum.)
+[  66.1s] Speaker 1  I’ll beSo I'm
+                    (Ben yemekten sonra hazır Sonra hazır olurum.)
+[  66.3s] Speaker 1  I’ll beSo I'm ready
+                    (Ben yemekten sonra hazır Sonra hazır olurum.)
+[  66.4s] Speaker 1  I’ll beSo I'm ready.
+                    (Ben yemekten sonra hazır Sonra hazır olurum.)
+[  67.5s] Speaker 2  
+                    (Ben biraz geç kalabilirim.)
+[  68.1s] Speaker 2  I
+                    (Ben biraz geç kalabilirim.)
+[  68.1s] Speaker 2  I might
+                    (Ben biraz geç kalabilirim.)
+[  68.2s] Speaker 2  I might be
+                    (Ben biraz geç kalabilirim.)
+[  68.2s] Speaker 2  I might be a
+                    (Ben biraz geç kalabilirim.)
+[  68.2s] Speaker 2  I might be a little
+                    (Ben biraz geç kalabilirim.)
+[  68.3s] Speaker 2  I might be a little late
+                    (Ben biraz geç kalabilirim.)
+[  68.3s] Speaker 2  I might be a little late getting
+                    (Ben biraz geç kalabilirim.)
+[  68.5s] Speaker 2  I might be a little late getting home
+                    (Ben biraz geç kalabilirim.)
+[  68.5s] Speaker 2  I might be a little late getting home from
+                    (Ben biraz geç kalabilirim.)
+[  68.5s] Speaker 2  I might be a little late getting home from work
+                    (Ben biraz geç kalabilirim.)
+[  68.6s] Speaker 2  I might be a little late getting home from work;
+                    (Ben biraz geç kalabilirim.)
+[  71.3s] Speaker 2  I'll call as soon as I leave.
+                    (İşten çıkınca hemen bağlanırım.)
+[  75.9s] Speaker 3  No problem.
+                    (Sorun değil Elif.)
+[  82.9s] Speaker 3  Elif. The three of us will play the first game.
+                    (İlk maçı biz üçümüz oynarız.)
+[  90.6s] Speaker 2  But like last week,
+                    (Ama geçen haftaki gibi yine kaybetmeyelim.)
+[  95.9s] Speaker 2  let's not lose again. It was really frustrating.
+                    (Çok sinir bozucuydu.)
+[ 104.1s] Speaker 2  That match—everyone ran to different places.
+                    (O maçta herkes farklı yere koştu.)
+  connection: Reconnecting — Connection dropped (Connection lost: The remote party closed the WebSocket connection without completing the close handshake.) — reconnecting in 1s
+  connection: Reconnecting — Reconnecting (attempt 2)…
+  connection: Connected — Connected
+[ 108.1s] Speaker 2  This time, let's plan beforehand.
+                    (Bu sefer önceden plan yapalım.)
+  connection: Reconnecting — Connection dropped (Connection lost: The remote party closed the WebSocket connection without completing the close handshake.) — reconnecting in 1s
+  connection: Reconnecting — Reconnecting (attempt 2)…
+  connection: Connected — Connected
+[ 123.4s] ?          
+                    (Tamam, ben gelince)
+  connection: Reconnecting — Connection dropped (Connection lost: The remote party closed the WebSocket connection without completing the close handshake.) — reconnecting in 1s
+  connection: Reconnecting — Reconnecting (attempt 2)…
+  connection: Connected — Connected
+[ 125.6s] ?          
+                    (Tamam, ben gelince Tam)
+[ 125.6s] ?          
+                    (Tamam, ben gelince Tamam)
+[ 125.7s] ?          
+                    (Tamam, ben gelince Tamam ben)
+[ 125.7s] ?          
+                    (Tamam, ben gelince Tamam ben gel)
+[ 125.7s] ?          
+                    (Tamam, ben gelince Tamam ben gelince)
+[ 125.8s] ?          
+                    (Tamam, ben gelince Tamam ben gelince destek)
+[ 125.9s] ?          
+                    (Tamam, ben gelince Tamam ben gelince destek oyn)
+[ 125.9s] ?          
+                    (Tamam, ben gelince Tamam ben gelince destek oynarım)
+[ 126.0s] ?          
+                    (Tamam, ben gelince Tamam ben gelince destek oynarım,)
+[ 126.1s] Speaker 3  
+                    (siz)
+[ 126.1s] Speaker 3  
+                    (siz saldır)
+[ 126.4s] Speaker 3  
+                    (siz saldırıya)
+[ 126.4s] ?          Hello
+                    (Tamam, ben gelince Tamam ben gelince destek oynarım,)
+[ 126.4s] Speaker 3  
+                    (siz saldırıya geç)
+[ 126.4s] Speaker 3  
+                    (siz saldırıya geçin)
+[ 126.4s] Speaker 3  
+                    (siz saldırıya geçin.)
+[ 126.6s] ?          Hello,
+                    (Tamam, ben gelince Tamam ben gelince destek oynarım,)
+[ 126.7s] ?          Hello, everyone
+                    (Tamam, ben gelince Tamam ben gelince destek oynarım,)
+[ 126.7s] ?          Hello, everyone.
+                    (Tamam, ben gelince Tamam ben gelince destek oynarım,)
+[ 126.8s] Speaker 3  When
+                    (siz saldırıya geçin.)
+[ 126.8s] Speaker 3  When I
+                    (siz saldırıya geçin.)
+[ 126.8s] Speaker 3  When I come
+                    (siz saldırıya geçin.)
+[ 126.9s] Speaker 3  When I come,
+                    (siz saldırıya geçin.)
+[ 127.1s] Speaker 3  When I come, I
+                    (siz saldırıya geçin.)
+[ 127.2s] Speaker 3  When I come, I play
+                    (siz saldırıya geçin.)
+[ 127.2s] Speaker 3  When I come, I play support
+                    (siz saldırıya geçin.)
+[ 127.2s] Speaker 3  When I come, I play support.
+                    (siz saldırıya geçin.)
+[ 127.3s] Speaker 3  When I come, I play support. You
+                    (siz saldırıya geçin.)
+[ 127.3s] Speaker 3  When I come, I play support. You go
+                    (siz saldırıya geçin.)
+[ 127.4s] Speaker 3  When I come, I play support. You go on
+                    (siz saldırıya geçin.)
+[ 127.4s] Speaker 3  When I come, I play support. You go on the
+                    (siz saldırıya geçin.)
+[ 127.5s] Speaker 3  When I come, I play support. You go on the offensive
+                    (siz saldırıya geçin.)
+[ 127.6s] Speaker 3  When I come, I play support. You go on the offensive.
+                    (siz saldırıya geçin.)
+  connection: Reconnecting — Connection dropped (Connection lost: The remote party closed the WebSocket connection without completing the close handshake.) — reconnecting in 1s
+  connection: Reconnecting — Reconnecting (attempt 2)…
+  connection: Connected — Connected
+[ 139.3s] Speaker 1  Deal. Then let's meet here at nine.
+                    (Anlaştık. o zaman saat dokuzda burada buluşuyoruz.)
+[ 151.5s] Speaker 2  See you, it’s Passion, I’ll grab a coffee and be right there.
+                    (Görüşürüz. Ben şimdi bir kahve alıp geliyorum.)
+  connection: Stopped — Stopped
+audio sent: 2.90 min of 2.46 min · est. cost $0.148
+  Speaker 2: 10 segments, 21.1s
+  Speaker 1: 4 segments, 12.1s
+  Speaker 3: 5 segments, 11.1s
+report written to test-results/run2/report-tr-gaps-continuous.json

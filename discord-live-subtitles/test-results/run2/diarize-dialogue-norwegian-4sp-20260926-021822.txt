@@ -1,0 +1,32 @@
+dialogue-norwegian-4sp-20260926-021822.wav: 57.0s @ 24000 Hz
+  segment   1:    0.22s –    2.05s  Speaker 1  (best 0.00, next 0.00)
+  segment   2:    2.34s –    3.33s  ?          (best 0.36, next 0.00)
+  segment   3:    3.65s –    4.38s  ?          (best 0.03, next 0.00)
+  segment   4:    4.67s –    6.08s  Speaker 2  (best 0.13, next 0.00)
+  segment   5:    6.37s –    8.16s  Speaker 2  (best 0.57, next 0.19)
+  segment   6:    8.45s –    9.60s  ?          (best 0.28, next 0.17)
+  segment   7:    9.89s –   11.84s  ?          (best 0.34, next 0.14)
+  segment   8:   12.13s –   13.92s  ?          (best 0.36, next 0.15)
+  segment   9:   14.34s –   16.19s  Speaker 3  (best 0.24, next 0.12)
+  segment  10:   16.48s –   19.23s  ?          (best 0.39, next 0.18)
+  segment  11:   20.13s –   21.38s  Speaker 2  (best 0.47, next 0.25)
+  segment  12:   21.66s –   23.33s  Speaker 2  (best 0.57, next 0.29)
+  segment  13:   23.74s –   25.76s  Speaker 2  (best 0.57, next 0.41)
+  segment  14:   26.05s –   28.64s  Speaker 2  (best 0.69, next 0.37)
+  segment  15:   28.93s –   30.11s  ?          (best 0.27, next 0.24)
+  segment  16:   30.40s –   32.58s  ?          (best 0.34, next 0.31)
+  segment  17:   33.60s –   35.46s  ?          (best 0.44, next 0.30)
+  segment  18:   35.81s –   38.08s  Speaker 3  (best 0.46, next 0.28)
+  segment  19:   38.69s –   39.58s  ?          (best 0.33, next 0.17)
+  segment  20:   39.87s –   41.41s  Speaker 2  (best 0.66, next 0.22)
+  segment  21:   41.70s –   44.13s  Speaker 2  (best 0.71, next 0.30)
+  segment  22:   44.42s –   45.15s  ?          (best 0.38, next 0.20)
+  segment  23:   45.44s –   48.13s  Speaker 2  (best 0.71, next 0.29)
+  segment  24:   48.64s –   49.66s  ?          (best 0.44, next 0.33)
+  segment  25:   50.24s –   52.03s  ?          (best 0.44, next 0.36)
+  segment  26:   52.61s –   55.20s  Speaker 3  (best 0.64, next 0.37)
+audio that would be sent: 56.7s of 57.0s
+final speakers (after retroactive fixes and merges):
+  Speaker 3: 3 segments, 7.0s
+  Speaker 2: 9 segments, 18.2s
+  Speaker 1: 1 segments, 1.9s

@@ -21,11 +21,20 @@ public static class LanguageGuess
         "i'll", "i've", "okay", "ok", "oh", "hey", "all", "some", "more", "up", "out", "then", "now", "too", "very",
         "really", "see", "want", "wanna", "need", "sure", "right", "good", "cool", "nice", "thanks", "thank", "lol", "so",
         "sounds", "maybe", "still", "though", "one", "which", "because", "also", "time", "tonight", "today", "anyone",
+        // short replies seen as blank subtitles in the live test
+        "awesome", "totally", "perfect", "sweet", "great", "exactly", "definitely", "absolutely", "yep", "nope", "alright",
+        "please", "sorry", "wait", "ready", "fine", "haha", "bro", "dude", "around", "snacks", "anyway", "probably",
     };
+
+    public static bool HasNonEnglishLetters(string text) => text.Any(c => "çğıöşüÇĞİÖŞÜæøåÆØÅäÄ".Contains(c));
+
+    /// <summary>Number of common English words in the text.</summary>
+    public static int EnglishWordCount(string text) =>
+        Words.Matches(text).Count(m => English.Contains(m.Value.ToLowerInvariant().Replace('’', '\'')));
 
     public static bool LooksEnglish(string text)
     {
-        if (text.Any(c => "çğıöşüÇĞİÖŞÜæøåÆØÅäÄ".Contains(c))) return false;
+        if (HasNonEnglishLetters(text)) return false;
         var words = Words.Matches(text).Select(m => m.Value.ToLowerInvariant().Replace('’', '\'')).ToList();
         if (words.Count == 0) return false;
         int hits = words.Count(w => English.Contains(w));

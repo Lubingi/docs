@@ -16,8 +16,9 @@ public interface ISpeakerIdentifier
     bool AnyMuted { get; }
     /// <summary>Compare only (does not update voice profiles). Used to decide early whether to translate a muted speaker.</summary>
     SpeakerMatch Peek(float[] audio16k);
-    /// <summary>Assign a finished segment to a speaker, creating/updating profiles.</summary>
-    SpeakerMatch Assign(int segmentId, float[] audio16k);
+    /// <summary>Assign a finished segment to a speaker, creating/updating profiles. The segment's position on the
+    /// capture timeline (optional) lets short pieces of one turn be identified together.</summary>
+    SpeakerMatch Assign(int segmentId, float[] audio16k, double startMs = double.NaN, double endMs = double.NaN);
     bool IsMuted(int speakerId);
     /// <summary>Maps a (possibly merged-away) speaker id to its current id; null if the voice was forgotten.</summary>
     int? Resolve(int? speakerId);
@@ -33,7 +34,7 @@ public sealed class NoSpeakerIdentifier : ISpeakerIdentifier
     public bool Enabled => false;
     public bool AnyMuted => false;
     public SpeakerMatch Peek(float[] audio16k) => SpeakerMatch.None;
-    public SpeakerMatch Assign(int segmentId, float[] audio16k) => SpeakerMatch.None;
+    public SpeakerMatch Assign(int segmentId, float[] audio16k, double startMs = double.NaN, double endMs = double.NaN) => SpeakerMatch.None;
     public bool IsMuted(int speakerId) => false;
     public int? Resolve(int? speakerId) => speakerId;
     public SegmentSpeaker? Lookup(int segmentId) => null;

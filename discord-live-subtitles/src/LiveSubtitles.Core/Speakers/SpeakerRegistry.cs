@@ -91,7 +91,18 @@ public sealed class SpeakerRegistry : ISpeakerIdentifier
     /// <summary>Neighbouring 1.5 s windows of one voice measured ≥ 0.41; at a change of speaker they dropped to 0.09–0.16.</summary>
     private const float ChangeThreshold = 0.30f;
 
-    public SpeakerMatch Assign(int segmentId, float[] audio16k)
+    /// <summary>A short segment starting this soon after the previous one may be the same person continuing.</summary>
+    private const double ContinuationGapMs = 700;
+    private const double ContinuationMaxMs = 12000;
+    /// <summary>Only pieces shorter than this get help from the previous piece; longer ones carry enough voice alone
+    /// (on a real 4-speaker file, joining ~2 s segments merged two people whose similarity was an ambiguous 0.34).</summary>
+    private const double ContinuationShortMs = 1500;
+    /// <summary>For two short pieces (too short for the windowed check) the pieces themselves must look alike.
+    /// Measured on ~1 s pieces: different people ≤ 0.23, the same person median 0.40.</summary>
+    private const float ContinuationPieceSimilarity = 0.30f;
+    private (int Id, float[] Audio, double StartMs, double EndMs)? _previous;
+
+    public SpeakerMatch Assign(int segmentId, float[] audio16k, double startMs = double.NaN, double endMs = double.NaN)
     {
         double ms = audio16k.Length / 16.0;
         var emb = _embed(audio16k);
@@ -99,10 +110,36 @@ public sealed class SpeakerRegistry : ISpeakerIdentifier
         // used to learn or create a voice (the blended profile would match both people); its line is labelled with
         // whoever starts it if that's certain, otherwise "?".
         var firstWindow = emb != null && ms >= ChangeCheckMs ? DetectVoiceChange(audio16k) : null;
+
+        // Pauses of 0.3 s split one person's turn into short pieces that are hard to identify alone (more "?").
+        // If a short piece follows the previous one closely and there's no change of voice across the two,
+        // identify it from both together.
+        float[]? joinedEmb = null;
+        double joinedMs = 0;
+        int? previousId = null;
+        (int Id, float[] Audio, double StartMs, double EndMs)? prev;
+        lock (_lock) prev = _previous;
+        if (emb != null && firstWindow == null && !double.IsNaN(startMs) && prev is { } p
+            && startMs - p.EndMs is >= 0 and <= ContinuationGapMs
+            && ms < ContinuationShortMs && p.Audio.Length / 16.0 <= 4000 && p.Audio.Length / 16.0 + ms <= ContinuationMaxMs)
+        {
+            var joined = new float[p.Audio.Length + audio16k.Length];
+            p.Audio.CopyTo(joined, 0);
+            audio16k.CopyTo(joined, p.Audio.Length);
+            bool singleVoice = joined.Length / 16.0 >= ChangeCheckMs ? DetectVoiceChange(joined) == null : true; // short: checked below
+            if (singleVoice)
+            {
+                joinedEmb = _embed(joined);
+                joinedMs = joined.Length / 16.0;
+                previousId = p.Id;
+            }
+        }
+
         SpeakerMatch result;
         bool structural = false;
         lock (_lock)
         {
+            _previous = double.IsNaN(startMs) ? null : (segmentId, audio16k.Length > 8 * 16000 ? audio16k[^(8 * 16000)..] : audio16k, startMs, endMs);
             var record = new SegmentRecord(segmentId, emb, ms);
             AddRecord(record);
             if (emb == null) return SpeakerMatch.None;
@@ -114,6 +151,20 @@ public sealed class SpeakerRegistry : ISpeakerIdentifier
                 if (sure) AddToSpeaker(best!, record, bestSim); // counts the line, doesn't train (Mixed)
                 else { record.Similarity = bestSim; record.Uncertain = true; }
                 result = new SpeakerMatch(sure ? best!.Id : null, bestSim, second, false, !sure);
+            }
+            else if (joinedEmb != null && previousId is { } pid
+                     && _segments.TryGetValue(pid, out var pr) && pr.Embedding != null && !pr.Mixed
+                     && SpeakerEmbedder.Cosine(pr.Embedding, emb) >= ContinuationPieceSimilarity)
+            {
+                // Decide with the combined sample; learn only from this segment's own embedding (no double counting).
+                (result, structural) = AssignLocked(record, joinedEmb, joinedMs);
+                if (!result.Uncertain && result.SpeakerId is { } sid && Find(sid) is { } speaker
+                    && _segments.TryGetValue(pid, out var previousRecord) && previousRecord.SpeakerId == null && !previousRecord.Mixed)
+                {
+                    // The earlier piece was "?": it's the same person, so label it too.
+                    AddToSpeaker(speaker, previousRecord, result.Similarity);
+                    structural = true;
+                }
             }
             else
             {

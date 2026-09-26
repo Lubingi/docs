@@ -150,6 +150,7 @@ public sealed class TranslationConnection : IAsyncDisposable
                 attempt == 0 ? "Connecting to OpenAI…" : $"Reconnecting (attempt {attempt + 1})…");
             var session = _factory();
             var pending = new ActiveSession(session); // subscribes to Ended before connecting
+            var connectClock = System.Diagnostics.Stopwatch.StartNew();
             try
             {
                 await session.ConnectAsync(ct).ConfigureAwait(false);
@@ -190,7 +191,9 @@ public sealed class TranslationConnection : IAsyncDisposable
             }
             if (attempt > 0 || ReconnectCount > 0) _log.Info("Translation reconnected");
             attempt = 0;
-            SetState(ConnectionState.Connected, "Connected");
+            double took = connectClock.Elapsed.TotalSeconds;
+            if (took > 3) _log.Warn($"OpenAI took {took:0.0} s to accept the connection; speech meanwhile was buffered");
+            SetState(ConnectionState.Connected, took > 3 ? $"Connected (connecting took {took:0} s)" : "Connected");
 
             // Supervise whichever session is current, rotating it shortly before it expires.
             while (!ct.IsCancellationRequested && !active.EndedTask.IsCompleted)

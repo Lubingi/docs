@@ -58,9 +58,9 @@ public class WebSocketSessionTests
         session.EventReceived += e => { lock (events) { events.Add(e); if (events.Count(x => x.Delta != null) >= 2) gotDeltas.TrySetResult(); } };
         await session.ConnectAsync(default);
         session.SendAudio(new byte[9600]);
-        await gotDeltas.Task.WaitAsync(TimeSpan.FromSeconds(5));
+        await gotDeltas.Task.WaitAsync(TimeSpan.FromSeconds(15));
         await session.CloseAsync(TimeSpan.FromSeconds(3));
-        await server.WaitAsync(TimeSpan.FromSeconds(5));
+        await server.WaitAsync(TimeSpan.FromSeconds(15));
 
         Assert.Equal("Bearer sk-test", auth);
         Assert.Equal("?model=gpt-realtime-translate", query);

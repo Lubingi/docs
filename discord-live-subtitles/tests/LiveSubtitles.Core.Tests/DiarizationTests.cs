@@ -6,6 +6,7 @@ using LiveSubtitles.Core.Vad;
 
 namespace LiveSubtitles.Core.Tests;
 
+[Collection("SpeakerModel")]
 public partial class DiarizationTests
 {
     private static List<(SegmentEnded Segment, SpeakerMatch Match)> Diarize(string wav, SpeakerRegistry registry) => DiarizationHelper.Diarize(wav, registry);
@@ -14,7 +15,7 @@ public partial class DiarizationTests
 internal static class DiarizationHelper
 {
     /// <summary>Runs VAD + segmenter + online clustering over a WAV like the live pipeline does.</summary>
-    public static List<(SegmentEnded Segment, SpeakerMatch Match)> Diarize(string wav, SpeakerRegistry registry, SegmenterOptions? options = null)
+    public static List<(SegmentEnded Segment, SpeakerMatch Match)> Diarize(string wav, ISpeakerIdentifier registry, SegmenterOptions? options = null)
     {
         var (samples, rate) = WavFile.ReadMono(wav);
         using var vad = new SileroVad(TestPaths.Model("silero_vad.onnx"));
@@ -29,7 +30,7 @@ internal static class DiarizationHelper
             events.Clear();
             if (i == frames) seg.Flush(events);
             else seg.Process(to16[(i * 512)..((i + 1) * 512)], to24[(i * 768)..((i + 1) * 768)], vad.Process(to16.AsSpan(i * 512, 512)), events);
-            foreach (var e in events.OfType<SegmentEnded>()) result.Add((e, registry.Assign(e.SegmentId, e.Audio16)));
+            foreach (var e in events.OfType<SegmentEnded>()) result.Add((e, registry.Assign(e.SegmentId, e.Audio16, e.StreamStartMs, e.StreamEndMs)));
         }
         return result;
     }
@@ -201,6 +202,7 @@ public class DialogueScriptTests
 /// Reproduces VPS bug 3: fast turn-taking (0.3–0.4 s gaps) puts two people into one segment; the blended voice
 /// profile then matched everyone and the conversation collapsed into a single speaker.
 /// </summary>
+[Collection("SpeakerModel")]
 public class FastTurnTakingTests
 {
     [Theory]
@@ -257,5 +259,88 @@ public class FastTurnTakingTests
         {
             File.Delete(file);
         }
+    }
+}
+
+/// <summary>VPS run 2, N6/N7: 0.3 s pause splitting cut turns into ~1 s pieces that were too short to identify
+/// (up to half the lines "?"), and no voice could be created until someone spoke 1.5 s without pausing.</summary>
+[Collection("SpeakerModel")]
+public class ChoppyTurnTests
+{
+    private static (List<(SegmentEnded Segment, SpeakerMatch Match)> Result, SpeakerRegistry Registry, List<(double Start, bool IsA)> Turns) Run(bool withTiming)
+    {
+        var (samples, _) = WavFile.ReadMono(TestPaths.Audio("two-speakers-en.wav"));
+        float[] Cut(double s, double e) => samples[(int)(s * 16000)..(int)(e * 16000)];
+        var utterances = new[] { (Cut(1.70, 3.55), true), (Cut(9.41, 11.49), false), (Cut(4.45, 6.53), true), (Cut(12.22, 14.69), false) };
+        var audio = new List<float>(new float[8000]);
+        var turns = new List<(double, bool)>();
+        foreach (var (u, isA) in utterances)
+        {
+            turns.Add((audio.Count / 16000.0, isA));
+            for (int i = 0; i < u.Length; i += 16000) // ~1 s pieces separated by 0.35 s pauses
+            {
+                audio.AddRange(u[i..Math.Min(u.Length, i + 16000)]);
+                audio.AddRange(new float[(int)(0.35 * 16000)]);
+            }
+            audio.AddRange(new float[(int)(0.8 * 16000)]);
+        }
+        var file = Path.Combine(Path.GetTempPath(), $"choppy-{Guid.NewGuid():N}.wav");
+        WavFile.WriteMono16(file, audio.ToArray(), 16000);
+        try
+        {
+            var emb = new SpeakerEmbedder(TestPaths.Model("campplus_voxceleb_16k.onnx"));
+            var reg = new SpeakerRegistry(x => emb.Embed(x), new DiarizationSettings());
+            var inner = DiarizationHelper.Diarize(file, withTiming ? reg : new NoTimingRegistry(reg));
+            return (inner, reg, turns);
+        }
+        finally { File.Delete(file); }
+    }
+
+    /// <summary>Forwards to the registry without segment timing (the old behaviour).</summary>
+    private sealed class NoTimingRegistry(SpeakerRegistry inner) : ISpeakerIdentifier
+    {
+        public bool Enabled => true;
+        public bool AnyMuted => inner.AnyMuted;
+        public SpeakerMatch Peek(float[] audio16k) => inner.Peek(audio16k);
+        public SpeakerMatch Assign(int segmentId, float[] audio16k, double startMs = double.NaN, double endMs = double.NaN) => inner.Assign(segmentId, audio16k);
+        public bool IsMuted(int speakerId) => inner.IsMuted(speakerId);
+        public int? Resolve(int? speakerId) => inner.Resolve(speakerId);
+        public SegmentSpeaker? Lookup(int segmentId) => inner.Lookup(segmentId);
+        public (string Label, string Color) Describe(int? speakerId, bool uncertain) => inner.Describe(speakerId, uncertain);
+        public event Action? SpeakersChanged { add => inner.SpeakersChanged += value; remove => inner.SpeakersChanged -= value; }
+    }
+
+    [Fact]
+    public void FewerUnknownsThanIdentifyingPiecesAlone()
+    {
+        if (!TestPaths.Has(TestPaths.Audio("two-speakers-en.wav")) || !TestPaths.Has(TestPaths.Model("campplus_voxceleb_16k.onnx"))) return;
+        int Unknown(bool timing)
+        {
+            var (result, reg, _) = Run(timing);
+            return result.Count(r => reg.Lookup(r.Segment.SegmentId) is not { Uncertain: false });
+        }
+        Assert.True(Unknown(true) < Unknown(false));
+    }
+
+    [Fact]
+    public void ShortPiecesOfOneTurnAreIdentifiedTogether()
+    {
+        if (!TestPaths.Has(TestPaths.Audio("two-speakers-en.wav")) || !TestPaths.Has(TestPaths.Model("campplus_voxceleb_16k.onnx"))) return;
+        var (result, reg, turns) = Run(withTiming: true);
+        int unknown = 0, labelled = 0;
+        var aIds = new HashSet<int>();
+        var bIds = new HashSet<int>();
+        foreach (var (seg, _) in result)
+        {
+            var l = reg.Lookup(seg.SegmentId)!;
+            if (l.Uncertain || l.SpeakerId is not { } id) { unknown++; continue; }
+            labelled++;
+            bool isA = turns.Last(t => t.Start <= seg.StreamStartMs / 1000 + 0.5).IsA; // segments start up to 0.32 s early (pre-roll)
+            (isA ? aIds : bIds).Add(id);
+        }
+        Assert.Empty(aIds.Intersect(bIds));                     // never the wrong person
+        Assert.True(unknown * 3 <= result.Count, $"{unknown} of {result.Count} pieces are '?'");
+        Assert.NotEmpty(aIds);
+        Assert.NotEmpty(bIds);
     }
 }

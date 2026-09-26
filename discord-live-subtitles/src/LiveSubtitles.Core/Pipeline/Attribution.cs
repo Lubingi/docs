@@ -238,8 +238,12 @@ public sealed class StreamAttributor
     {
         if (index < _cursor) return true;
         if (!seg.SpeechEnded || seg.EndSentWall is not { } endWall) return false;
+        if (_joining && _joinTarget == seg.Id) return false;
         var last = _lastDelta.TryGetValue(seg.Id, out var t) && t > endWall ? t : endWall;
-        return (now - last).TotalMilliseconds >= _o.FinalizeIdleMs;
+        // A line whose sentence is visibly complete (and has as many sentences as its original) finishes sooner.
+        var text = TextFor(seg.Id);
+        double idle = EndsSentence(text) && SentencesComplete(seg.Id, text, 0) ? Math.Min(_o.FinalizeIdleMs, 1000) : _o.FinalizeIdleMs;
+        return (now - last).TotalMilliseconds >= idle;
     }
 
     internal static bool EndsSentence(string text)

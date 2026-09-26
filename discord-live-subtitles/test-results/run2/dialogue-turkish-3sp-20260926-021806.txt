@@ -1,0 +1,14 @@
+Test dialogue — Turkish, 3 speakers (generated with OpenAI TTS voices, not real people)
+
+Speaker 1 (cedar): Selam millet, beni duyabiliyor musunuz?
+Speaker 2 (marin): Evet, sesin geliyor ama biraz cızırtılı.
+Speaker 1 (cedar): Tamam, mikrofonu değiştirdim. Şimdi nasıl?
+Speaker 3 (ash): Şimdi çok daha iyi. Bu akşam kaçta başlıyoruz?
+Speaker 2 (marin): Bence dokuzda başlayalım, ben yemekten sonra hazır olurum.
+Speaker 1 (cedar): Ben biraz geç kalabilirim, işten çıkınca hemen bağlanırım.
+Speaker 3 (ash): Sorun değil Elif, ilk maçı biz üçümüz oynarız.
+Speaker 2 (marin): Ama geçen haftaki gibi yine kaybetmeyelim, çok sinir bozucuydu.
+Speaker 1 (cedar): O maçta herkes farklı yere koştu. Bu sefer önceden plan yapalım.
+Speaker 3 (ash): Tamam, ben gelince destek oynarım, siz saldırıya geçin.
+Speaker 2 (marin): Anlaştık. O zaman saat dokuzda burada buluşuyoruz.
+Speaker 1 (cedar): Görüşürüz, ben şimdi bir kahve alıp geliyorum.

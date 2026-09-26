@@ -6,6 +6,7 @@ namespace LiveSubtitles.Core.Tests;
 
 /// <summary>Checks the C# feature extraction + ONNX embedding against the Python reference implementation
 /// (kaldi-native-fbank + onnxruntime) on real speech.</summary>
+[Collection("SpeakerModel")]
 public class SpeakerModelTests
 {
     private sealed record Reference(int StartSample, int EndSample, float[][] Fbank, float[] Embedding);
