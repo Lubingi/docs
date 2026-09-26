@@ -122,6 +122,9 @@ public sealed class SubtitlePipeline : IAsyncDisposable
         Post(() => OnAudio(samples, sampleRate));
     }
 
+    /// <summary>Test hook (CLI --drop-at): drop the OpenAI connection as if the network failed.</summary>
+    public void SimulateConnectionDrop() => _connection.SimulateDrop();
+
     public async Task StopAsync()
     {
         if (!_running) return;

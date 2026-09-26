@@ -17,6 +17,8 @@ using LiveSubtitles.Core.Vad;
 //   livesubs-cli diarize <file.wav>                             print who spoke when (local speaker model)
 //   livesubs-cli translate <file.wav> [lang] [--report r.json]  full pipeline (VAD, speakers, OpenAI) in real time
 //   livesubs-cli probe <file.wav> <events.jsonl> [--no-original] stream the whole file straight to OpenAI and log every raw event
+//   livesubs-cli spread <in.wav> <out.wav> <seconds>            lengthen the pauses between lines (silence tests)
+//   --continuous (translate): send all audio incl. silence; --drop-at N (translate): simulate a dropped connection
 //   livesubs-cli dialogue <language> <speakers 2-4> <out-folder> [--gpt]   generate a test conversation with OpenAI TTS
 // Commands that call OpenAI need the OPENAI_API_KEY environment variable. The key is never printed or written.
 
@@ -89,7 +91,11 @@ switch (args[0])
         using var vad = new SileroVad(Path.Combine(modelsDir, "silero_vad.onnx"));
         using var embedder = new SpeakerEmbedder(Path.Combine(modelsDir, "campplus_voxceleb_16k.onnx"));
         var registry = new SpeakerRegistry(a => embedder.Embed(a), new DiarizationSettings());
-        var pipeline = new SubtitlePipeline(new PipelineOptions(), vad, registry,
+        var pipelineOptions = new PipelineOptions();
+        if (args.Contains("--continuous"))
+            pipelineOptions = pipelineOptions with { Segmenter = pipelineOptions.Segmenter with { SendContinuously = true } };
+        double? dropAt = Option("--drop-at") is { } d ? double.Parse(d, System.Globalization.CultureInfo.InvariantCulture) : null;
+        var pipeline = new SubtitlePipeline(pipelineOptions, vad, registry,
             () => new RealtimeTranslationSession(config, key, log), store, log);
         pipeline.RawEvent += e =>
         {
@@ -103,6 +109,12 @@ switch (args[0])
         int chunk = rate / 50;
         for (int i = 0; i < samples.Length; i += chunk)
         {
+            if (dropAt is { } at && i / (double)rate >= at)
+            {
+                Console.WriteLine($"  [test] dropping the OpenAI connection at {at:0.0}s");
+                pipeline.SimulateConnectionDrop();
+                dropAt = null;
+            }
             pipeline.PushAudio(samples[i..Math.Min(samples.Length, i + chunk)], rate);
             var due = TimeSpan.FromSeconds((double)(i + chunk) / rate);
             if (due > clock.Elapsed) await Task.Delay(due - clock.Elapsed);
@@ -193,6 +205,30 @@ switch (args[0])
         return 0;
     }
 
+    case "spread":
+    {
+        // spread <in.wav> <out.wav> <seconds>: lengthens every pause between lines (runs of exact digital silence of
+        // at least 0.2 s, as the dialogue generator writes them) to the given length, to test long silences.
+        if (args.Length < 4) return Usage();
+        var (samples, rate) = WavFile.ReadMono(args[1]);
+        double gap = double.Parse(args[3], System.Globalization.CultureInfo.InvariantCulture);
+        var output = new List<float>(samples.Length * 2);
+        int i = 0, gaps = 0;
+        while (i < samples.Length)
+        {
+            if (samples[i] != 0) { output.Add(samples[i++]); continue; }
+            int start = i;
+            while (i < samples.Length && samples[i] == 0) i++;
+            int run = i - start;
+            bool between = start > 0 && i < samples.Length && run >= rate / 5;
+            if (between) gaps++;
+            output.AddRange(new float[between ? (int)(gap * rate) : run]);
+        }
+        WavFile.WriteMono16(args[2], output.ToArray(), rate);
+        Console.WriteLine($"{gaps} pauses set to {gap:0.#} s: {samples.Length / (double)rate:0.0}s → {output.Count / (double)rate:0.0}s");
+        return 0;
+    }
+
     case "dialogue":
     {
         var key = RequireKey();
@@ -217,7 +253,8 @@ switch (args[0])
 int Usage()
 {
     Console.WriteLine("usage: livesubs-cli vad|diarize <file.wav> [--call-quality]");
-    Console.WriteLine("       livesubs-cli translate <file.wav> [lang] [--report report.json] [--call-quality]");
+    Console.WriteLine("       livesubs-cli translate <file.wav> [lang] [--report report.json] [--call-quality] [--continuous] [--drop-at seconds]");
+    Console.WriteLine("       livesubs-cli spread <in.wav> <out.wav> <pause-seconds>");
     Console.WriteLine("       livesubs-cli probe <file.wav> <events.jsonl> [--no-original]");
     Console.WriteLine("       livesubs-cli dialogue <language> <speakers 2-4> <out-folder> [--gpt]");
     return 1;

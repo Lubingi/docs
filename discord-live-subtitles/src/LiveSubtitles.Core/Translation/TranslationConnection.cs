@@ -342,6 +342,14 @@ public sealed class TranslationConnection : IAsyncDisposable
 
     private static string Short(Exception ex) => ex is TranslationConnectException ? ex.Message : ex.GetBaseException().Message;
 
+    /// <summary>Test hook: kills the current socket without a close handshake, like a network failure or server drop.</summary>
+    public void SimulateDrop()
+    {
+        ActiveSession? current;
+        lock (_lock) current = _current;
+        if (current != null) _ = Task.Run(async () => await current.Session.DisposeAsync().ConfigureAwait(false));
+    }
+
     public async Task StopAsync()
     {
         if (_runTask == null && _current == null) return;

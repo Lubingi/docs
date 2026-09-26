@@ -1,12 +1,5 @@
 # Test brief for a Claude session on the VPS
 
-> **Run 2** re-tests the fixes for the six bugs found in run 1 (`test-results/run1/SUMMARY.md` if present). Skip
-> step 2 (docs) unless something changed. In your summary, compare each metric with run 1:
-> - bleed and stray-punctuation counts
-> - speaker accuracy, especially the English 2-voice dialogue (run 1 found 1 voice)
-> - that stop no longer crashes and reports are written
-> - that English lines show the speaker's own words
-
 You are testing **Live Subtitles for Discord** (this folder) on behalf of the Claude session that wrote it. That
 session could not reach OpenAI's documentation, had no OpenAI API key and could not run Windows. Your job is to
 fill those gaps and **report back evidence**.
@@ -42,7 +35,7 @@ Install the **.NET 10 SDK**:
 Also install `ffmpeg`. `yt-dlp` is optional (`pipx install yt-dlp` or `pip install yt-dlp`).
 
 ```bash
-mkdir -p test-results/run2 work
+mkdir -p test-results/run1 work
 dotnet build -c Release 2>&1 | tail -3            # the first build downloads the models; a SHA-256 check guards them
 CLI="dotnet tools/LiveSubtitles.Cli/bin/Release/net10.0/livesubs-cli.dll"
 ```
@@ -50,10 +43,10 @@ CLI="dotnet tools/LiveSubtitles.Cli/bin/Release/net10.0/livesubs-cli.dll"
 ## 1. Unit and integration tests (no key needed)
 
 ```bash
-dotnet test tests/LiveSubtitles.Core.Tests -c Release --logger "console;verbosity=normal" 2>&1 | tee test-results/run2/unit-tests.txt | tail -5
+dotnet test tests/LiveSubtitles.Core.Tests -c Release --logger "console;verbosity=normal" 2>&1 | tee test-results/run1/unit-tests.txt | tail -5
 ```
 
-Expected: all tests pass (81 at the time of writing).
+Expected: 49 passed.
 
 ## 2. Check the OpenAI documentation (no key needed)
 
@@ -65,7 +58,7 @@ Read these pages in full and follow any links to the Realtime translation API re
 - The Realtime API reference sections for translation sessions (client and server events)
 - The pricing page for these two models
 
-Write `test-results/run2/docs-findings.md`. For every question below, give the answer, a **verbatim quote**, and the
+Write `test-results/run1/docs-findings.md`. For every question below, give the answer, a **verbatim quote**, and the
 **URL**. If the docs don't say, write "not documented".
 
 1. **Endpoints:** are the WebSocket URL and auth exactly
@@ -98,10 +91,10 @@ Write `test-results/run2/docs-findings.md`. For every question below, give the a
 
 ```bash
 read -rs OPENAI_API_KEY && export OPENAI_API_KEY
-$CLI dialogue Turkish 3 work/ 2>&1 | tee test-results/run2/dialogue-tr.txt
-$CLI dialogue Norwegian 4 work/ 2>&1 | tee test-results/run2/dialogue-no.txt
-$CLI dialogue English 2 work/ --gpt 2>&1 | tee test-results/run2/dialogue-en.txt
-cp work/*.txt test-results/run2/     # the scripts: ground truth of who said what
+$CLI dialogue Turkish 3 work/ 2>&1 | tee test-results/run1/dialogue-tr.txt
+$CLI dialogue Norwegian 4 work/ 2>&1 | tee test-results/run1/dialogue-no.txt
+$CLI dialogue English 2 work/ --gpt 2>&1 | tee test-results/run1/dialogue-en.txt
+cp work/*.txt test-results/run1/     # the scripts: ground truth of who said what
 ```
 
 Optional, if `yt-dlp` works: get about 90 s of real Turkish speech with 2+ people (a podcast) and about 90 s of
@@ -120,8 +113,8 @@ For each generated dialogue WAV, with and without `--call-quality`:
 ```bash
 for f in work/dialogue-*.wav; do
   n=$(basename "$f" .wav)
-  $CLI diarize "$f" > test-results/run2/diarize-$n.txt
-  $CLI diarize "$f" --call-quality > test-results/run2/diarize-$n-callquality.txt
+  $CLI diarize "$f" > test-results/run1/diarize-$n.txt
+  $CLI diarize "$f" --call-quality > test-results/run1/diarize-$n-callquality.txt
 done
 ```
 
@@ -140,9 +133,9 @@ Also report:
 ## 5. Raw API behaviour probe (needs the key; about 3 minutes of audio)
 
 ```bash
-$CLI probe work/dialogue-turkish-*.wav test-results/run2/probe-tr.jsonl
-$CLI probe work/dialogue-norwegian-*.wav test-results/run2/probe-no.jsonl
-$CLI probe work/dialogue-english-*.wav test-results/run2/probe-en.jsonl
+$CLI probe work/dialogue-turkish-*.wav test-results/run1/probe-tr.jsonl
+$CLI probe work/dialogue-norwegian-*.wav test-results/run1/probe-no.jsonl
+$CLI probe work/dialogue-english-*.wav test-results/run1/probe-en.jsonl
 ```
 
 From the jsonl files, report:
@@ -162,10 +155,10 @@ From the jsonl files, report:
 ## 6. Full pipeline (needs the key; about 4 minutes of audio)
 
 ```bash
-$CLI translate work/dialogue-turkish-*.wav en --report test-results/run2/report-tr.json | tee test-results/run2/translate-tr.txt
-$CLI translate work/dialogue-norwegian-*.wav en --report test-results/run2/report-no.json | tee test-results/run2/translate-no.txt
-$CLI translate work/dialogue-turkish-*.wav en --call-quality --report test-results/run2/report-tr-cq.json | tee test-results/run2/translate-tr-cq.txt
-$CLI translate work/dialogue-english-*.wav en --report test-results/run2/report-en.json | tee test-results/run2/translate-en.txt
+$CLI translate work/dialogue-turkish-*.wav en --report test-results/run1/report-tr.json | tee test-results/run1/translate-tr.txt
+$CLI translate work/dialogue-norwegian-*.wav en --report test-results/run1/report-no.json | tee test-results/run1/translate-no.txt
+$CLI translate work/dialogue-turkish-*.wav en --call-quality --report test-results/run1/report-tr-cq.json | tee test-results/run1/translate-tr-cq.txt
+$CLI translate work/dialogue-english-*.wav en --report test-results/run1/report-en.json | tee test-results/run1/translate-en.txt
 # optional: real podcast clips from step 3
 ```
 
@@ -187,14 +180,14 @@ powershell -ExecutionPolicy Bypass -File installer\build-installer.ps1      # ne
 $p = Start-Process artifacts\publish\LiveSubtitles.exe -ArgumentList '--smoke-test',"$PWD\smoke.txt" -PassThru; $null=$p.Handle; $p.WaitForExit(180000); Get-Content smoke.txt; $p.ExitCode
 ```
 
-Copy `smoke.txt` and today's log from `%APPDATA%\LiveSubtitles\logs` into `test-results/run2/`.
+Copy `smoke.txt` and today's log from `%APPDATA%\LiveSubtitles\logs` into `test-results/run1/`.
 
 If there's a desktop session with audio, also run the app itself. Use the Audio file source with the generated
 Turkish dialogue and describe what the overlay shows (take screenshots if you can).
 
 ## 8. What to give back
 
-Write `test-results/run2/SUMMARY.md`, keeping it under about 300 lines:
+Write `test-results/run1/SUMMARY.md`, keeping it under about 300 lines:
 
 - **OS and SDK:** the OS, the .NET SDK version, and which steps ran or were skipped.
 - **Unit tests:** the result.
@@ -213,7 +206,7 @@ Then deliver it:
 grep -rn "sk-" test-results/ && echo "KEY FOUND - STOP"      # must print nothing
 git checkout -b vps-test-results
 git add test-results/
-git commit -m "VPS test results run2"
+git commit -m "VPS test results run1"
 git push -u origin vps-test-results
 ```
 
