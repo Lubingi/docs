@@ -23,6 +23,7 @@ public sealed class AppSettings
     public bool CallQualitySimulation { get; set; }
 
     // --- translation
+    public TranslationEngine Engine { get; set; } = TranslationEngine.OpenAI;
     public string OutputLanguage { get; set; } = "en";
     public string Model { get; set; } = TranslationProtocol.DefaultModel;
     public string TranscriptionModel { get; set; } = TranslationProtocol.DefaultTranscriptionModel;
@@ -31,6 +32,9 @@ public sealed class AppSettings
     /// <summary>"near_field", "far_field" or "" (off).</summary>
     public string NoiseReduction { get; set; } = "";
     public bool SendContinuously { get; set; }
+    public string SonioxModel { get; set; } = SonioxProtocol.DefaultModel;
+    /// <summary>Comma-separated ISO 639-1 codes of the languages people speak ("tr, no"); empty = detect automatically.</summary>
+    public string SonioxLanguageHints { get; set; } = "";
 
     // --- speakers
     public bool SpeakerIdEnabled { get; set; } = true;
@@ -52,6 +56,8 @@ public sealed class AppSettings
     // --- cost
     public double TranslateUsdPerMinute { get; set; } = 0.034;
     public double TranscribeUsdPerMinute { get; set; } = 0.017;
+    /// <summary>Soniox real-time: about $0.12 per hour of audio, plus a little for the translated text.</summary>
+    public double SonioxUsdPerMinute { get; set; } = 0.0025;
     public double? SpendingCapUsd { get; set; }
 
     // --- app
@@ -61,9 +67,22 @@ public sealed class AppSettings
     // --- advanced tuning
     public AdvancedSettings Advanced { get; set; } = new();
 
+    public bool IsSoniox => Engine == TranslationEngine.Soniox;
+
+    /// <summary>Soniox always returns the original text at no extra cost, so it is always used there.</summary>
+    public bool OriginalTextEnabled => IsSoniox || ShowOriginal;
+
+    public string EngineName => IsSoniox ? "Soniox" : "OpenAI";
+
+    /// <summary>Per-minute prices for the cost estimate: (translation, original text).</summary>
+    public (double Translate, double Transcribe) PricesPerMinute =>
+        IsSoniox ? (SonioxUsdPerMinute, 0) : (TranslateUsdPerMinute, ShowOriginal ? TranscribeUsdPerMinute : 0);
+
     public PipelineOptions ToPipelineOptions() => new()
     {
-        ShowOriginal = ShowOriginal,
+        ShowOriginal = OriginalTextEnabled,
+        ServiceName = EngineName,
+        OriginalTimed = IsSoniox,
         OutputLanguage = OutputLanguage,
         SameLanguage = SameLanguage,
         Segmenter = new SegmenterOptions
@@ -89,6 +108,31 @@ public sealed class AppSettings
         TranscriptionModel = ShowOriginal ? TranscriptionModel : null,
         NoiseReduction = string.IsNullOrWhiteSpace(NoiseReduction) ? null : NoiseReduction,
     };
+
+    public SonioxSessionConfig ToSonioxConfig()
+    {
+        var (terms, translationTerms) = SonioxProtocol.GlossaryContext(Glossary);
+        return new SonioxSessionConfig
+        {
+            Model = string.IsNullOrWhiteSpace(SonioxModel) ? SonioxProtocol.DefaultModel : SonioxModel.Trim(),
+            OutputLanguage = OutputLanguage,
+            LanguageHints = SonioxSessionConfig.ParseLanguageHints(SonioxLanguageHints),
+            Terms = terms,
+            TranslationTerms = translationTerms,
+        };
+    }
+
+    /// <summary>Creates sessions for the selected engine. <paramref name="apiKey"/> is that engine's key.</summary>
+    public Func<ITranslationSession> CreateSessionFactory(string apiKey, Diagnostics.ILog log)
+    {
+        if (IsSoniox)
+        {
+            var soniox = ToSonioxConfig();
+            return () => new SonioxTranslationSession(soniox, apiKey, log);
+        }
+        var openai = ToSessionConfig();
+        return () => new RealtimeTranslationSession(openai, apiKey, log);
+    }
 }
 
 public sealed class OverlaySettings

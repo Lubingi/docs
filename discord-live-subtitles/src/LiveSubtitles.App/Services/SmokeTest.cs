@@ -76,9 +76,12 @@ internal static class SmokeTest
             Check("settings apply", vm.ApplySettings);
             Check("dialogs load", () =>
             {
-                var w = new ApiKeyWindow("gpt-realtime-translate");
-                w.Show();
-                w.Close();
+                foreach (var engine in Enum.GetValues<LiveSubtitles.Core.Translation.TranslationEngine>())
+                {
+                    var w = new ApiKeyWindow(engine, "model");
+                    w.Show();
+                    w.Close();
+                }
                 PromptWindow.CreateForSmokeTest().Close();
             });
             await Pump(300);

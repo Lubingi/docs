@@ -19,8 +19,10 @@ using LiveSubtitles.Core.Vad;
 //   livesubs-cli probe <file.wav> <events.jsonl> [--no-original] stream the whole file straight to OpenAI and log every raw event
 //   livesubs-cli spread <in.wav> <out.wav> <seconds>            lengthen the pauses between lines (silence tests)
 //   --continuous (translate): send all audio incl. silence; --drop-at N (translate): simulate a dropped connection
+//   --engine soniox (translate): use Soniox instead of OpenAI (needs SONIOX_API_KEY); --hints tr,no: Soniox language hints
+//   livesubs-cli probe-soniox <file.wav> <messages.jsonl> [lang]  raw Soniox token log (like probe)
 //   livesubs-cli dialogue <language> <speakers 2-4> <out-folder> [--gpt]   generate a test conversation with OpenAI TTS
-// Commands that call OpenAI need the OPENAI_API_KEY environment variable. The key is never printed or written.
+// Commands that call OpenAI need the OPENAI_API_KEY environment variable (Soniox: SONIOX_API_KEY). Keys are never printed or written.
 
 var json = new JsonSerializerOptions { WriteIndented = true };
 string modelsDir = Path.Combine(AppContext.BaseDirectory, "models");
@@ -79,13 +81,20 @@ switch (args[0])
 
     case "translate":
     {
-        var key = RequireKey();
+        var settings = new AppSettings
+        {
+            Engine = Option("--engine")?.ToLowerInvariant() == "soniox" ? TranslationEngine.Soniox : TranslationEngine.OpenAI,
+            OutputLanguage = args.Length > 2 && !args[2].StartsWith("--") ? args[2] : "en",
+            SonioxLanguageHints = Option("--hints") ?? "",
+            SonioxModel = Option("--soniox-model") ?? SonioxProtocol.DefaultModel,
+            SendContinuously = args.Contains("--continuous"),
+        };
+        var key = RequireKey(settings.Engine);
         if (key == null) return 1;
         var (samples, rate) = Load(args[1]);
-        string lang = args.Length > 2 && !args[2].StartsWith("--") ? args[2] : "en";
         string? reportPath = Option("--report");
-        var config = new TranslationSessionConfig { OutputLanguage = lang };
         var log = new ConsoleLog();
+        Console.WriteLine($"engine: {settings.EngineName}");
         var store = new TranscriptStore();
         var debug = new ConcurrentDictionary<int, SegmentDebugInfo>();
         var raw = new ConcurrentQueue<string>();
@@ -98,12 +107,11 @@ switch (args[0])
         using var vad = new SileroVad(Path.Combine(modelsDir, "silero_vad.onnx"));
         using var embedder = new SpeakerEmbedder(Path.Combine(modelsDir, "campplus_voxceleb_16k.onnx"));
         var registry = new SpeakerRegistry(a => embedder.Embed(a), new DiarizationSettings());
-        var pipelineOptions = new PipelineOptions();
-        if (args.Contains("--continuous"))
-            pipelineOptions = pipelineOptions with { Segmenter = pipelineOptions.Segmenter with { SendContinuously = true } };
+        // Same defaults as the app (Advanced settings), for the selected engine.
+        var pipelineOptions = settings.ToPipelineOptions();
         double? dropAt = Option("--drop-at") is { } d ? double.Parse(d, System.Globalization.CultureInfo.InvariantCulture) : null;
         var pipeline = new SubtitlePipeline(pipelineOptions, vad, registry,
-            () => new RealtimeTranslationSession(config, key, log), store, log);
+            settings.CreateSessionFactory(key, log), store, log);
         pipeline.RawEvent += e =>
         {
             raw.Enqueue($"{clock.Elapsed.TotalMilliseconds:0} {e}");
@@ -118,7 +126,7 @@ switch (args[0])
         {
             if (dropAt is { } at && i / (double)rate >= at)
             {
-                Console.WriteLine($"  [test] dropping the OpenAI connection at {at:0.0}s");
+                Console.WriteLine($"  [test] dropping the {settings.EngineName} connection at {at:0.0}s");
                 pipeline.SimulateConnectionDrop();
                 dropAt = null;
             }
@@ -129,13 +137,15 @@ switch (args[0])
         await Task.Delay(8000);
         await pipeline.StopAsync();
         var usage = (lastStatus?.AudioSentSeconds ?? 0) / 60.0;
-        Console.WriteLine($"audio sent: {usage:0.00} min of {samples.Length / (double)rate / 60:0.00} min · est. cost ${usage * 0.051:0.000}");
+        var (priceTranslate, priceTranscribe) = settings.PricesPerMinute;
+        Console.WriteLine($"audio sent: {usage:0.00} min of {samples.Length / (double)rate / 60:0.00} min · est. cost ${usage * (priceTranslate + priceTranscribe):0.000} ({settings.EngineName})");
         foreach (var sp in registry.Snapshot()) Console.WriteLine($"  {sp.Label}: {sp.Segments} segments, {sp.SpeechSeconds:0.0}s");
         if (reportPath != null)
         {
             var report = new
             {
                 file = Path.GetFileName(args[1]),
+                engine = settings.EngineName,
                 durationSeconds = samples.Length / (double)rate,
                 audioSentMinutes = usage,
                 avgTextLagMs = lastStatus?.AvgTextLagMs,
@@ -212,6 +222,74 @@ switch (args[0])
         return 0;
     }
 
+    case "probe-soniox":
+    {
+        // Like probe, for Soniox: streams the file in real time as raw PCM, then 3 s of silence and end-of-audio, and
+        // records every raw server message (tokens with is_final, times, speaker, language, translation_status).
+        // This checks the assumptions the app's token mapping relies on. The config (which holds the key) is not logged.
+        var key = RequireKey(TranslationEngine.Soniox);
+        if (key == null || args.Length < 3) return key == null ? 1 : Usage();
+        var (samples, rate) = Load(args[1]);
+        var pcm24 = rate == 24000 ? samples : new StreamResampler(rate, 24000).Process(samples);
+        var config = new SonioxSessionConfig
+        {
+            Model = Option("--soniox-model") ?? SonioxProtocol.DefaultModel,
+            OutputLanguage = args.Length > 3 && !args[3].StartsWith("--") ? args[3] : "en",
+            LanguageHints = SonioxSessionConfig.ParseLanguageHints(Option("--hints")),
+        };
+        await using var output = new StreamWriter(args[2]);
+        var gate = new object();
+        var clock = Stopwatch.StartNew();
+        double sentMs = 0;
+        void Write(string line) { lock (gate) output.WriteLine(line); }
+        void WriteObj(object o) => Write(JsonSerializer.Serialize(o));
+
+        using var ws = new System.Net.WebSockets.ClientWebSocket();
+        await ws.ConnectAsync(new Uri(config.Endpoint), CancellationToken.None);
+        await ws.SendAsync(SonioxProtocol.BuildConfig(config, key), System.Net.WebSockets.WebSocketMessageType.Text, true, CancellationToken.None);
+        WriteObj(new { t_ms = Math.Round(clock.Elapsed.TotalMilliseconds), type = "client.connected", file = Path.GetFileName(args[1]), model = config.Model, audio_seconds = pcm24.Length / 24000.0 });
+        int finals = 0;
+        var receiver = Task.Run(async () =>
+        {
+            var buf = new byte[1 << 20];
+            using var ms = new MemoryStream();
+            while (ws.State == System.Net.WebSockets.WebSocketState.Open)
+            {
+                var r = await ws.ReceiveAsync(buf, CancellationToken.None);
+                if (r.MessageType == System.Net.WebSockets.WebSocketMessageType.Close) break;
+                ms.Write(buf, 0, r.Count);
+                if (!r.EndOfMessage) continue;
+                var text = System.Text.Encoding.UTF8.GetString(ms.ToArray());
+                ms.SetLength(0);
+                Write($"{{\"t_ms\":{Math.Round(clock.Elapsed.TotalMilliseconds)},\"sent_ms\":{sentMs},\"msg\":{text}}}");
+                var m = SonioxProtocol.Parse(System.Text.Encoding.UTF8.GetBytes(text));
+                foreach (var t in m.Tokens.Where(t => t.IsFinal))
+                {
+                    finals++;
+                    if (t.IsTranslation) Console.Write(t.Text);
+                }
+                if (m.ErrorCode != null) Console.WriteLine($"\n  ERROR {m.ErrorCode}: {m.ErrorMessage}");
+                if (m.Finished) break;
+            }
+        });
+        var withTail = pcm24.Concat(new float[24000 * 3]).ToArray();
+        var pace = Stopwatch.StartNew();
+        for (int i = 0; i < withTail.Length && ws.State == System.Net.WebSockets.WebSocketState.Open; i += TranslationProtocol.ChunkSamples)
+        {
+            var piece = withTail.AsSpan(i, Math.Min(TranslationProtocol.ChunkSamples, withTail.Length - i)).ToArray();
+            await ws.SendAsync(Pcm16.FromFloat(piece), System.Net.WebSockets.WebSocketMessageType.Binary, true, CancellationToken.None);
+            sentMs += piece.Length / 24.0;
+            var due = TimeSpan.FromMilliseconds(sentMs);
+            if (due > pace.Elapsed) await Task.Delay(due - pace.Elapsed);
+        }
+        WriteObj(new { t_ms = Math.Round(clock.Elapsed.TotalMilliseconds), type = "client.end_of_audio", sent_ms = sentMs });
+        if (ws.State == System.Net.WebSockets.WebSocketState.Open)
+            await ws.SendAsync(Array.Empty<byte>(), System.Net.WebSockets.WebSocketMessageType.Text, true, CancellationToken.None);
+        await Task.WhenAny(receiver, Task.Delay(15000));
+        Console.WriteLine($"\n{finals} final tokens; messages written to {args[2]}");
+        return 0;
+    }
+
     case "spread":
     {
         // spread <in.wav> <out.wav> <seconds>: lengthens every pause between lines (runs of exact digital silence of
@@ -260,9 +338,10 @@ switch (args[0])
 int Usage()
 {
     Console.WriteLine("usage: livesubs-cli vad|diarize <file.wav> [--call-quality]");
-    Console.WriteLine("       livesubs-cli translate <file.wav> [lang] [--report report.json] [--call-quality] [--continuous] [--drop-at seconds]");
+    Console.WriteLine("       livesubs-cli translate <file.wav> [lang] [--engine openai|soniox] [--hints tr,no] [--soniox-model id] [--report report.json] [--call-quality] [--continuous] [--drop-at seconds]");
     Console.WriteLine("       livesubs-cli spread <in.wav> <out.wav> <pause-seconds>");
     Console.WriteLine("       livesubs-cli probe <file.wav> <events.jsonl> [--no-original]");
+    Console.WriteLine("       livesubs-cli probe-soniox <file.wav> <messages.jsonl> [lang] [--hints tr,no] [--soniox-model id]");
     Console.WriteLine("       livesubs-cli dialogue <language> <speakers 2-4> <out-folder> [--gpt]");
     return 1;
 }
@@ -276,10 +355,11 @@ int Usage()
     return r;
 }
 
-string? RequireKey()
+string? RequireKey(TranslationEngine engine = TranslationEngine.OpenAI)
 {
-    var key = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
-    if (string.IsNullOrWhiteSpace(key)) Console.WriteLine("Set the OPENAI_API_KEY environment variable first.");
+    var name = engine == TranslationEngine.Soniox ? "SONIOX_API_KEY" : "OPENAI_API_KEY";
+    var key = Environment.GetEnvironmentVariable(name);
+    if (string.IsNullOrWhiteSpace(key)) Console.WriteLine($"Set the {name} environment variable first.");
     return string.IsNullOrWhiteSpace(key) ? null : key.Trim();
 }
 

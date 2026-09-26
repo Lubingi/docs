@@ -15,6 +15,11 @@ public sealed record PipelineOptions
     public SameLanguageMode SameLanguage { get; init; } = SameLanguageMode.ShowOriginal;
     /// <summary>Speaker is "muted" only if matched at least this confidently during early identification.</summary>
     public float MuteMinSimilarity { get; init; } = 0.5f;
+    /// <summary>Name of the translation service, for status messages.</summary>
+    public string ServiceName { get; init; } = "OpenAI";
+    /// <summary>The engine stamps original-language words with the time they were spoken (Soniox), so they are placed
+    /// on lines by time instead of by arrival order.</summary>
+    public bool OriginalTimed { get; init; }
 }
 
 public enum SegmentDecision { Pending, Allowed, Suppressed }

@@ -65,7 +65,9 @@ public partial class MainViewModel : ObservableObject
         _selectedNoiseReduction = NoiseReductionOptions.FirstOrDefault(o => o.Value == Settings.NoiseReduction) ?? NoiseReductionOptions[0];
         _fallbackToDevice = Settings.FallbackToDeviceLoopback;
         _overlayVisible = Settings.Overlay.Visible;
-        _hasApiKey = CredentialStore.HasApiKey();
+        _selectedEngine = EngineOptions.First(o => o.Value == Settings.Engine);
+        _sonioxLanguageHints = Settings.SonioxLanguageHints;
+        _hasApiKey = CredentialStore.HasApiKey(Settings.Engine);
 
         Transcript.LineAdded += l => UiThread.Post(() => OnLine(l));
         Transcript.LineUpdated += l => UiThread.Post(() => OnLine(l));
@@ -74,7 +76,7 @@ public partial class MainViewModel : ObservableObject
         Session.RawEvent += e => UiThread.Post(() => Debug.Log(e));
         Session.SourceStatus += s => UiThread.Post(() => SourceStatus = s);
         Session.Level += (l, p) => UiThread.Post(() => { InputLevel = LevelToMeter(l); SpeechProbability = p; });
-        Session.ServerError += e => UiThread.Post(() => LastError = "OpenAI: " + e);
+        Session.ServerError += e => UiThread.Post(() => LastError = Settings.EngineName + ": " + e);
         Session.AudioSent += ms => _usage?.AddAudio(ms);
         Session.SourceStopped += ex => UiThread.Post(() => { if (ex != null) LastError = "Audio source stopped: " + ex.Message; });
         log.Logged += (level, text) => { if (level >= LogLevel.Warning) UiThread.Post(() => Debug.Log(text)); };
@@ -99,6 +101,12 @@ public partial class MainViewModel : ObservableObject
         new Option<SourceKind>(SourceKind.App, "Any app (test mode: e.g. your browser)"),
         new Option<SourceKind>(SourceKind.File, "Audio file (test mode)"),
         new Option<SourceKind>(SourceKind.Device, "Whole output device (fallback)"),
+    };
+
+    public IReadOnlyList<Option<TranslationEngine>> EngineOptions { get; } = new[]
+    {
+        new Option<TranslationEngine>(TranslationEngine.OpenAI, "OpenAI Realtime Translation (about $2–3 per hour)"),
+        new Option<TranslationEngine>(TranslationEngine.Soniox, "Soniox real-time translation (about $0.15 per hour)"),
     };
 
     public IReadOnlyList<Option<SameLanguageMode>> SameLanguageOptions { get; } = new[]
@@ -137,6 +145,12 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty] private Option<SameLanguageMode> _selectedSameLanguage;
     [ObservableProperty] private Option<string> _selectedNoiseReduction;
     [ObservableProperty] private bool _overlayVisible;
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(IsSoniox), nameof(IsOpenAI), nameof(EngineHeader))] private Option<TranslationEngine> _selectedEngine;
+    [ObservableProperty] private string _sonioxLanguageHints;
+
+    public bool IsSoniox => SelectedEngine.Value == TranslationEngine.Soniox;
+    public bool IsOpenAI => !IsSoniox;
+    public string EngineHeader => "Translation service";
 
     partial void OnSelectedSourceChanged(Option<SourceKind> value) { Settings.Source = value.Value; SaveSettings(); }
     partial void OnSelectedProcessChanged(ProcessChoice? value) { if (value != null) { Settings.AppProcessName = value.Name; SaveSettings(); } }
@@ -151,6 +165,14 @@ public partial class MainViewModel : ObservableObject
     }
     partial void OnFallbackToDeviceChanged(bool value) { Settings.FallbackToDeviceLoopback = value; SaveSettings(); }
     partial void OnShowOriginalChanged(bool value) { Settings.ShowOriginal = value; SaveSettings(); }
+    partial void OnSelectedEngineChanged(Option<TranslationEngine> value)
+    {
+        Settings.Engine = value.Value;
+        HasApiKey = CredentialStore.HasApiKey(value.Value);
+        OnPropertyChanged(nameof(ApiKeyStatus));
+        SaveSettings();
+    }
+    partial void OnSonioxLanguageHintsChanged(string value) { Settings.SonioxLanguageHints = value; SaveSettings(); }
     partial void OnSelectedSameLanguageChanged(Option<SameLanguageMode> value) { Settings.SameLanguage = value.Value; SaveSettings(); }
     partial void OnSelectedNoiseReductionChanged(Option<string> value) { Settings.NoiseReduction = value.Value; SaveSettings(); }
     partial void OnOverlayVisibleChanged(bool value)
@@ -180,7 +202,9 @@ public partial class MainViewModel : ObservableObject
     public string StartStopLabel => IsRunning ? "■ Stop" : "▶ Start";
     public string PauseLabel => IsPaused ? "▶ Resume" : "❚❚ Pause";
     public bool CanEditSource => !IsRunning;
-    public string ApiKeyStatus => HasApiKey ? "OpenAI API key saved in Windows Credential Manager." : "No OpenAI API key yet — click “Set API key”.";
+    public string ApiKeyStatus => HasApiKey
+        ? $"{Settings.EngineName} API key saved in Windows Credential Manager."
+        : $"No {Settings.EngineName} API key yet — click “Set API key”.";
 
     private void OnStatus(PipelineStatus s)
     {
@@ -307,18 +331,19 @@ public partial class MainViewModel : ObservableObject
     private async Task StartSessionAsync()
     {
         LastError = "";
-        var key = CredentialStore.LoadApiKey();
+        var key = CredentialStore.LoadApiKey(Settings.Engine);
         if (string.IsNullOrWhiteSpace(key))
         {
             SetApiKey();
-            key = CredentialStore.LoadApiKey();
+            key = CredentialStore.LoadApiKey(Settings.Engine);
             if (string.IsNullOrWhiteSpace(key)) return;
         }
         if (Settings.Source == SourceKind.Device && Settings.OutputDeviceId == "") Settings.OutputDeviceId = null;
         _capPaused = false;
         SaveNow();
         Overlay.Clear();
-        _usage = new UsageTracker(Settings.TranslateUsdPerMinute, Settings.TranscribeUsdPerMinute, Settings.ShowOriginal, Settings.SpendingCapUsd);
+        var (translatePrice, transcribePrice) = Settings.PricesPerMinute;
+        _usage = new UsageTracker(translatePrice, transcribePrice, transcribePrice > 0, Settings.SpendingCapUsd);
         _usage.CapReached += () => UiThread.Post(OnCapReached);
         CostText = "";
         try
@@ -403,11 +428,14 @@ public partial class MainViewModel : ObservableObject
     private void ResetOverlayPosition() => _overlayWindow?.ResetPosition();
 
     [RelayCommand]
-    private void SetApiKey()
+    private void SetApiKey() => PromptForApiKey(Settings.Engine);
+
+    private void PromptForApiKey(TranslationEngine engine)
     {
-        var dlg = new ApiKeyWindow(Settings.Model) { Owner = _mainWindow };
+        var dlg = new ApiKeyWindow(engine, engine == TranslationEngine.Soniox ? Settings.SonioxModel : Settings.Model) { Owner = _mainWindow };
         dlg.ShowDialog();
-        HasApiKey = CredentialStore.HasApiKey();
+        HasApiKey = CredentialStore.HasApiKey(Settings.Engine);
+        OnPropertyChanged(nameof(ApiKeyStatus));
     }
 
     [RelayCommand]

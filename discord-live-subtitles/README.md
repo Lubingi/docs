@@ -1,16 +1,19 @@
 # Live Subtitles for Discord
 
-A Windows desktop app that shows live English subtitles for Discord voice calls. It uses OpenAI's
-Realtime Translation model (`gpt-realtime-translate`) and runs entirely on your PC: no bots, no servers,
-nothing for the people you talk to to install. The only external service is the OpenAI API.
+A Windows desktop app that shows live English subtitles for Discord voice calls. It runs entirely on your PC:
+no bots, no servers, nothing for the people you talk to to install. The translation itself comes from one of two
+cloud services, your choice:
+
+- **OpenAI** Realtime Translation (`gpt-realtime-translate`), about $2–3 per hour of speech;
+- **Soniox** real-time translation, about $0.15 per hour of speech (see [Choosing a translation service](#choosing-a-translation-service)).
 
 - Captures **only Discord's audio**, using Windows per-app loopback capture. Your microphone, games and
   music are excluded.
-- A local voice detector (Silero VAD) means only speech is sent to OpenAI, not silence.
+- A local voice detector (Silero VAD) means only speech is sent for translation, not silence.
 - The overlay is transparent and always on top. It streams partial text, then replaces it with the final line.
 - Shows the original-language transcript under each subtitle (optional).
 - **Who is speaking**, fully automatic and local. Each voice gets a label and a colour. Rename a label once and
-  that voice is recognised in future calls. Mute English speakers so their speech isn't sent to OpenAI.
+  that voice is recognised in future calls. Mute English speakers so their speech isn't sent at all.
 - Test mode: use any app (e.g. a YouTube video in Chrome) or a local audio file as the source, or generate a
   fake multi-speaker conversation with OpenAI text-to-speech.
 - Debug panel: speech segments, latency and raw text.
@@ -22,7 +25,8 @@ All five build stages are complete. To try it quickly, see [Install](#install) a
 
 - Windows 10 version 2004 (build 19041) or newer, or Windows 11. Per-app capture needs 2004+. On older builds
   the app falls back to capturing a whole output device.
-- An OpenAI API key with access to `gpt-realtime-translate` (see below).
+- An API key for the service you use: OpenAI with access to `gpt-realtime-translate`, or Soniox (see below).
+  The test-dialogue generator always uses OpenAI text-to-speech.
 - For games: run the game in **borderless windowed** or windowed mode. Exclusive fullscreen draws over every
   overlay.
 
@@ -52,7 +56,8 @@ The script runs the tests, publishes a self-contained build and writes
 
 ## Quick start
 
-1. Start **Live Subtitles**, click **Set API key…**, paste your key, then **Test key** and **Save**.
+1. Start **Live Subtitles**. Under **Translation service** pick OpenAI or Soniox, click **Set API key…**, paste
+   that service's key, then **Test key** and **Save**.
 2. Join a Discord voice channel. Keep **Audio source = Discord** and click **▶ Start** (or press `Ctrl+Alt+S`).
 3. Subtitles appear at the bottom of the screen. To move the overlay, untick **Click-through** (`Ctrl+Alt+T`),
    drag it, then lock it again so clicks pass through to your game.
@@ -72,6 +77,32 @@ The script runs the tests, publishes a self-contained build and writes
 **Cost:** `gpt-realtime-translate` is billed at about **$0.034 per minute** of audio sent. The optional
 original-language transcript (`gpt-realtime-whisper`) adds about **$0.017 per minute**. Only detected speech,
 plus a short tail after it, is sent.
+
+## Choosing a translation service
+
+Pick the service on the **Session** tab under **Translation service**. Each has its own key, stored separately.
+Everything else (capture, speaker labels, overlay, glossary, history) works the same with both.
+
+| | OpenAI `gpt-realtime-translate` | Soniox real-time |
+|---|---|---|
+| Cost per hour of speech | about $2.04, or $3.06 with the original text | about $0.12–0.15, original text included |
+| Original-language text | optional extra model | always included |
+| Glossary | applied to the text afterwards | also sent to Soniox as context (names, preferred translations) |
+| Word timing | none: text is matched to speech by arrival time | every original word has its time, so lines split more precisely |
+| Speech already in English | inconsistent (the app shows the original instead) | left untranslated; the app shows the original |
+| Languages | 70+ spoken, 13 subtitle languages | 60+ spoken and subtitle languages |
+
+Soniox is new in this app and has been tested against a local simulation of its protocol, not yet against the live
+service. If a line looks wrong, the Debug tab shows the raw text for both services.
+
+### Getting a Soniox API key
+
+1. Sign up at <https://console.soniox.com/> and add credit under billing (pay-as-you-go).
+2. Create an API key in the console and copy it.
+3. In the app, choose **Soniox** under **Translation service**, click **Set API key…**, paste it, **Test key**, then **Save**.
+   It is stored in Windows Credential Manager as `LiveSubtitles/Soniox-API-Key`.
+4. Optional: under **Languages people speak**, enter two-letter codes such as `tr, no`. This helps accuracy;
+   leave it empty to detect languages automatically.
 
 ## Building and running from source
 
@@ -141,11 +172,20 @@ official SDK type definitions and the official cookbook guide for `gpt-realtime-
   to finish a sentence. It also pads to a whole 200 ms frame. **Send continuously** (Settings) follows the docs
   exactly, at the higher cost.
 
+**With Soniox** the flow is the same up to the segmenter. Audio goes as raw 24 kHz PCM16 binary frames to
+`wss://stt-rt.soniox.com/transcribe-websocket`, after a JSON config with one-way translation to the subtitle language.
+Soniox returns tokens: original words with their start and end times, followed by their translation (without times).
+The app uses only final tokens. It places the original words on the line whose speech contains them, and gives each
+translated word the time of the original word at the same position in its chunk. The start of each new translated
+chunk also closes the previous line. When audio stops (silence skipping), the app asks Soniox to finalise the last
+words at once instead of waiting.
+
 ## Privacy
 
 - Audio is processed in memory and is **never saved to disk**. The exceptions are test files you choose or generate
   in test mode.
-- Nothing is sent anywhere except the OpenAI API (speech audio only, over TLS).
+- Nothing is sent anywhere except the translation service you picked, OpenAI or Soniox (speech audio only, over
+  TLS). With Soniox, the glossary terms are sent too, as context.
 - The error log (`%APPDATA%\LiveSubtitles\logs`) contains connection events and errors. It never contains audio,
   transcript text or your key.
 
@@ -183,7 +223,8 @@ Everything can be tested without Turkish or Norwegian speakers, using test mode.
 
 Headless check without the UI, on any OS: `dotnet run --project tools/LiveSubtitles.Cli -- vad some.wav` lists
 the speech segments. `translate some.wav` streams a WAV file to OpenAI and prints the lines (set the
-`OPENAI_API_KEY` environment variable first).
+`OPENAI_API_KEY` environment variable first). Add `--engine soniox` (and optionally `--hints tr,no`) to use
+Soniox instead, with `SONIOX_API_KEY`.
 
 ### Stage 2: settings, hotkeys, glossary, transcript history
 
@@ -322,6 +363,9 @@ The result is in the `smoke-test-output` artifact.
 - **Same-language speech:** English speech is shown from the original transcript (so keep "Show the original"
   on), and the check is a simple word list. Mixed Turkish/English sentences count as Turkish and get translated.
   To save cost for people who always speak English, mute them.
+- **Soniox:** the model id defaults to `stt-rt-v5` (Settings → Advanced tuning). If Soniox renames its models,
+  the app reports "Soniox refused the settings" and you can change the id there. Soniox translates in chunks, so
+  a translated line can appear slightly later than its original text.
 - **Exclusive fullscreen games** hide every overlay. Use borderless windowed mode.
 - **Speaker labels** depend on audio quality. Discord's noise suppression and very similar voices can split one
   person into two labels or merge two people. In testing, two similar female TTS voices ("coral" and "marin")
@@ -331,7 +375,7 @@ The result is in the `smoke-test-output` artifact.
 - **Connection drops:** OpenAI sometimes closes the connection (25 times in 16 minutes on one test day, including
   with the plain API). The app reconnects in about 1.5–2 s and re-sends the speech not yet translated. Words from
   around the drop can still be translated slightly differently.
-- The cost shown is an estimate from audio minutes sent. OpenAI's billing is authoritative.
+- The cost shown is an estimate from audio minutes sent. The service's own billing is authoritative.
 - **Testing so far:**
   - The API details were checked against OpenAI's documentation, SDK and a live test run
     (see `VPS-TEST-BRIEF.md`). That run found 6 bugs, all fixed.
@@ -346,6 +390,8 @@ The result is in the `smoke-test-output` artifact.
 | "Waiting for Discord to start…" although Discord is open | Discord, Discord PTB and Canary are detected. For another client, use **Any app** and pick it. |
 | Nothing happens when people talk | Watch **Speech detected** in the top bar. If it stays empty, Discord's output may be muted or deafened, or you picked the wrong app. Try the **Whole output device** source to compare. |
 | "OpenAI rejected the API key (401)" | Create a new key and use **Test key**. |
+| "Soniox rejected the API key" / "out of credit" | Check the key and credit at console.soniox.com, then **Test key**. |
+| "Soniox refused the settings" | Usually an unknown model id or language code. Check Settings → Advanced → Soniox model id, and the language hints. |
 | "…not available to this project (404/403)" | The key's project has no access to `gpt-realtime-translate`. Check the project's model permissions on platform.openai.com. |
 | "Rate limited or out of credit (429)" | Add credit under Billing, or raise the project's rate limits. |
 | Hotkey doesn't work | Another app has taken it (the Settings tab says which). Pick another combination. |
@@ -355,11 +401,11 @@ The result is in the `smoke-test-output` artifact.
 ## Project layout
 
 ```
-src/LiveSubtitles.Core      platform-independent pipeline: resampler, VAD, segmenter, OpenAI client,
+src/LiveSubtitles.Core      platform-independent pipeline: resampler, VAD, segmenter, OpenAI + Soniox clients,
                             text-to-segment matching, speaker model + clustering, glossary, export, cost
 src/LiveSubtitles.App       Windows WPF app: WASAPI capture (NAudio), overlay, main window, tray, hotkeys,
                             Credential Manager
-tests/LiveSubtitles.Core.Tests   unit + integration tests (real speech, fake OpenAI server)
+tests/LiveSubtitles.Core.Tests   unit + integration tests (real speech, fake OpenAI and Soniox servers)
 tools/LiveSubtitles.Cli     headless vad / diarize / translate on a WAV file
 installer/                  Inno Setup script and build script
 ```

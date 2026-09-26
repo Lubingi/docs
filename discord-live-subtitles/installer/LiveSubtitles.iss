@@ -3,7 +3,7 @@
 ; Installs per user (no admin rights needed); the .NET runtime and both ONNX models are bundled.
 
 #ifndef MyAppVersion
-  #define MyAppVersion "0.1.0"
+  #define MyAppVersion "0.2.0"
 #endif
 #ifndef PublishDir
   #define PublishDir "..\artifacts\publish"
@@ -64,12 +64,13 @@ var
 begin
   if CurUninstallStep = usPostUninstall then
   begin
-    if MsgBox('Also delete your settings, remembered voice profiles, logs and the saved OpenAI API key?' + #13#10 +
+    if MsgBox('Also delete your settings, remembered voice profiles, logs and the saved API keys?' + #13#10 +
               '(Transcripts and test audio you saved yourself are not touched.)',
               mbConfirmation, MB_YESNO) = IDYES then
     begin
       DelTree(ExpandConstant('{userappdata}\LiveSubtitles'), True, True, True);
       Exec(ExpandConstant('{sys}\cmdkey.exe'), '/delete:LiveSubtitles/OpenAI-API-Key', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+      Exec(ExpandConstant('{sys}\cmdkey.exe'), '/delete:LiveSubtitles/Soniox-API-Key', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
     end;
   end;
 end;

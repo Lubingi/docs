@@ -2,8 +2,8 @@ namespace LiveSubtitles.Core.Pipeline;
 
 /// <summary>
 /// Running cost estimate for the current session. OpenAI bills gpt-realtime-translate (and gpt-realtime-whisper, used for the
-/// original-language text) per minute of audio, so the estimate is audio minutes sent × the per-minute prices in Settings.
-/// It is an estimate: check platform.openai.com/usage for the real figure.
+/// original-language text) per minute of audio, and Soniox mainly per hour of audio, so the estimate is audio minutes sent ×
+/// the per-minute prices in Settings. It is an estimate: check the provider's usage page for the real figure.
 /// </summary>
 public sealed class UsageTracker
 {

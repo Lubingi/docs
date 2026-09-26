@@ -4,6 +4,7 @@ using LiveSubtitles.App.Services;
 using LiveSubtitles.Core.Diagnostics;
 using LiveSubtitles.Core.Settings;
 using LiveSubtitles.Core.Testing;
+using LiveSubtitles.Core.Translation;
 
 namespace LiveSubtitles.App.ViewModels;
 
@@ -34,11 +35,12 @@ public partial class MainViewModel
             _generateCts?.Cancel();
             return;
         }
-        var key = CredentialStore.LoadApiKey();
+        // The voices come from OpenAI text-to-speech, whichever translation service is selected.
+        var key = CredentialStore.LoadApiKey(TranslationEngine.OpenAI);
         if (string.IsNullOrWhiteSpace(key))
         {
-            SetApiKey();
-            key = CredentialStore.LoadApiKey();
+            PromptForApiKey(TranslationEngine.OpenAI);
+            key = CredentialStore.LoadApiKey(TranslationEngine.OpenAI);
             if (string.IsNullOrWhiteSpace(key)) return;
         }
         IsGenerating = true;

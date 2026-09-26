@@ -12,7 +12,8 @@ public enum TranscriptStream { Translation, Original }
 public readonly record struct FrameTag(int? SegmentId, bool IsSpeech, bool Replay = false);
 
 /// <param name="Session">Increments with every new WebSocket session (reconnects, rotations).</param>
-public sealed record TranscriptDelta(TranscriptStream Stream, string Text, double ModelMs, bool HadElapsed, DateTimeOffset ReceivedAt, int Session = 0);
+/// <param name="NewChunk">Soniox: the first words of a new translation chunk (the previous one is complete).</param>
+public sealed record TranscriptDelta(TranscriptStream Stream, string Text, double ModelMs, bool HadElapsed, DateTimeOffset ReceivedAt, int Session = 0, bool NewChunk = false);
 
 public sealed record ReconnectPolicy
 {
@@ -61,12 +62,15 @@ public sealed class TranslationConnection : IAsyncDisposable
     private bool _rotating;
     private volatile bool _stopping;
     private int _sessionCount;
+    private readonly string _service;
 
-    public TranslationConnection(Func<ITranslationSession> factory, ReconnectPolicy? policy = null, ILog? log = null)
+    /// <param name="serviceName">Shown in status messages ("Connecting to OpenAI…").</param>
+    public TranslationConnection(Func<ITranslationSession> factory, ReconnectPolicy? policy = null, ILog? log = null, string serviceName = "OpenAI")
     {
         _factory = factory;
         _policy = policy ?? new ReconnectPolicy();
         _log = log ?? NullLog.Instance;
+        _service = serviceName;
     }
 
     public ConnectionState State { get; private set; } = ConnectionState.Stopped;
@@ -147,7 +151,7 @@ public sealed class TranslationConnection : IAsyncDisposable
         while (!ct.IsCancellationRequested)
         {
             SetState(ReconnectCount == 0 && attempt == 0 ? ConnectionState.Connecting : ConnectionState.Reconnecting,
-                attempt == 0 ? "Connecting to OpenAI…" : $"Reconnecting (attempt {attempt + 1})…");
+                attempt == 0 ? $"Connecting to {_service}…" : $"Reconnecting (attempt {attempt + 1})…");
             var session = _factory();
             var pending = new ActiveSession(session); // subscribes to Ended before connecting
             var connectClock = System.Diagnostics.Stopwatch.StartNew();
@@ -192,7 +196,7 @@ public sealed class TranslationConnection : IAsyncDisposable
             if (attempt > 0 || ReconnectCount > 0) _log.Info("Translation reconnected");
             attempt = 0;
             double took = connectClock.Elapsed.TotalSeconds;
-            if (took > 3) _log.Warn($"OpenAI took {took:0.0} s to accept the connection; speech meanwhile was buffered");
+            if (took > 3) _log.Warn($"{_service} took {took:0.0} s to accept the connection; speech meanwhile was buffered");
             SetState(ConnectionState.Connected, took > 3 ? $"Connected (connecting took {took:0} s)" : "Connected");
 
             // Supervise whichever session is current, rotating it shortly before it expires.
@@ -240,8 +244,11 @@ public sealed class TranslationConnection : IAsyncDisposable
             dead.LastOutputElapsedMs is { } last ? last - _policy.ReplayLead.TotalMilliseconds : 0);
         var replay = dead.RecentFrom(from);
         if (!replay.Any(f => f.Tag.IsSpeech)) return;
-        // Nothing to recover if the text had already caught up with the end of the speech (sentence ends arrive ≤ 2.7 s after).
-        if (dead.LastOutputElapsedMs is { } caughtUp && dead.LastSpeechAt is { } speechEnd && caughtUp >= speechEnd + 2700) return;
+        // Nothing to recover if the text had already caught up with the end of the speech. OpenAI stamps text with the
+        // input position when it was emitted (sentence ends arrive ≤ 2.7 s after the speech); Soniox with the time the
+        // translated words were spoken.
+        double caughtUpAfter = dead.TimedOutput ? -600 : 2700;
+        if (dead.LastOutputElapsedMs is { } caughtUp && dead.LastSpeechAt is { } speechEnd && caughtUp >= speechEnd + caughtUpAfter) return;
         var rest = _backlog.ToList();
         _backlog.Clear();
         foreach (var f in replay) _backlog.Enqueue((f.Audio, f.Tag with { Replay = true }));
@@ -328,7 +335,18 @@ public sealed class TranslationConnection : IAsyncDisposable
                 bool hadElapsed;
                 lock (_lock)
                 {
-                    if (stream == TranscriptStream.Translation)
+                    if (ev.Timed && ev.ElapsedMs is { } spokenAt)
+                    {
+                        // Soniox: the words' own audio time.
+                        model = session.Offset + spokenAt;
+                        hadElapsed = true;
+                        if (stream == TranscriptStream.Translation)
+                        {
+                            session.TimedOutput = true;
+                            session.LastOutputElapsedMs = Math.Max(session.LastOutputElapsedMs ?? 0, spokenAt);
+                        }
+                    }
+                    else if (stream == TranscriptStream.Translation)
                     {
                         model = session.Offset + (ev.ElapsedMs ?? session.SentMs);
                         hadElapsed = ev.ElapsedMs != null;
@@ -342,7 +360,7 @@ public sealed class TranslationConnection : IAsyncDisposable
                         hadElapsed = false;
                     }
                 }
-                DeltaReceived?.Invoke(new TranscriptDelta(stream, ev.Delta, model, hadElapsed, ev.ReceivedAt, session.Number));
+                DeltaReceived?.Invoke(new TranscriptDelta(stream, ev.Delta, model, hadElapsed, ev.ReceivedAt, session.Number, ev.NewChunk));
                 break;
             }
             case "session.output_audio.delta":
@@ -426,6 +444,8 @@ public sealed class TranslationConnection : IAsyncDisposable
         /// <summary>Session position of the end of the last speech frame sent.</summary>
         public double? LastSpeechAt { get; set; }
         public int Number { get; set; }
+        /// <summary>Translated text carries the time it was spoken (Soniox) rather than the emission position.</summary>
+        public bool TimedOutput { get; set; }
 
         public void Remember(float[] audio, FrameTag tag, double at, double keepMs)
         {

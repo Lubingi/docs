@@ -11,7 +11,7 @@ using LiveSubtitles.Core.Vad;
 
 namespace LiveSubtitles.App.Services;
 
-/// <summary>Builds and runs one subtitle session: audio source + pipeline + OpenAI connection.</summary>
+/// <summary>Builds and runs one subtitle session: audio source + pipeline + translation connection (OpenAI or Soniox).</summary>
 public sealed class SessionController
 {
     private readonly ILog _log;
@@ -44,13 +44,12 @@ public sealed class SessionController
     {
         if (IsRunning) return;
         _vad = CreateVad();
-        var sessionConfig = settings.ToSessionConfig();
         var options = settings.ToPipelineOptions();
         int nextId = Transcript.Snapshot().Select(l => l.SegmentId).DefaultIfEmpty(0).Max() + 1;
         options = options with { Segmenter = options.Segmenter with { FirstSegmentId = nextId } };
         var pipeline = new SubtitlePipeline(
             options, _vad, settings.SpeakerIdEnabled ? speakers : new NoSpeakerIdentifier(),
-            () => new RealtimeTranslationSession(sessionConfig, apiKey, _log),
+            settings.CreateSessionFactory(apiKey, _log),
             Transcript, _log, text);
         pipeline.StatusChanged += s => StatusChanged?.Invoke(s);
         pipeline.SegmentDebug += d => SegmentDebug?.Invoke(d);
@@ -76,7 +75,7 @@ public sealed class SessionController
             await StopAsync();
             throw;
         }
-        _log.Info($"Session started: source={settings.Source}, output={settings.OutputLanguage}");
+        _log.Info($"Session started: engine={settings.EngineName}, source={settings.Source}, output={settings.OutputLanguage}");
     }
 
     private IAudioSource CreateSource(AppSettings s, IAudioEffect? fileEffect) => s.Source switch

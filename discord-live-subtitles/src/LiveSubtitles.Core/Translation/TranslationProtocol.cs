@@ -140,6 +140,10 @@ public sealed class TranslationServerEvent
     public string? EventId { get; set; }
     public DateTimeOffset ReceivedAt { get; init; }
     public double? ElapsedMs { get; set; }
+    /// <summary>ElapsedMs is when the words were spoken (Soniox), not the input position when the text was emitted (OpenAI).</summary>
+    public bool Timed { get; set; }
+    /// <summary>First translated token of a new Soniox chunk: the previous chunk's translation is complete.</summary>
+    public bool NewChunk { get; set; }
     public string? Delta { get; set; }
     public int AudioBytes { get; set; }
     public string? SessionJson { get; set; }

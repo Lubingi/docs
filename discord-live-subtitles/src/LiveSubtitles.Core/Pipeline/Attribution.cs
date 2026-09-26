@@ -17,6 +17,9 @@ public sealed record AttributionOptions
     public int? EmptySkipLagMs { get; init; }
     /// <summary>A segment is final once no new text has arrived for this long after its speech ended.</summary>
     public int FinalizeIdleMs { get; init; } = 2200;
+    /// <summary>Text is stamped with the time it was spoken (Soniox original words): put it on the line whose speech
+    /// contains that time instead of following the cursor rules.</summary>
+    public bool PlaceByTime { get; init; }
 }
 
 /// <summary>Where a speech segment sits on the translation model's audio timeline.</summary>
@@ -58,10 +61,12 @@ public sealed class StreamAttributor
 
     /// <summary>Creates the original-language attributor and the translation attributor anchored to it.</summary>
     public static (StreamAttributor Translation, StreamAttributor Original) CreatePair(
-        AttributionOptions options, Func<IReadOnlyList<TimelineSegment>> sentSegments, bool withOriginal)
+        AttributionOptions options, Func<IReadOnlyList<TimelineSegment>> sentSegments, bool withOriginal, bool originalTimed = false)
     {
-        var original = new StreamAttributor(options with { EmptySkipLagMs = options.EmptySkipLagMs ?? 1000 }, sentSegments);
-        var translation = new StreamAttributor(options, sentSegments, withOriginal ? original : null);
+        var original = new StreamAttributor(options with { EmptySkipLagMs = options.EmptySkipLagMs ?? 1000, PlaceByTime = originalTimed }, sentSegments);
+        // Timed translations (Soniox) carry the time of the words they translate: a translated word that belongs to a later
+        // line means the current line got no translation at all (e.g. speech already in the subtitle language).
+        var translation = new StreamAttributor(originalTimed ? options with { EmptySkipLagMs = 0 } : options, sentSegments, withOriginal ? original : null);
         return (translation, original);
     }
 
@@ -139,11 +144,27 @@ public sealed class StreamAttributor
     private static int WordCount(string s) => s.Split(' ', StringSplitOptions.RemoveEmptyEntries).Length;
 
     /// <summary>Returns the segment id the delta was attached to, or null if no segment has been sent yet.</summary>
-    public int? Add(string delta, double modelMs, DateTimeOffset now)
+    /// <param name="newChunk">Soniox: first words of a new translation chunk, stamped with the time of the first word it
+    /// translates. The previous chunk is complete, so a line whose speech ended before that time gets no more text.</param>
+    public int? Add(string delta, double modelMs, DateTimeOffset now, bool newChunk = false)
     {
         var segs = _segments();
         if (segs.Count == 0) return null;
         if (_cursor >= segs.Count) _cursor = segs.Count - 1;
+
+        if (_o.PlaceByTime)
+        {
+            // The last line whose audio started at or before the word (a word in a gap belongs to the line before it).
+            // Words arrive in time order, so the cursor only moves forward.
+            int at = _cursor;
+            for (int i = _cursor + 1; i < segs.Count; i++)
+            {
+                if (segs[i].ModelStartMs is { } start && start <= modelMs + TimedToleranceMs) at = i;
+                else break;
+            }
+            _cursor = at;
+            return AppendAtCursor(segs, delta, now);
+        }
 
         while (_cursor + 1 < segs.Count)
         {
@@ -159,7 +180,8 @@ public sealed class StreamAttributor
             bool confirmedEmpty = empty && _anchor != null && _anchor.Cursor > _cursor
                                   && _anchor.TextFor(cur.Id).Trim().Length == 0 && modelMs >= curEnd + _o.MinLagMs;
             if (empty && _o.EmptySkipLagMs is { } skip && modelMs >= curEnd + skip) confirmedEmpty = true;
-            if (!(pastClose || sentenceDone || confirmedEmpty)) break;
+            bool chunkDone = newChunk && modelMs >= curEnd;
+            if (!(pastClose || sentenceDone || confirmedEmpty || chunkDone)) break;
             _cursor++;
         }
 
@@ -177,6 +199,14 @@ public sealed class StreamAttributor
             }
         }
 
+        return AppendAtCursor(segs, delta, now);
+    }
+
+    /// <summary>Timed words may start a little before the line's first audio frame is logged as sent.</summary>
+    private const double TimedToleranceMs = 60;
+
+    private int? AppendAtCursor(IReadOnlyList<TimelineSegment> segs, string delta, DateTimeOffset now)
+    {
         var target = segs[_cursor];
         if (_joining)
         {

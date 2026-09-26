@@ -39,10 +39,19 @@
             <TabItem Header="Session">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <StackPanel Margin="12" MaxWidth="820" HorizontalAlignment="Left">
-                        <TextBlock Style="{StaticResource SectionHeader}" Text="OpenAI" Margin="0,0,0,6" />
+                        <TextBlock Style="{StaticResource SectionHeader}" Text="{Binding EngineHeader}" Margin="0,0,0,6" />
+                        <ComboBox ItemsSource="{Binding EngineOptions}" SelectedItem="{Binding SelectedEngine}" Width="420" HorizontalAlignment="Left" IsEnabled="{Binding CanEditSource}" Margin="0,0,0,4" />
                         <StackPanel Orientation="Horizontal">
                             <Button Content="Set API key…" Command="{Binding SetApiKeyCommand}" />
                             <TextBlock Text="{Binding ApiKeyStatus}" VerticalAlignment="Center" />
+                        </StackPanel>
+                        <StackPanel Visibility="{Binding IsSoniox, Converter={StaticResource BoolToVis}}" Margin="0,4,0,0">
+                            <TextBlock Style="{StaticResource Hint}" Text="Soniox transcribes and translates in one step and always includes the original text. It supports 60+ spoken languages and costs a small fraction of OpenAI. Each engine has its own API key." />
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Languages people speak (optional):" VerticalAlignment="Center" Width="230" />
+                                <TextBox Text="{Binding SonioxLanguageHints, UpdateSourceTrigger=PropertyChanged}" Width="160" IsEnabled="{Binding CanEditSource}" />
+                                <TextBlock Text="  two-letter codes, e.g. tr, no — helps accuracy; empty = detect" VerticalAlignment="Center" Foreground="{StaticResource Muted}" />
+                            </StackPanel>
                         </StackPanel>
 
                         <TextBlock Style="{StaticResource SectionHeader}" Text="Audio source" />
@@ -90,13 +99,14 @@
                                   Visibility="{Binding IsDeviceSource, Converter={StaticResource InverseBoolToVis}}" />
 
                         <TextBlock Style="{StaticResource SectionHeader}" Text="Subtitles" />
-                        <CheckBox Content="Show the original-language text under each subtitle (adds gpt-realtime-whisper, $0.017/min)" IsChecked="{Binding ShowOriginal}" IsEnabled="{Binding CanEditSource}" />
+                        <CheckBox Content="Show the original-language text under each subtitle (adds gpt-realtime-whisper, $0.017/min)" IsChecked="{Binding ShowOriginal}" IsEnabled="{Binding CanEditSource}"
+                                  Visibility="{Binding IsOpenAI, Converter={StaticResource BoolToVis}}" />
                         <StackPanel Orientation="Horizontal" Margin="0,4">
                             <TextBlock Text="Speech that is already in English:" VerticalAlignment="Center" Width="230" />
                             <ComboBox ItemsSource="{Binding SameLanguageOptions}" SelectedItem="{Binding SelectedSameLanguage}" Width="280" IsEnabled="{Binding CanEditSource}" />
                         </StackPanel>
                         <TextBlock Style="{StaticResource Hint}" Text="English speech is recognised from the original transcript (needs the option above) and shown word for word, because the model's own output for it is unreliable. To avoid paying for someone who always speaks English, mute them on the Speakers tab." />
-                        <StackPanel Orientation="Horizontal" Margin="0,4">
+                        <StackPanel Orientation="Horizontal" Margin="0,4" Visibility="{Binding IsOpenAI, Converter={StaticResource BoolToVis}}">
                             <TextBlock Text="OpenAI noise reduction:" VerticalAlignment="Center" Width="230" />
                             <ComboBox ItemsSource="{Binding NoiseReductionOptions}" SelectedItem="{Binding SelectedNoiseReduction}" Width="280" IsEnabled="{Binding CanEditSource}" />
                         </StackPanel>
@@ -121,7 +131,7 @@
                         <TextBlock Style="{StaticResource Hint}" Text="{Binding SpeakerModelStatus}" />
                         <TextBlock Style="{StaticResource Hint}">
                             New voices get a number and colour automatically. Rename someone to have them recognised in future calls.
-                            Tick <Bold>Mute</Bold> for people who speak English: once they're recognised (about a second into speaking), their speech is not sent to OpenAI, which saves money, and their lines are hidden.
+                            Tick <Bold>Mute</Bold> for people who speak English: once they're recognised (about a second into speaking), their speech is not sent for translation, which saves money, and their lines are hidden.
                             Lines that don't clearly match anyone show “?” — click the name in the overlay or history to say who it was.
                         </TextBlock>
                         <StackPanel Orientation="Horizontal" Margin="0,4,0,6">
@@ -336,8 +346,10 @@
                             <TextBox Text="{Binding Settings.TranslateUsdPerMinute}" Width="80" />
                             <TextBlock Text="  original text $" VerticalAlignment="Center" />
                             <TextBox Text="{Binding Settings.TranscribeUsdPerMinute}" Width="80" />
+                            <TextBlock Text="  Soniox $" VerticalAlignment="Center" />
+                            <TextBox Text="{Binding Settings.SonioxUsdPerMinute}" Width="80" />
                         </StackPanel>
-                        <TextBlock Style="{StaticResource Hint}" Text="The running cost shown at the top is an estimate (audio minutes sent × these prices). Check platform.openai.com/usage for exact billing." />
+                        <TextBlock Style="{StaticResource Hint}" Text="The running cost shown at the top is an estimate (audio minutes sent × these prices). Check platform.openai.com/usage or console.soniox.com for exact billing." />
 
                         <TextBlock Style="{StaticResource SectionHeader}" Text="App" />
                         <CheckBox Content="Minimise and close to the system tray" IsChecked="{Binding Settings.MinimizeToTray}" />
@@ -348,7 +360,7 @@
                                 <TextBlock Style="{StaticResource Hint}" Text="Changes apply the next time you press Start. The Debug tab shows how segments and text line up." />
                                 <Grid>
                                     <Grid.ColumnDefinitions><ColumnDefinition Width="330" /><ColumnDefinition Width="120" /></Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /></Grid.RowDefinitions>
+                                    <Grid.RowDefinitions><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /><RowDefinition /></Grid.RowDefinitions>
                                     <TextBlock Text="Speech threshold (0-1, higher = stricter)" VerticalAlignment="Center" />
                                     <TextBox Grid.Column="1" Text="{Binding Settings.Advanced.VadThreshold}" Margin="0,2" />
                                     <TextBlock Grid.Row="1" Text="Pause that ends a segment (ms)" VerticalAlignment="Center" />
@@ -367,8 +379,10 @@
                                     <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Settings.Diarization.NewSpeakerThreshold}" Margin="0,2" />
                                     <TextBlock Grid.Row="8" Text="Auto-merge voices above similarity" VerticalAlignment="Center" />
                                     <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding Settings.Diarization.MergeThreshold}" Margin="0,2" />
-                                    <TextBlock Grid.Row="9" Text="Model id" VerticalAlignment="Center" />
+                                    <TextBlock Grid.Row="9" Text="OpenAI model id" VerticalAlignment="Center" />
                                     <TextBox Grid.Row="9" Grid.Column="1" Text="{Binding Settings.Model}" Margin="0,2" />
+                                    <TextBlock Grid.Row="10" Text="Soniox model id" VerticalAlignment="Center" />
+                                    <TextBox Grid.Row="10" Grid.Column="1" Text="{Binding Settings.SonioxModel}" Margin="0,2" />
                                 </Grid>
                                 <Button Content="Reset advanced settings" Command="{Binding ResetAdvancedCommand}" HorizontalAlignment="Left" Margin="0,6,0,0" />
                             </StackPanel>

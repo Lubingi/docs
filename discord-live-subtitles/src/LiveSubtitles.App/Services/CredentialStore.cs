@@ -1,15 +1,17 @@
 using System.Runtime.InteropServices;
 using System.Text;
+using LiveSubtitles.Core.Translation;
 using static LiveSubtitles.App.Interop.NativeMethods;
 
 namespace LiveSubtitles.App.Services;
 
-/// <summary>Stores the OpenAI API key in Windows Credential Manager (per user, encrypted by Windows). Never written to disk by the app.</summary>
+/// <summary>Stores the API keys (OpenAI, Soniox) in Windows Credential Manager (per user, encrypted by Windows). Never written to disk by the app.</summary>
 public static class CredentialStore
 {
-    private const string Target = "LiveSubtitles/OpenAI-API-Key";
+    private static string Target(TranslationEngine engine) =>
+        engine == TranslationEngine.Soniox ? "LiveSubtitles/Soniox-API-Key" : "LiveSubtitles/OpenAI-API-Key";
 
-    public static void SaveApiKey(string key)
+    public static void SaveApiKey(string key, TranslationEngine engine = TranslationEngine.OpenAI)
     {
         var bytes = Encoding.Unicode.GetBytes(key.Trim());
         var blob = Marshal.AllocHGlobal(bytes.Length);
@@ -19,12 +21,12 @@ public static class CredentialStore
             var cred = new CREDENTIAL
             {
                 Type = CRED_TYPE_GENERIC,
-                TargetName = Target,
+                TargetName = Target(engine),
                 CredentialBlob = blob,
                 CredentialBlobSize = (uint)bytes.Length,
                 Persist = CRED_PERSIST_LOCAL_MACHINE,
-                UserName = "openai",
-                Comment = "OpenAI API key for Live Subtitles",
+                UserName = engine == TranslationEngine.Soniox ? "soniox" : "openai",
+                Comment = $"{(engine == TranslationEngine.Soniox ? "Soniox" : "OpenAI")} API key for Live Subtitles",
             };
             if (!CredWrite(ref cred, 0)) throw new InvalidOperationException($"CredWrite failed ({Marshal.GetLastWin32Error()})");
         }
@@ -34,9 +36,9 @@ public static class CredentialStore
         }
     }
 
-    public static string? LoadApiKey()
+    public static string? LoadApiKey(TranslationEngine engine = TranslationEngine.OpenAI)
     {
-        if (!CredRead(Target, CRED_TYPE_GENERIC, 0, out var ptr)) return null;
+        if (!CredRead(Target(engine), CRED_TYPE_GENERIC, 0, out var ptr)) return null;
         try
         {
             var cred = Marshal.PtrToStructure<CREDENTIAL>(ptr);
@@ -51,7 +53,7 @@ public static class CredentialStore
         }
     }
 
-    public static bool HasApiKey() => LoadApiKey() is { Length: > 0 };
+    public static bool HasApiKey(TranslationEngine engine = TranslationEngine.OpenAI) => LoadApiKey(engine) is { Length: > 0 };
 
-    public static void DeleteApiKey() => CredDelete(Target, CRED_TYPE_GENERIC, 0);
+    public static void DeleteApiKey(TranslationEngine engine = TranslationEngine.OpenAI) => CredDelete(Target(engine), CRED_TYPE_GENERIC, 0);
 }

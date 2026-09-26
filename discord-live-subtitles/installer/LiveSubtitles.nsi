@@ -1,11 +1,11 @@
 ; NSIS installer for Live Subtitles for Discord.
-; Builds on Windows or Linux:  makensis -DVERSION=0.1.0 installer/LiveSubtitles.nsi
+; Builds on Windows or Linux:  makensis -DVERSION=0.2.0 installer/LiveSubtitles.nsi
 ; (expects the self-contained publish output in artifacts/publish; see installer/build-installer-nsis.sh)
 ; Per-user install (no admin rights). The .NET runtime and both ONNX models are included.
 
 Unicode true
 !ifndef VERSION
-  !define VERSION "0.1.0"
+  !define VERSION "0.2.0"
 !endif
 !define APPNAME "Live Subtitles for Discord"
 !define EXE "LiveSubtitles.exe"
@@ -37,7 +37,7 @@ VIAddVersionKey "LegalCopyright" "Live Subtitles"
 !define MUI_ICON "..\src\LiveSubtitles.App\Assets\app.ico"
 !define MUI_UNICON "..\src\LiveSubtitles.App\Assets\app.ico"
 !define MUI_ABORTWARNING
-!define MUI_WELCOMEPAGE_TEXT "This installs ${APPNAME} ${VERSION}: live English subtitles for Discord voice calls, using OpenAI's Realtime Translation.$\r$\n$\r$\nEverything runs on this PC. You will need your own OpenAI API key (the app explains how to get one).$\r$\n$\r$\nNo administrator rights are needed."
+!define MUI_WELCOMEPAGE_TEXT "This installs ${APPNAME} ${VERSION}: live English subtitles for Discord voice calls, using OpenAI's Realtime Translation or Soniox.$\r$\n$\r$\nEverything runs on this PC. You will need your own OpenAI or Soniox API key (the read-me explains how to get one).$\r$\n$\r$\nNo administrator rights are needed."
 !define MUI_FINISHPAGE_RUN "$INSTDIR\${EXE}"
 !define MUI_FINISHPAGE_RUN_TEXT "Start ${APPNAME} now"
 !define MUI_FINISHPAGE_SHOWREADME "$INSTDIR\README.md"
@@ -125,8 +125,9 @@ Section "Uninstall"
   DeleteRegValue HKCU "Software\Microsoft\Windows\CurrentVersion\Run" "LiveSubtitles"
   DeleteRegKey HKCU "${UNINSTKEY}"
   IfSilent done
-  MessageBox MB_YESNO|MB_ICONQUESTION "Also delete your settings, remembered voice profiles, logs and the saved OpenAI API key?$\r$\n$\r$\n(Transcripts and test audio you saved yourself are not touched.)" IDNO done
+  MessageBox MB_YESNO|MB_ICONQUESTION "Also delete your settings, remembered voice profiles, logs and the saved API keys?$\r$\n$\r$\n(Transcripts and test audio you saved yourself are not touched.)" IDNO done
     RMDir /r "$APPDATA\LiveSubtitles"
     nsExec::Exec 'cmdkey /delete:LiveSubtitles/OpenAI-API-Key'
+    nsExec::Exec 'cmdkey /delete:LiveSubtitles/Soniox-API-Key'
   done:
 SectionEnd

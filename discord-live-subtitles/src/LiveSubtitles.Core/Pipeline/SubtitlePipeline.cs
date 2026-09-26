@@ -76,8 +76,8 @@ public sealed class SubtitlePipeline : IAsyncDisposable
         _text = textProcessor ?? NoTextPostProcessor.Instance;
         _segmenter = new SpeechSegmenter(options.Segmenter);
         // The original-language transcript aligns better with speech; it anchors where translated lines end.
-        (_translationAttr, _originalAttr) = StreamAttributor.CreatePair(options.Attribution, () => _sent, options.ShowOriginal);
-        _connection = new TranslationConnection(sessionFactory, reconnect, log);
+        (_translationAttr, _originalAttr) = StreamAttributor.CreatePair(options.Attribution, () => _sent, options.ShowOriginal, options.OriginalTimed);
+        _connection = new TranslationConnection(sessionFactory, reconnect, log, options.ServiceName);
         _connection.FrameSent += (tag, start, dur, wall) => Post(() => OnFrameSent(tag, start, dur, wall));
         _connection.DeltaReceived += d => Post(() => OnDelta(d));
         _connection.StateChanged += (s, m) => Post(() => { RawEvent?.Invoke($"connection: {s} — {m}"); PublishStatus(force: true); });
@@ -438,7 +438,7 @@ public sealed class SubtitlePipeline : IAsyncDisposable
         int streamIndex = (int)d.Stream;
         if (_lastSession[streamIndex] != 0 && d.Session != _lastSession[streamIndex]) attr.BeginJoin(now);
         _lastSession[streamIndex] = d.Session;
-        int? sid = attr.Add(d.Text, d.ModelMs, now);
+        int? sid = attr.Add(d.Text, d.ModelMs, now, d.NewChunk);
         RawEvent?.Invoke($"{(d.Stream == TranscriptStream.Translation ? "EN" : "SRC")} @{d.ModelMs:0}ms → seg {sid?.ToString() ?? "-"}: {d.Text}");
         if (sid is not { } id || !_segments.TryGetValue(id, out var st)) return;
 
