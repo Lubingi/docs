@@ -49,6 +49,7 @@ public sealed class SubtitlePipeline : IAsyncDisposable
     private DateTimeOffset _lastLevel = DateTimeOffset.MinValue;
     private bool _flushAfterPump;
     private int _finalizeFrom;
+    private readonly int[] _lastSession = new int[2];
     private DateTimeOffset _lastTick = DateTimeOffset.MinValue;
     private bool _dropTailFrames;
     private bool _paused;
@@ -433,11 +434,14 @@ public sealed class SubtitlePipeline : IAsyncDisposable
     {
         var attr = d.Stream == TranscriptStream.Translation ? _translationAttr : _originalAttr;
         var now = DateTimeOffset.UtcNow;
+        int streamIndex = (int)d.Stream;
+        if (_lastSession[streamIndex] != 0 && d.Session != _lastSession[streamIndex]) attr.BeginJoin(now);
+        _lastSession[streamIndex] = d.Session;
         int? sid = attr.Add(d.Text, d.ModelMs, now);
         RawEvent?.Invoke($"{(d.Stream == TranscriptStream.Translation ? "EN" : "SRC")} @{d.ModelMs:0}ms → seg {sid?.ToString() ?? "-"}: {d.Text}");
         if (sid is not { } id || !_segments.TryGetValue(id, out var st)) return;
 
-        if (d.HadElapsed && WallForModel(d.ModelMs) is { } sentAt)
+        if (d.Stream == TranscriptStream.Translation && d.HadElapsed && WallForModel(d.ModelMs) is { } sentAt)
         {
             double lag = (now - sentAt).TotalMilliseconds;
             _recentLags.Enqueue(lag);
@@ -484,6 +488,8 @@ public sealed class SubtitlePipeline : IAsyncDisposable
             }
         }
 
+        _translationAttr.FlushJoin(now);
+        _originalAttr.FlushJoin(now);
         while (_finalizeFrom < _sent.Count && (!_segments.TryGetValue(_sent[_finalizeFrom].Id, out var f) || f.IsFinal))
             _finalizeFrom++;
         for (int i = _finalizeFrom; i < _sent.Count; i++)

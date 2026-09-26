@@ -11,7 +11,8 @@ public enum TranscriptStream { Translation, Original }
 /// <paramref name="Replay"/> marks audio re-sent after a dropped connection.</summary>
 public readonly record struct FrameTag(int? SegmentId, bool IsSpeech, bool Replay = false);
 
-public sealed record TranscriptDelta(TranscriptStream Stream, string Text, double ModelMs, bool HadElapsed, DateTimeOffset ReceivedAt);
+/// <param name="Session">Increments with every new WebSocket session (reconnects, rotations).</param>
+public sealed record TranscriptDelta(TranscriptStream Stream, string Text, double ModelMs, bool HadElapsed, DateTimeOffset ReceivedAt, int Session = 0);
 
 public sealed record ReconnectPolicy
 {
@@ -22,9 +23,10 @@ public sealed record ReconnectPolicy
     /// <summary>Start a fresh session this long before the server-side expiry, during a quiet moment.</summary>
     public TimeSpan RotateBeforeExpiry { get; init; } = TimeSpan.FromMinutes(3);
     /// <summary>After an unexpected drop, audio the old session had not translated yet (up to this much) is sent again.</summary>
-    public TimeSpan MaxReplay { get; init; } = TimeSpan.FromSeconds(4);
-    /// <summary>Text trails the audio by about 1–1.5 s, so replay starts this far before the last text received.</summary>
-    public TimeSpan ReplayLead { get; init; } = TimeSpan.FromMilliseconds(1500);
+    public TimeSpan MaxReplay { get; init; } = TimeSpan.FromSeconds(6);
+    /// <summary>Replay starts this far before the last text received. Text trails audio by 1–1.5 s, and the model
+    /// needs some context: with only 2.5 s it mistranslated "…middag først" in the live test.</summary>
+    public TimeSpan ReplayLead { get; init; } = TimeSpan.FromMilliseconds(3000);
     /// <summary>Never rotate a session younger than this (guards against a very short server-side expiry).</summary>
     public TimeSpan MinSessionAge { get; init; } = TimeSpan.FromMinutes(1);
 
@@ -58,6 +60,7 @@ public sealed class TranslationConnection : IAsyncDisposable
     private Task? _runTask;
     private bool _rotating;
     private volatile bool _stopping;
+    private int _sessionCount;
 
     public TranslationConnection(Func<ITranslationSession> factory, ReconnectPolicy? policy = null, ILog? log = null)
     {
@@ -126,6 +129,7 @@ public sealed class TranslationConnection : IAsyncDisposable
         _current!.Remember(audio24, tag, _current.SentMs, _policy.MaxReplay.TotalMilliseconds + _policy.ReplayLead.TotalMilliseconds);
         _globalModelMs += durationMs;
         _current.SentMs += durationMs;
+        if (tag.IsSpeech) _current.LastSpeechAt = _current.SentMs;
         if (tag.IsSpeech) _lastSpeechSent = now;
         _chunk.AddRange(audio24);
         while (_chunk.Count >= TranslationProtocol.ChunkSamples)
@@ -233,6 +237,8 @@ public sealed class TranslationConnection : IAsyncDisposable
             dead.LastOutputElapsedMs is { } last ? last - _policy.ReplayLead.TotalMilliseconds : 0);
         var replay = dead.RecentFrom(from);
         if (!replay.Any(f => f.Tag.IsSpeech)) return;
+        // Nothing to recover if the text had already caught up with the end of the speech (sentence ends arrive ≤ 2.7 s after).
+        if (dead.LastOutputElapsedMs is { } caughtUp && dead.LastSpeechAt is { } speechEnd && caughtUp >= speechEnd + 2700) return;
         var rest = _backlog.ToList();
         _backlog.Clear();
         foreach (var f in replay) _backlog.Enqueue((f.Audio, f.Tag with { Replay = true }));
@@ -244,6 +250,7 @@ public sealed class TranslationConnection : IAsyncDisposable
     private ActiveSession Install(ActiveSession active)
     {
         active.Offset = _globalModelMs;
+        active.Number = ++_sessionCount;
         active.InstalledAt = DateTimeOffset.UtcNow;
         active.Session.EventReceived += ev => OnServerEvent(active, ev);
         _current = active;
@@ -314,14 +321,25 @@ public sealed class TranslationConnection : IAsyncDisposable
             {
                 if (string.IsNullOrEmpty(ev.Delta)) return;
                 double model;
+                var stream = ev.Type == "session.output_transcript.delta" ? TranscriptStream.Translation : TranscriptStream.Original;
+                bool hadElapsed;
                 lock (_lock)
                 {
-                    model = session.Offset + (ev.ElapsedMs ?? session.SentMs);
-                    if (ev.Type == "session.output_transcript.delta")
+                    if (stream == TranscriptStream.Translation)
+                    {
+                        model = session.Offset + (ev.ElapsedMs ?? session.SentMs);
+                        hadElapsed = ev.ElapsedMs != null;
                         session.LastOutputElapsedMs = Math.Max(session.LastOutputElapsedMs ?? 0, ev.ElapsedMs ?? session.SentMs);
+                    }
+                    else
+                    {
+                        // The input transcript's elapsed_ms drifts ~3 s per skipped silence (measured in the live test), so
+                        // place original-language text by arrival instead: it trails the audio sent by only 200–400 ms.
+                        model = session.Offset + Math.Max(0, session.SentMs - 300);
+                        hadElapsed = false;
+                    }
                 }
-                var stream = ev.Type == "session.output_transcript.delta" ? TranscriptStream.Translation : TranscriptStream.Original;
-                DeltaReceived?.Invoke(new TranscriptDelta(stream, ev.Delta, model, ev.ElapsedMs != null, ev.ReceivedAt));
+                DeltaReceived?.Invoke(new TranscriptDelta(stream, ev.Delta, model, hadElapsed, ev.ReceivedAt, session.Number));
                 break;
             }
             case "session.output_audio.delta":
@@ -402,6 +420,9 @@ public sealed class TranslationConnection : IAsyncDisposable
         public double Offset { get; set; }
         /// <summary>Largest elapsed_ms of translated text received: audio before about this point has been translated.</summary>
         public double? LastOutputElapsedMs { get; set; }
+        /// <summary>Session position of the end of the last speech frame sent.</summary>
+        public double? LastSpeechAt { get; set; }
+        public int Number { get; set; }
 
         public void Remember(float[] audio, FrameTag tag, double at, double keepMs)
         {

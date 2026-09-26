@@ -84,3 +84,48 @@ public class AttributionTests
     [InlineData("", false)]
     public void SentenceEndDetection(string text, bool expected) => Assert.Equal(expected, StreamAttributor.EndsSentence(text));
 }
+
+/// <summary>VPS run 2, N5: text around a reconnect was duplicated ("II might be…") or glued ("butOn").</summary>
+public class ReconnectJoinTests
+{
+    private static TimelineSegment Seg(int id, double start, double end) =>
+        new(id) { ModelStartMs = start, ModelSpeechEndMs = end, SpeechEnded = true, EndSentWall = DateTimeOffset.UtcNow };
+
+    [Theory]
+    [InlineData("Ben biraz geç kalabilirim. I", "I might be a little late", " might be a little late")]
+    [InlineData("Let's do casual first", "Let's do casual first, then ranked.", ", then ranked.")]
+    [InlineData("Bence", "Bence dokuzda başlayalım", " dokuzda başlayalım")]
+    [InlineData("I'm in, but", "On a lunch break.", "On a lunch break.")]
+    [InlineData("", "Hello", "Hello")]
+    public void RemovesRepeatedWords(string existing, string incoming, string expected) =>
+        Assert.Equal(expected, StreamAttributor.RemoveOverlap(existing, incoming));
+
+    [Fact]
+    public void NewSessionTextIsDeduplicatedAndSpaced()
+    {
+        var t0 = DateTimeOffset.UtcNow;
+        var segs = new List<TimelineSegment> { Seg(1, 0, 6000) };
+        var attr = new StreamAttributor(new AttributionOptions(), () => segs);
+        attr.Add("I'm in, but I", 3000, t0);
+        attr.BeginJoin(t0);               // connection dropped and came back
+        attr.Add("I", 6200, t0);          // replayed audio: the model repeats "I"
+        attr.Add(" have to", 6400, t0);
+        attr.Add(" eat dinner first.", 6600, t0);
+        attr.FlushJoin(t0.AddSeconds(2));
+        Assert.Equal("I'm in, but I have to eat dinner first.", attr.TextFor(1));
+    }
+
+    [Fact]
+    public void GluedWordsGetASpace()
+    {
+        var t0 = DateTimeOffset.UtcNow;
+        var segs = new List<TimelineSegment> { Seg(1, 0, 6000) };
+        var attr = new StreamAttributor(new AttributionOptions(), () => segs);
+        attr.Add("I'm in, but", 3000, t0);
+        attr.BeginJoin(t0);
+        attr.Add("On a lunch", 6200, t0);
+        attr.Add(" break.", 6400, t0);
+        attr.FlushJoin(t0.AddSeconds(2));
+        Assert.Equal("I'm in, but On a lunch break.", attr.TextFor(1));
+    }
+}

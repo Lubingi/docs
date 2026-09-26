@@ -1,0 +1,36 @@
+<Project>
+  <!--
+    Downloads the local ONNX models once per build (pinned URLs + SHA-256) into models/.
+    Every project that needs the models calls this project's Download target through the MSBuild task with the same
+    properties, so MSBuild runs it exactly once even in a parallel build (the old per-project download raced).
+  -->
+  <PropertyGroup>
+    <ModelsDir Condition="'$(ModelsDir)' == ''">$(MSBuildThisFileDirectory)..\models\</ModelsDir>
+  </PropertyGroup>
+  <ItemGroup>
+    <LiveSubsModel Include="silero_vad.onnx">
+      <Url>https://raw.githubusercontent.com/snakers4/silero-vad/v6.2/src/silero_vad/data/silero_vad.onnx</Url>
+      <Sha256>1A153A22F4509E292A94E67D6F9B85E8DEB25B4988682B7E174C65279D8788E3</Sha256>
+    </LiveSubsModel>
+    <LiveSubsModel Include="campplus_voxceleb_16k.onnx">
+      <Url>https://github.com/k2-fsa/sherpa-onnx/releases/download/speaker-recongition-models/3dspeaker_speech_campplus_sv_en_voxceleb_16k.onnx</Url>
+      <Sha256>357A834F702B80161E5B981182C038E18553C1F2CA752ED6CEC2052365D4129B</Sha256>
+    </LiveSubsModel>
+  </ItemGroup>
+
+  <Target Name="Download" Returns="@(_LiveSubsModelFile)">
+    <MakeDir Directories="$(ModelsDir)" />
+    <DownloadFile SourceUrl="%(LiveSubsModel.Url)" DestinationFolder="$(ModelsDir)" DestinationFileName="%(LiveSubsModel.Identity)"
+                  Condition="!Exists('$(ModelsDir)%(LiveSubsModel.Identity)')" Retries="3" />
+    <GetFileHash Files="@(LiveSubsModel->'$(ModelsDir)%(Identity)')" Algorithm="SHA256">
+      <Output TaskParameter="Items" ItemName="_LiveSubsModelHash" />
+    </GetFileHash>
+    <Error Condition="'%(_LiveSubsModelHash.FileHash)' != '%(_LiveSubsModelHash.Sha256)'"
+           Text="Model %(_LiveSubsModelHash.Identity) failed its SHA-256 check (got %(_LiveSubsModelHash.FileHash)). Delete it and rebuild." />
+    <ItemGroup>
+      <_LiveSubsModelFile Include="@(LiveSubsModel->'$(ModelsDir)%(Identity)')" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="Build" DependsOnTargets="Download" />
+</Project>

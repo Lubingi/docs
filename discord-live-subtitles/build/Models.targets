@@ -1,33 +1,12 @@
 <Project>
-  <!--
-    Downloads the local ONNX models on first build (pinned URLs + SHA-256) and copies them
-    next to the executable in a "models" folder. Nothing here runs at app runtime.
-  -->
-  <PropertyGroup>
-    <ModelsDir>$(RepoRoot)models\</ModelsDir>
-  </PropertyGroup>
-  <ItemGroup>
-    <LiveSubsModel Include="silero_vad.onnx">
-      <Url>https://raw.githubusercontent.com/snakers4/silero-vad/v6.2/src/silero_vad/data/silero_vad.onnx</Url>
-      <Sha256>1A153A22F4509E292A94E67D6F9B85E8DEB25B4988682B7E174C65279D8788E3</Sha256>
-    </LiveSubsModel>
-    <LiveSubsModel Include="campplus_voxceleb_16k.onnx">
-      <Url>https://github.com/k2-fsa/sherpa-onnx/releases/download/speaker-recongition-models/3dspeaker_speech_campplus_sv_en_voxceleb_16k.onnx</Url>
-      <Sha256>357A834F702B80161E5B981182C038E18553C1F2CA752ED6CEC2052365D4129B</Sha256>
-    </LiveSubsModel>
-  </ItemGroup>
-
+  <!-- Makes the local ONNX models available next to the executable in a "models" folder.
+       The download itself lives in Models.proj and runs once per build. Nothing here runs at app runtime. -->
   <Target Name="LiveSubsDownloadModels" BeforeTargets="BeforeBuild" Condition="'$(SkipModelDownload)' != 'true'">
-    <MakeDir Directories="$(ModelsDir)" />
-    <DownloadFile SourceUrl="%(LiveSubsModel.Url)" DestinationFolder="$(ModelsDir)" DestinationFileName="%(LiveSubsModel.Identity)"
-                  Condition="!Exists('$(ModelsDir)%(LiveSubsModel.Identity)')" Retries="3" />
-    <GetFileHash Files="@(LiveSubsModel->'$(ModelsDir)%(Identity)')" Algorithm="SHA256">
-      <Output TaskParameter="Items" ItemName="_LiveSubsModelHash" />
-    </GetFileHash>
-    <Error Condition="'%(_LiveSubsModelHash.FileHash)' != '%(_LiveSubsModelHash.Sha256)'"
-           Text="Model %(_LiveSubsModelHash.Identity) failed its SHA-256 check (got %(_LiveSubsModelHash.FileHash)). Delete it and rebuild." />
+    <MSBuild Projects="$(MSBuildThisFileDirectory)Models.proj" Targets="Download"
+             Properties="ModelsDir=$(RepoRoot)models\" RemoveProperties="Configuration;Platform;TargetFramework;RuntimeIdentifier;SelfContained">
+      <Output TaskParameter="TargetOutputs" ItemName="_LiveSubsModelFile" />
+    </MSBuild>
     <ItemGroup>
-      <_LiveSubsModelFile Include="@(LiveSubsModel->'$(ModelsDir)%(Identity)')" />
       <None Include="@(_LiveSubsModelFile)" Link="models\%(_LiveSubsModelFile.Filename)%(_LiveSubsModelFile.Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
     </ItemGroup>
   </Target>

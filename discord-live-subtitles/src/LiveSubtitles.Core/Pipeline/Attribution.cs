@@ -71,6 +71,73 @@ public sealed class StreamAttributor
     /// <summary>Index of the segment currently receiving text; segments before it are closed for this stream.</summary>
     public int Cursor => _cursor;
 
+    // ---- joining text across a reconnect
+    private bool _joining;
+    private readonly System.Text.StringBuilder _joinBuffer = new();
+    private int _joinTarget = -1;
+    private DateTimeOffset _joinStarted;
+
+    /// <summary>
+    /// Call when text starts coming from a new session (after a reconnect). The replayed audio makes the model repeat
+    /// words that were already shown, and the new session's first delta has no leading space. The first few words are
+    /// held back, de-duplicated against the end of the existing line and joined with a proper space.
+    /// </summary>
+    public void BeginJoin(DateTimeOffset now)
+    {
+        _joining = true;
+        _joinStarted = now;
+        _joinBuffer.Clear();
+        _joinTarget = -1;
+    }
+
+    /// <summary>Releases held-back join text once enough has arrived or it has waited long enough (called periodically).</summary>
+    public void FlushJoin(DateTimeOffset now, bool force = false)
+    {
+        if (!_joining || _joinTarget < 0) return;
+        if (!force && WordCount(_joinBuffer.ToString()) < 4 && (now - _joinStarted).TotalMilliseconds < 1500) return;
+        var target = _joinTarget;
+        var text = _joinBuffer.ToString();
+        _joining = false;
+        _joinBuffer.Clear();
+        _joinTarget = -1;
+        var segs = _segments();
+        int idx = -1;
+        for (int i = 0; i < segs.Count; i++) if (segs[i].Id == target) idx = i;
+        var existing = TextFor(target);
+        if (existing.Trim().Length == 0 && idx > 0) existing = TextFor(segs[idx - 1].Id);
+        text = RemoveOverlap(existing, text);
+        if (text.Trim().Length == 0) return;
+        var current = TextFor(target);
+        if (current.Length > 0 && !char.IsWhiteSpace(current[^1]) && !char.IsWhiteSpace(text[0]) && char.IsLetterOrDigit(text[0]))
+            text = " " + text;
+        Append(target, text, now);
+    }
+
+    /// <summary>Drops words at the start of <paramref name="incoming"/> that repeat the end of <paramref name="existing"/>.</summary>
+    internal static string RemoveOverlap(string existing, string incoming)
+    {
+        static string Norm(string w) => new string(w.Where(char.IsLetterOrDigit).Select(char.ToLowerInvariant).ToArray());
+        var have = existing.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(Norm).Where(w => w.Length > 0).ToList();
+        var matches = System.Text.RegularExpressions.Regex.Matches(incoming, @"\S+");
+        var words = matches.Select(m => Norm(m.Value)).ToList();
+        int best = 0;
+        for (int k = Math.Min(8, Math.Min(have.Count, words.Count)); k >= 1; k--)
+        {
+            if (words.Take(k).Where(w => w.Length > 0).SequenceEqual(have.Skip(have.Count - k).Take(k)) && words.Take(k).All(w => w.Length > 0))
+            {
+                best = k;
+                break;
+            }
+        }
+        if (best == 0) return incoming;
+        var cut = matches[best - 1];
+        int lastLetter = cut.Value.Length - 1;
+        while (lastLetter > 0 && !char.IsLetterOrDigit(cut.Value[lastLetter])) lastLetter--;
+        return incoming[(cut.Index + lastLetter + 1)..]; // keep punctuation after the repeated word ("first," → ",")
+    }
+
+    private static int WordCount(string s) => s.Split(' ', StringSplitOptions.RemoveEmptyEntries).Length;
+
     /// <summary>Returns the segment id the delta was attached to, or null if no segment has been sent yet.</summary>
     public int? Add(string delta, double modelMs, DateTimeOffset now)
     {
@@ -111,6 +178,17 @@ public sealed class StreamAttributor
         }
 
         var target = segs[_cursor];
+        if (_joining)
+        {
+            if (_joinTarget >= 0 && _joinTarget != target.Id) FlushJoin(now, force: true);
+            if (_joining)
+            {
+                _joinTarget = target.Id;
+                _joinBuffer.Append(delta);
+                FlushJoin(now);
+                return target.Id;
+            }
+        }
         Append(target.Id, delta, now);
         return target.Id;
     }
